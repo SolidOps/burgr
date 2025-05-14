@@ -1,2 +1,2 @@
 # burgr
-A source generator using templates and DDD
+A source generator using templates and DDD.
