@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <AssemblyName>SolidOps.Burgr</AssemblyName>
+        <RootNamespace>SolidOps.Burgr</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <ApplicationIcon />
+        <OutputType>Exe</OutputType>
+        <StartupObject>SolidOps.Burgr.Program</StartupObject>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>burgr</ToolCommandName>
+        <PackageId>Burgr</PackageId>
+        <PackageDescription>A source generator using templates and DDD</PackageDescription>
+        <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
+        <Company>Solid Ops</Company>
+        <Authors>Damien Lechat</Authors>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+        <PackageReference Include="YamlDotNet" Version="15.1.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Burgr.Core\Burgr.Core.csproj" />
+    </ItemGroup>
+
+</Project>

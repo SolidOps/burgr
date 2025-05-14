@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F98183C1-7EB4-4E2C-9BE0-B31D1AD8D28C}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Burgr.Core", "Burgr.Core\Burgr.Core.csproj", "{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Burgr", "Burgr\Burgr.csproj", "{86F7602C-D55B-81A7-8302-341F4445C32C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86F7602C-D55B-81A7-8302-341F4445C32C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86F7602C-D55B-81A7-8302-341F4445C32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86F7602C-D55B-81A7-8302-341F4445C32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86F7602C-D55B-81A7-8302-341F4445C32C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {650335C4-C122-4DF8-ADF3-794C0A0746C8}
+	EndGlobalSection
+EndGlobal
