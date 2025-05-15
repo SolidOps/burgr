@@ -8,7 +8,12 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <IsPackable>false</IsPackable>
+        <PackageId>Burgr.Core</PackageId>
+        <PackageDescription>Core classes available as package for customization</PackageDescription>
+        <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
+        <Company>Solid Ops</Company>
+        <Authors>Damien Lechat</Authors>
+        <IsPackable>true</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
