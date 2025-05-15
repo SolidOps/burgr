@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <AssemblyName>SolidOps.Burgr.Essential</AssemblyName>
+        <RootNamespace>SolidOps.Burgr.Essential</RootNamespace>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <PackageId>Burgr.Essential</PackageId>
+        <PackageDescription>The essential package to build applications</PackageDescription>
+        <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
+        <Company>Solid Ops</Company>
+        <Authors>Damien Lechat</Authors>
+        <IsPackable>true</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Burgr.Core\Burgr.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="YamlDotNet" Version="15.1.4" />
+    </ItemGroup>
+
+</Project>
