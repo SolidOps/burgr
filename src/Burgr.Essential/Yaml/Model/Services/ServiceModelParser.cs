@@ -58,7 +58,6 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
             NamespaceName = namespaceName,
             ModuleName = moduleName
         };
-        // TypeModelDescriptor.AddTypeInfo(modelDescriptor, type);
 
         modelDescriptor.Set("Anonymous", service.is_anonymous.ToString());
         modelDescriptor.Set("CreateRestServices", service.create_rest_services.ToString());
@@ -119,12 +118,6 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
 
             if (returnType != ReturnType.Void)
             {
-                //if (returnType == ReturnType.Identity)
-                //{
-                //    modelServiceMethod.Set("SimpleType", "string");
-                //}
-                //else
-                //{ 
                 var typeInfo = new TypeInfo(method.result, moduleName);
 
                 if (typeInfo.IsEnum)
@@ -148,7 +141,6 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
                     modelServiceMethod.Set("List", typeInfo.IsArray.ToString());
                     modelServiceMethod.Set("Null", typeInfo.IsNull.ToString());
                 }
-                //}
             }
 
             if (method.result == "System.IO.Stream")
@@ -223,7 +215,6 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
                         modelServiceParameterMethod.Set("Null", typeInfo.IsNull.ToString());
                     }
 
-                    //modelServiceParameterMethod.Set("ClassName", ConversionHelper.ConvertToPascalCase(parameter.ParameterType.Name));
                     modelServiceMethod.AddChild(modelServiceParameterMethod);
 
                     if (typeInfo.Name == "System.IO.Stream")
@@ -262,7 +253,6 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
                     ModuleName = moduleName
                 };
                 AddRelatedDescriptor(child, new TypeInfo(kvpDependecy.Key, moduleName), "Object");
-                // YamlTypeModelDescriptor.AddTypeInfo(child, kvpDependecy.Value, modelsRepository, child.FullModuleName);
                 modelDescriptor.AddChild(child);
             }
         }
@@ -296,30 +286,6 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
 
         Type resourceType = null;
 
-        // TODO
-        //switch (modelServiceMethod.Get("ReturnType"))
-        //{
-        //    case SolidOps.Burgr.Core.ReturnType.Model.ToString():
-        //        resourceType = modelServiceMethod.MethodInfo.ReturnType;
-        //        break;
-        //    case SolidOps.Burgr.Core.ReturnType.ModelList.ToString():
-        //        resourceType = modelServiceMethod.MethodInfo.ReturnType.GetElementType();
-        //        break;
-        //    case SolidOps.Burgr.Core.ReturnType.Void.ToString():
-        //    case SolidOps.Burgr.Core.ReturnType.Simple.ToString():
-        //        foreach (ParameterInfo paramInfo in modelServiceMethod.MethodInfo.GetParameters())
-        //        {
-        //            if (!paramInfo.ParameterType.FullName.StartsWith("System."))
-        //            {
-        //                resourceType = paramInfo.ParameterType;
-        //                break;
-        //            }
-        //        }
-        //        break;
-        //    default:
-        //        break;
-        //}
-
         if (resourceType == null)
         {
             resourceType = typeof(Basic);
@@ -332,111 +298,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
             _ = resourceName.Replace("[]", string.Empty);
         }
 
-        // TODO
-
-        //ModelResource modelResource = modelDescription.ModelResources.Where(r => r.Name == resourceName && r.FullModuleName == fullModuleName).SingleOrDefault();
-
-        //if (modelResource == null)
-        //{
-        //    //Create modelResource
-        //    modelResource = new ModelResource
-        //    {
-        //        Name = resourceName,
-        //        Type = resourceType,
-        //        NamespaceName = fullModuleName,
-        //        ShortModuleName = shortModuleName,
-        //        Methods = new List<ModelResourceMethod>()
-        //    };
-        //    modelDescription.ModelResources.Add(modelResource);
-        //}
-
-        //ResourceVerb verb = ResourceVerb.Get;
-        //ReturnType returnType = modelServiceMethod.ReturnType;
-        //List<ModelResourceParameter> parameters = new();
-
-        //foreach (ParameterInfo paramInfo in modelServiceMethod.MethodInfo.GetParameters())
-        //{
-        //    string testParamName = paramInfo.ParameterType.Name;
-        //    if (testParamName.EndsWith("[]"))
-        //    {
-        //        testParamName = testParamName.Replace("[]", string.Empty);
-        //    }
-
-        //    if (testParamName == resourceName)
-        //    {
-        //        verb = ResourceVerb.Post;
-        //        parameters.Add(new ModelResourceParameter() { Name = paramInfo.Name, Type = paramInfo.ParameterType, IsResource = true });
-        //        continue;
-        //    }
-        //    if (modelServiceMethod.ReturnType is ReturnType.Simple or ReturnType.Void)
-        //    {
-        //        if (!paramInfo.ParameterType.FullName.StartsWith("System.") && !paramInfo.ParameterType.FullName.EndsWith("DTO") && !paramInfo.ParameterType.IsEnum)
-        //        {
-        //            throw new BuilderException(modelServiceMethod.MethodInfo.Name + " : only one model parameter in resource method");
-        //        }
-        //    }
-
-        //    parameters.Add(new ModelResourceParameter() { Name = paramInfo.Name, Type = paramInfo.ParameterType });
-        //}
-
-        //ModelResourceMethod mrm = null;
-        //foreach (ModelResourceMethod method in modelResource.Methods)
-        //{
-        //    if (method.InfoName != modelServiceMethod.MethodInfo.Name)
-        //    {
-        //        continue;
-        //    }
-
-        //    if (method.Verb != verb)
-        //    {
-        //        continue;
-        //    }
-
-        //    if (method.ReturnType != method.ReturnType)
-        //    {
-        //        continue;
-        //    }
-
-        //    if (method.Parameters.Count != parameters.Count)
-        //    {
-        //        continue;
-        //    }
-
-        //    foreach (ModelResourceParameter param in method.Parameters)
-        //    {
-        //        ModelResourceParameter param2 = parameters.Where(p => p.Name == param.Name).SingleOrDefault();
-
-        //        if (param2 == null)
-        //        {
-        //            continue;
-        //        }
-
-        //        if (param2.Type.FullName != param.Type.FullName)
-        //        {
-        //            continue;
-        //        }
-        //    }
-        //    mrm = method;
-        //    break;
-        //}
-
-        //if (mrm == null)
-        //{
-        //    mrm = new ModelResourceMethod
-        //    {
-        //        InfoName = modelServiceMethod.MethodInfo.Name,
-        //        Verb = verb,
-        //        Parameters = parameters,
-        //        ReturnType = returnType,
-        //        SimpleType = modelServiceMethod.MethodInfo.ReturnType,
-        //        MandatoryRight = modelUC.MandatoryRight,
-        //        OwnershipOverrideRight = modelUC.OwnershipOverrideRight,
-        //        IsAnonymous = modelUC.IsAnonymous
-        //    };
-        //    modelResource.Methods.Add(mrm);
-        //}
-
-        return null; // new Tuple<ModelResource, ModelResourceMethod>(modelResource, mrm);
+        return null;
     }
     private ModelDescriptor GetServiceObjectInList(string name)
     {
@@ -456,14 +318,6 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
 
     public static bool IsNonPersistent(string searchTypeFullName, Dictionary<string, FullModelDescription> modelDescriptions)
     {
-        //foreach (KeyValuePair<string, FullModelDescription> modelDescription in modelDescriptions)
-        //{
-        //    bool nonPersistent = modelDescription.Value.NonPersistentObjects.Contains(searchTypeFullName);
-        //    if (nonPersistent)
-        //    {
-        //        return true;
-        //    }
-        //}
         return false;
     }
 }

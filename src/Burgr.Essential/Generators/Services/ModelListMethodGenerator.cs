@@ -46,7 +46,7 @@ public class ModelListMethodGenerator : BaseMethodGenerator, IGenerator
         }
         result = result.Replace("_DOMODELLISTACTION_", ConversionHelper.ConvertToPascalCase(method.Name));
         result = result.Replace("_DOMODELLISTACTIONURL_", TextHelper.GenerateSlug(method.Name));
-        // result = SetResourceCall(language, method, result);
+
         result = ReplaceParameters(service, conversionService, method, result, modelPrefix, modelSuffix, out _);
 
         // methods with return are always get unless post is forces

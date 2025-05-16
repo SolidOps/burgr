@@ -21,34 +21,9 @@ public class YamlTemplateDescriptionBuilder
     {
         List<SourceTemplate> sourceTemplates = new();
 
-        //foreach (Assembly templateAssembly in templateAssemblies)
-        //{
-        //    Console.WriteLine(templateAssembly.FullName);
-        //    string assemblyName = templateAssembly.FullName;
-        //    string namespaceName = assemblyName.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)[0];
-        //    Type initTemplateType = templateAssembly.GetType(namespaceName + "." + "InitTemplate");
-        //    IInitTemplate initTemplate = (IInitTemplate)Activator.CreateInstance(initTemplateType);
-        //    string overrideDestination = null;
-        //    foreach (KeyValuePair<string, string> kvp in GeneratorOptions.OverrideDestinations)
-        //    {
-        //        if (namespaceName.EndsWith("." + kvp.Key))
-        //        {
-        //            overrideDestination = kvp.Value;
-        //            break;
-        //        }
-        //    }
-        //    List<SourceTemplate> assemblySourceTemplates = initTemplate.Init(templateSpecDirectory, GeneratorOptions.BuildingDirectory, overrideDestination);
-        //    sourceTemplates.AddRange(assemblySourceTemplates);
-
-        //}
-
         foreach (var templateDirectory in templateDirectoryPaths)
         {
             Console.WriteLine(templateDirectory);
-            //string assemblyName = templateAssembly.FullName;
-            //string namespaceName = assemblyName.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries)[0];
-            //Type initTemplateType = templateAssembly.GetType(namespaceName + "." + "InitTemplate");
-            //IInitTemplate initTemplate = (IInitTemplate)Activator.CreateInstance(initTemplateType);
             string overrideDestination = null;
             foreach (KeyValuePair<string, string> kvp in GeneratorOptions.OverrideDestinations)
             {

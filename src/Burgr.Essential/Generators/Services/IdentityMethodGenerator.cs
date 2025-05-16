@@ -30,7 +30,7 @@ public class IdentityMethodGenerator : BaseMethodGenerator, IGenerator
 
         result = result.Replace("_DOIDENTITYACTION_", ConversionHelper.ConvertToPascalCase(method.Name));
         result = result.Replace("_DOIDENTITYACTIONURL_", TextHelper.GenerateSlug(method.Name));
-        // result = SetResourceCall(template.DestinationLanguage, method, result);
+
         result = ReplaceParameters(service, conversionService, method, result, modelPrefix, modelSuffix, out _);
 
         result = result.Replace("_VERB_", "Post"); // void method are always post

@@ -7,34 +7,12 @@ namespace SolidOps.Burgr.Essential.Generators.Services;
 
 public abstract class BaseMethodGenerator : BaseNORADGenerator
 {
-    //protected string SetResourceCall(string language, ModelDescriptor method, string initialText)
-    //{
-    //    if (method.ResourceAndMethod != null)
-    //    {
-    //        initialText = initialText.Replace("_RESOURCENAME_", ConversionHelper.ConvertToPascalCase(method.ResourceAndMethod.Item1.Name));
-
-    //        if (method.ResourceAndMethod.Item2.Verb == ResourceVerb.Post)
-    //        {
-    //            if (language == "JS")
-    //            {
-    //                initialText = initialText.Replace("'GET'", "'POST'");
-    //            }
-    //        }
-    //    }
-    //    return initialText;
-    //}
-
     public override string Generate(string content, ModelDescriptor model, TemplateDescriptor template, string modelPrefix, string modelSuffix)
     {
         content = base.Generate(content, model, template, modelPrefix, modelSuffix);
 
         ModelDescriptor method = model;
         ModelDescriptor service = model.Parent;
-
-        // MandatoryRight
-        // OwnershipOverrideRight
-        // MethodMandatoryRight
-        // MethodOwnershipOverrideRight
 
         string actor = "User";
         if (service.Is("Anonymous"))
@@ -163,11 +141,6 @@ public abstract class BaseMethodGenerator : BaseNORADGenerator
                     _ = parameterJson.AppendFormat("\"{0}\": \"{1}\"", conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, false, false), ConversionHelper.ConvertToCamelCase(parameterInfo.Name));
 
                     singleBodyParameterType = conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false);
-                    //string module = Utilities.GetFullModuleName(parameterInfo.ParameterType);
-                    //if (service.FullModuleName != module)
-                    //{
-                    //    parameterImports += string.Format(Utilities.SingleNewLine + "import {{ {0} }} from '{1}-lib';", ConversionHelper.ConvertParameterType(parameterInfo.ParameterType, language, modelPrefix, modelSuffix, false, false), ConversionHelper.ConvertToJSLibrary(module));
-                    //}
                 }
                 else
                 {
@@ -202,14 +175,7 @@ public abstract class BaseMethodGenerator : BaseNORADGenerator
                 parameterDataType = ConversionServices[language].ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false, true);
             }
         }
-        //if (language == "JS" && !method.Get("FullTypeName").StartsWith("System.") && !method.Get("FullTypeName").StartsWith("SolidOps.Common.Starburst"))
-        //{
-        //string module = Utilities.GetFullModuleName(returnType);
-        //if (service.FullModuleName != module)
-        //{
-        //    parameterImports += string.Format(Utilities.SingleNewLine + "import {{ {0} }} from '{1}-lib';", ConversionHelper.ConvertParameterType(returnType, language, modelPrefix, modelSuffix, false, false), ConversionHelper.ConvertToJSLibrary(module));
-        //}
-        //}
+
         _ = parameterJson.Append("\n}\n");
         parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + " <.down. " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + "Input\n");
         if (fromBodyCount > 0)

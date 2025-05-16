@@ -355,7 +355,7 @@ public class PropertyGenerator : BaseNORADGenerator, IGenerator
 
         result = HandlePropertyValidationRules(model, result);
 
-        // angular
+        // password fields
         string inputType = "text";
         if (model.Name == "password")
         {

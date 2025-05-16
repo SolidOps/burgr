@@ -10,12 +10,6 @@ namespace SolidOps.Burgr.Essential.Yaml;
 
 public class ModelParserEngine : IModelParserEngine
 {
-    //public Assembly modelAssembly = null;
-    //private readonly List<Assembly> referencedAssemblies = new();
-    //private readonly List<Assembly> otherAssemblies = new();
-
-    //public List<Type> SortedTypes { get; set; }
-
     public bool IsInitialized { get; set; } = false;
 
     public string ModelParserType => "Yaml";
@@ -59,8 +53,6 @@ public class ModelParserEngine : IModelParserEngine
             {
                 throw new Exception("can't find any model in " + ModelsDirectory);
             }
-
-            // SortedTypes = TopologicSort(modelAssembly.GetTypes());
 
             YamlModelContentByModule = new Dictionary<string, YamlModelContentV1>();
 
@@ -225,14 +217,6 @@ public class ModelParserEngine : IModelParserEngine
         return null;
     }
 
-    public static string InferSubModuleName(TypeInfo typeInfo, string namespaceName, string moduleName)
-    {
-        //string @namespace = typeInfo.Namespace.Replace(namespaceName + "." + moduleName + ".", string.Empty);
-        //string[] parts = @namespace.Split('.');
-        //return parts.Reverse().SkipWhile(p => p != "Model").Skip(1).FirstOrDefault();
-        return string.Empty;
-    }
-
     public static string GetModuleName(TypeInfo typeInfo, string namespaceName, string moduleName)
     {
         var subModule = GetSubModule(typeInfo, namespaceName, moduleName);
@@ -246,11 +230,6 @@ public class ModelParserEngine : IModelParserEngine
     private static string GetSubModule(TypeInfo typeInfo, string namespaceName, string moduleName)
     {
         throw new NotImplementedException();
-    }
-
-    public static string GetFullModuleName(TypeInfo typeInfo, string namespaceName, string moduleName)
-    {
-        return namespaceName + "." + GetModuleName(typeInfo, namespaceName, moduleName);
     }
 
     public void Dispose() { }

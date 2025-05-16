@@ -662,7 +662,6 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
             baseProp.Set("ColumnName", specialType == SpecialType.DBAlias.ToString() ? property.db_column_name : initialName);
         }
 
-        // baseProp.Set("Null", property.is);
         baseProp.Set("Unique", property.is_unique.ToString());
         baseProp.Set("UniqueCaseSensitive", property.is_unique_case_sensitive.ToString());
         baseProp.Set("Label", property.is_label.ToString());

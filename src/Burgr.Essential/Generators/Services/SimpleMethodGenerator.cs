@@ -45,7 +45,7 @@ public class SimpleMethodGenerator : BaseMethodGenerator, IGenerator
         result = result.Replace("_SIMPLE__TYPE_", conversionService.ConvertParameterType(typeName, fullName, resultType.IsEnum, method.NamespaceName, method.ModuleName, null, null));
         result = result.Replace("_DOSIMPLEACTION_", ConversionHelper.ConvertToPascalCase(method.Name));
         result = result.Replace("_DOSIMPLEACTIONURL_", TextHelper.GenerateSlug(method.Name));
-        // result = SetResourceCall(template.DestinationLanguage, method, result);
+
         result = ReplaceParameters(service, conversionService, method, result, modelPrefix, modelSuffix, out _);
 
         // methods with return are always get unless post is forces
