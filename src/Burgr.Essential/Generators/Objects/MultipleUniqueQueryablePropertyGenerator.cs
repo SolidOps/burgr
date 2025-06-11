@@ -5,7 +5,7 @@ using SolidOps.Burgr.Essential.Generators.ConversionServices;
 
 namespace SolidOps.Burgr.Essential.Generators.Objects;
 
-public class MultipleUniqueQueryablePropertyGenerator : BaseNORADGenerator, IGenerator
+public class MultipleUniqueQueryablePropertyGenerator : BaseBurgrGenerator, IGenerator
 {
     public static string Name = "MultipleUniqueQueryableProperty";
     public override string DescriptorType => Name;

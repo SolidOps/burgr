@@ -1,0 +1,20 @@
+burgr-model-version: 1.0.0
+
+aggregate_roots:
+  # ---- #
+  item:
+    properties:
+      name:
+        is_unique: true
+        field_size: 50
+      due_date: datetime
+      remaining_days: =int
+      status: $item_status
+
+enums:
+  item_status:
+    values:
+      Todo: 0
+      InProgress: 1
+      Done: 2
+    

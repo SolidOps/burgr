@@ -3,7 +3,7 @@ using SolidOps.Burgr.Core.Generators;
 
 namespace SolidOps.Burgr.Essential.Generators.Rights;
 
-public class RightGenerator : BaseNORADGenerator, IGenerator
+public class RightGenerator : BaseBurgrGenerator, IGenerator
 {
     public static string Name = "Right";
     public override string DescriptorType => Name;

@@ -3,7 +3,7 @@ using SolidOps.Burgr.Core.Generators;
 
 namespace SolidOps.Burgr.Essential.Generators.Common;
 
-public class ConsumedEventGenerator : BaseNORADGenerator, IGenerator
+public class ConsumedEventGenerator : BaseBurgrGenerator, IGenerator
 {
     public static string Name = "ConsumedEvent";
     public override string DescriptorType => Name;

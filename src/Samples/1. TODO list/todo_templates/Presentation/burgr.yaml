@@ -1,0 +1,19 @@
+source_templates:
+  console:
+    source: Console.cs.tpl
+    file_suffix: Console.cs
+    destination_suffix: Presentation
+    force_separate_dll: false
+    options:
+      model_prefix: .Domain._DOMAINTYPE_.
+      model_suffix: ''
+    destination_language: CS
+  mappers:
+    source: Mappers.cs.tpl
+    file_suffix: Mappers.cs
+    destination_suffix: Presentation
+    force_separate_dll: false
+    options:
+      model_prefix: .Domain._DOMAINTYPE_.
+      model_suffix: ''
+    destination_language: CS

@@ -1,0 +1,29 @@
+source_templates:
+  facade:
+    source: FacadesApi.cs.tpl
+    file_suffix: FacadesApi.cs
+    destination_suffix: Presentation
+    force_separate_dll: false
+    options:
+      model_prefix: .Contracts.DTO.
+      model_suffix: DTO
+    destination_language: CS
+  resource:
+    source: ResourcesApi.cs.tpl
+    file_suffix: ResourcesApi.cs
+    destination_suffix: Presentation
+    force_separate_dll: false
+    options:
+      model_prefix: .Contracts.DTO.
+      model_suffix: DTO
+    destination_language: CS
+  mappers:
+    source: Mappers.cs.tpl
+    file_suffix: Mappers.cs
+    destination_suffix: Presentation
+    force_separate_dll: false
+    options:
+      model_prefix: .Contracts.DTO.
+      model_suffix: DTO
+    destination_language: CS
+  

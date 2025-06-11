@@ -3,7 +3,7 @@ using SolidOps.Burgr.Core.Generators;
 
 namespace SolidOps.Burgr.Essential.Generators.Objects;
 
-public class RuleGenerator : BaseNORADGenerator, IGenerator
+public class RuleGenerator : BaseBurgrGenerator, IGenerator
 {
     public static string Name = "Rule";
     public override string DescriptorType => Name;

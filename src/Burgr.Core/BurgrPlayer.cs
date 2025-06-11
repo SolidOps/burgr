@@ -5,7 +5,7 @@ using SolidOps.Burgr.Core.Template;
 using SolidOps.SubZero;
 using System.Reflection;
 
-namespace SolidOps.Burgr
+namespace SolidOps.Burgr.Core
 {
     public class GeneratorSettings
     {
@@ -357,12 +357,6 @@ namespace SolidOps.Burgr
     <RootNamespace>{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}</RootNamespace>
   </PropertyGroup>
 
-  <Import Project=""../version.proj"" />
-
-  <ItemGroup>
-    <PackageReference Include=""SolidOps.NORAD.Core"" Version=""1.0.4"" />
-  </ItemGroup>
-
 </Project>
 ");
                         }
@@ -375,13 +369,6 @@ namespace SolidOps.Burgr
     <AssemblyName>{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}</AssemblyName>
     <RootNamespace>{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}</RootNamespace>
   </PropertyGroup>
-
-  <Import Project=""../version.proj"" />
-
-  <ItemGroup>
-    <PackageReference Include=""SolidOps.NORAD.Core"" Version=""1.0.4"" />
-    <ProjectReference Include=""..\{fileResult.Value.ModuleName}.Contracts\{fileResult.Value.ModuleName}.Contracts.csproj"" />
-  </ItemGroup>
 
 </Project>
 ");

@@ -1,0 +1,22 @@
+source_templates:
+  event:
+    source: Events.cs.tpl
+    file_suffix: Events.cs
+    destination_suffix: Contracts
+    force_separate_dll: true
+    destination_language: CS
+  dto:
+    source: DTO.cs.tpl
+    file_suffix: DTO.cs
+    destination_suffix: Contracts
+    force_separate_dll: true
+    destination_language: CS
+  end_point:
+    source: Endpoints.cs.tpl
+    file_suffix: Endpoints.cs
+    destination_suffix: Contracts
+    force_separate_dll: true
+    destination_language: CS
+    options:
+      model_prefix: .Contracts.DTO.
+      model_suffix: DTO

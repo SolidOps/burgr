@@ -1,0 +1,10 @@
+source_templates:
+  test_end_point:
+    source: TestEndpoints.cs.tpl
+    file_suffix: TestEndpoints.cs
+    destination_suffix: Tests
+    force_separate_dll: true
+    destination_language: CS
+    options:
+      model_prefix: .Contracts.DTO.
+      model_suffix: DTO

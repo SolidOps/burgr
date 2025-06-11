@@ -34,7 +34,7 @@ public class YamlTemplateDescriptionBuilder
                 }
             }
 
-            var content = File.ReadAllText(templateDirectory + "\\joshua.yaml");
+            var content = File.ReadAllText(templateDirectory + "\\burgr.yaml");
             var yamlContent = new YamlDotNet.Serialization.Deserializer().Deserialize<YamlTemplateContentV1>(content);
 
             foreach (var source_template in yamlContent.source_templates)

@@ -4,7 +4,7 @@ using SolidOps.Burgr.Essential.Generators.ConversionServices;
 
 namespace SolidOps.Burgr.Essential.Generators.Objects;
 
-public class PropertyGenerator : BaseNORADGenerator, IGenerator
+public class PropertyGenerator : BaseBurgrGenerator, IGenerator
 {
     public static string Name = "Property";
     public override string DescriptorType => Name;

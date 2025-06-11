@@ -7,7 +7,7 @@ using SolidOps.SubZero;
 
 namespace SolidOps.Burgr.Essential.Generators.Objects;
 
-public class ObjectGenerator : BaseNORADGenerator, IGenerator
+public class ObjectGenerator : BaseBurgrGenerator, IGenerator
 {
     public static string Name = "Object";
     public override string DescriptorType => Name;
@@ -190,7 +190,6 @@ public class ObjectGenerator : BaseNORADGenerator, IGenerator
 
         result = result.Replace("/*, INTERFACE */", interfaces);
 
-        // From Joshua
         var type = model.Get("IdentityKeysType") ?? GeneratorOptions.IdentityKeysType;
         result = conversionService.ReplaceIdentityType(result, type);
 

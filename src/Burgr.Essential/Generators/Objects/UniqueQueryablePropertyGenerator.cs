@@ -4,7 +4,7 @@ using SolidOps.Burgr.Core.Generators;
 
 namespace SolidOps.Burgr.Essential.Generators.Objects;
 
-public class UniqueQueryablePropertyGenerator : BaseNORADGenerator, IGenerator
+public class UniqueQueryablePropertyGenerator : BaseBurgrGenerator, IGenerator
 {
     public static string Name = "UniqueQueryableProperty";
     public override string DescriptorType => Name;

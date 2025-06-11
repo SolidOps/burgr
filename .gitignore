@@ -245,4 +245,5 @@ ModelManifest.xml
 .fake/
 source/**/*.jfm
 
-launchSettings.json
+src/Burgr/Properties/launchSettings.json
+src/.config/dotnet-tools.json

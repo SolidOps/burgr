@@ -3,16 +3,119 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F98183C1-7EB4-4E2C-9BE0-B31D1AD8D28C}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Burgr.Core", "Burgr.Core\Burgr.Core.csproj", "{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Burgr", "Burgr\Burgr.csproj", "{86F7602C-D55B-81A7-8302-341F4445C32C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Burgr.Essential", "Burgr.Essential\Burgr.Essential.csproj", "{BFF0DBF0-3E3D-9D56-D8D4-A19B0B047A82}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. TODO list", "1. TODO list", "{C238A1A3-5ACE-4BD5-B8A4-4359D711C46C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. User management API", "2. User management API", "{E09D7D9B-AAA8-4E4A-901A-42C415D39482}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. e-commerce", "3. e-commerce", "{31E3D682-CCA0-4016-B3CD-73A080A6BDDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UM", "Samples\2. User management API\UM\UM.csproj", "{FE8D0A32-3686-458F-BBDE-9C82CC469A9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Burgr.Core", "Burgr.Core\Burgr.Core.csproj", "{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UM.Contracts", "Samples\2. User management API\UM.Contracts\UM.Contracts.csproj", "{E1988139-D491-03B6-FB7E-6B7EE75F75A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UM.Tests", "Samples\2. User management API\UM.Tests\UM.Tests.csproj", "{860B8E3E-389A-4494-8643-8830059F8A7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UM.API", "Samples\2. User management API\UM.API\UM.API.csproj", "{8C25D3D0-02A7-8261-33F4-80EC6D3CFFCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UM.Shared", "Samples\2. User management API\UM.Shared\UM.Shared.csproj", "{4396FAF6-077F-6861-1073-F3643D72EE84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO", "Samples\1. TODO list\src\TODO\TODO.csproj", "{B2D40454-1436-4035-87BC-A6ECA027A4DF}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "todo_specs", "Samples\1. TODO list\todo_specs\", "{87B6F3C5-DCDB-4A8C-E880-B1E016C591A4}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_57347"
+		Debug.AspNetCompiler.PhysicalPath = "Samples\1. TODO list\todo_specs\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57347\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_57347"
+		Release.AspNetCompiler.PhysicalPath = "Samples\1. TODO list\todo_specs\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57347\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "57347"
+		SlnRelativePath = "Samples\1. TODO list\todo_specs\"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "todo_templates", "Samples\1. TODO list\todo_templates\", "{80158DCF-A099-BB82-AC26-899B19248C14}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_57352"
+		Debug.AspNetCompiler.PhysicalPath = "Samples\1. TODO list\todo_templates\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57352\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_57352"
+		Release.AspNetCompiler.PhysicalPath = "Samples\1. TODO list\todo_templates\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57352\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "57352"
+		SlnRelativePath = "Samples\1. TODO list\todo_templates\"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "um_specs", "Samples\2. User management API\um_specs\", "{A6C5BE03-3D36-2AF3-47B7-819DC8AA84EF}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_57360"
+		Debug.AspNetCompiler.PhysicalPath = "Samples\2. User management API\um_specs\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57360\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_57360"
+		Release.AspNetCompiler.PhysicalPath = "Samples\2. User management API\um_specs\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57360\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "57360"
+		SlnRelativePath = "Samples\2. User management API\um_specs\"
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "um_templates", "Samples\2. User management API\um_templates\", "{5F6419AB-7593-8DC6-7A36-661B9BA83B6E}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.8"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_57363"
+		Debug.AspNetCompiler.PhysicalPath = "Samples\2. User management API\um_templates\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57363\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_57363"
+		Release.AspNetCompiler.PhysicalPath = "Samples\2. User management API\um_templates\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_57363\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "57363"
+		SlnRelativePath = "Samples\2. User management API\um_templates\"
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO.Shared", "Samples\1. TODO list\src\TODO.Shared\TODO.Shared.csproj", "{EB8FAD16-60A8-45C7-890F-F73181266B81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO.ConsoleApp", "Samples\1. TODO list\src\TODO.ConsoleApp\TODO.ConsoleApp.csproj", "{BB2A44CC-4D10-AA83-0DAC-E5EF5BB344FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +123,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86F7602C-D55B-81A7-8302-341F4445C32C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{86F7602C-D55B-81A7-8302-341F4445C32C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86F7602C-D55B-81A7-8302-341F4445C32C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -32,9 +131,74 @@ Global
 		{BFF0DBF0-3E3D-9D56-D8D4-A19B0B047A82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFF0DBF0-3E3D-9D56-D8D4-A19B0B047A82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFF0DBF0-3E3D-9D56-D8D4-A19B0B047A82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE8D0A32-3686-458F-BBDE-9C82CC469A9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE8D0A32-3686-458F-BBDE-9C82CC469A9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE8D0A32-3686-458F-BBDE-9C82CC469A9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE8D0A32-3686-458F-BBDE-9C82CC469A9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A40AE6D7-0638-F19E-8FD7-B14C858C28B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E1988139-D491-03B6-FB7E-6B7EE75F75A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E1988139-D491-03B6-FB7E-6B7EE75F75A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E1988139-D491-03B6-FB7E-6B7EE75F75A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E1988139-D491-03B6-FB7E-6B7EE75F75A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{860B8E3E-389A-4494-8643-8830059F8A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{860B8E3E-389A-4494-8643-8830059F8A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{860B8E3E-389A-4494-8643-8830059F8A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{860B8E3E-389A-4494-8643-8830059F8A7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C25D3D0-02A7-8261-33F4-80EC6D3CFFCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C25D3D0-02A7-8261-33F4-80EC6D3CFFCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C25D3D0-02A7-8261-33F4-80EC6D3CFFCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C25D3D0-02A7-8261-33F4-80EC6D3CFFCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4396FAF6-077F-6861-1073-F3643D72EE84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4396FAF6-077F-6861-1073-F3643D72EE84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4396FAF6-077F-6861-1073-F3643D72EE84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4396FAF6-077F-6861-1073-F3643D72EE84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2D40454-1436-4035-87BC-A6ECA027A4DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2D40454-1436-4035-87BC-A6ECA027A4DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2D40454-1436-4035-87BC-A6ECA027A4DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2D40454-1436-4035-87BC-A6ECA027A4DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B6F3C5-DCDB-4A8C-E880-B1E016C591A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B6F3C5-DCDB-4A8C-E880-B1E016C591A4}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B6F3C5-DCDB-4A8C-E880-B1E016C591A4}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{80158DCF-A099-BB82-AC26-899B19248C14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80158DCF-A099-BB82-AC26-899B19248C14}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{80158DCF-A099-BB82-AC26-899B19248C14}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{A6C5BE03-3D36-2AF3-47B7-819DC8AA84EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6C5BE03-3D36-2AF3-47B7-819DC8AA84EF}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6C5BE03-3D36-2AF3-47B7-819DC8AA84EF}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{5F6419AB-7593-8DC6-7A36-661B9BA83B6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F6419AB-7593-8DC6-7A36-661B9BA83B6E}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F6419AB-7593-8DC6-7A36-661B9BA83B6E}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{EB8FAD16-60A8-45C7-890F-F73181266B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB8FAD16-60A8-45C7-890F-F73181266B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB8FAD16-60A8-45C7-890F-F73181266B81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB8FAD16-60A8-45C7-890F-F73181266B81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB2A44CC-4D10-AA83-0DAC-E5EF5BB344FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB2A44CC-4D10-AA83-0DAC-E5EF5BB344FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB2A44CC-4D10-AA83-0DAC-E5EF5BB344FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB2A44CC-4D10-AA83-0DAC-E5EF5BB344FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C238A1A3-5ACE-4BD5-B8A4-4359D711C46C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{E09D7D9B-AAA8-4E4A-901A-42C415D39482} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{31E3D682-CCA0-4016-B3CD-73A080A6BDDA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{FE8D0A32-3686-458F-BBDE-9C82CC469A9E} = {E09D7D9B-AAA8-4E4A-901A-42C415D39482}
+		{E1988139-D491-03B6-FB7E-6B7EE75F75A1} = {E09D7D9B-AAA8-4E4A-901A-42C415D39482}
+		{860B8E3E-389A-4494-8643-8830059F8A7B} = {E09D7D9B-AAA8-4E4A-901A-42C415D39482}
+		{8C25D3D0-02A7-8261-33F4-80EC6D3CFFCA} = {E09D7D9B-AAA8-4E4A-901A-42C415D39482}
+		{4396FAF6-077F-6861-1073-F3643D72EE84} = {E09D7D9B-AAA8-4E4A-901A-42C415D39482}
+		{B2D40454-1436-4035-87BC-A6ECA027A4DF} = {C238A1A3-5ACE-4BD5-B8A4-4359D711C46C}
+		{87B6F3C5-DCDB-4A8C-E880-B1E016C591A4} = {C238A1A3-5ACE-4BD5-B8A4-4359D711C46C}
+		{80158DCF-A099-BB82-AC26-899B19248C14} = {C238A1A3-5ACE-4BD5-B8A4-4359D711C46C}
+		{A6C5BE03-3D36-2AF3-47B7-819DC8AA84EF} = {E09D7D9B-AAA8-4E4A-901A-42C415D39482}
+		{5F6419AB-7593-8DC6-7A36-661B9BA83B6E} = {E09D7D9B-AAA8-4E4A-901A-42C415D39482}
+		{EB8FAD16-60A8-45C7-890F-F73181266B81} = {C238A1A3-5ACE-4BD5-B8A4-4359D711C46C}
+		{BB2A44CC-4D10-AA83-0DAC-E5EF5BB344FB} = {C238A1A3-5ACE-4BD5-B8A4-4359D711C46C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {650335C4-C122-4DF8-ADF3-794C0A0746C8}

@@ -4,7 +4,7 @@ using SolidOps.Burgr.Core.Generators;
 
 namespace SolidOps.Burgr.Essential.Generators.Common;
 
-public class DependencyGenerator : BaseNORADGenerator, IGenerator
+public class DependencyGenerator : BaseBurgrGenerator, IGenerator
 {
     public static string Name = "Dependency";
     public override string DescriptorType => Name;

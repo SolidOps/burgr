@@ -36,7 +36,7 @@ public static class DescriptorTypes
 {
     public const string PRODUCED_EVENT_DESCRIPTOR = "ProducedEvent";
     public const string RESOURCE_DEFINITION_DESCRIPTOR = "ResourceDefinition";
-    public const string SERVICE_METHOD_PARAMETER_DESCRIPTOR = "ServiceMethodParameter";
+    public const string USECASE_STEP_PARAMETER_DESCRIPTOR = "UseCaseStepParameter";
     public const string COMPONENT_DEFINITION_DESCRIPTOR = "ComponentDefinition";
     public const string VIEW_DEFINITION_DESCRIPTOR = "ViewDefinition";
     public const string RULE_DEFINITION_DESCRIPTOR = "RuleDefinition";

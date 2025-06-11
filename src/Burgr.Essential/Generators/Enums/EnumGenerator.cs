@@ -4,7 +4,7 @@ using SolidOps.Burgr.Core.Generators;
 
 namespace SolidOps.Burgr.Essential.Generators.Enums;
 
-public class EnumGenerator : BaseNORADGenerator, IGenerator
+public class EnumGenerator : BaseBurgrGenerator, IGenerator
 {
     public static string Name = "Enum";
     public override string DescriptorType => Name;

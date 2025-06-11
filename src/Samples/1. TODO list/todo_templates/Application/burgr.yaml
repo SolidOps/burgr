@@ -1,0 +1,16 @@
+source_templates:
+  use_case:
+    source: UseCase.cs.tpl
+    file_suffix: UseCase.cs
+    destination_suffix: Application
+    force_separate_dll: false
+    options:
+      model_prefix: .Contracts.DTO.
+      model_suffix: DTO
+    destination_language: CS
+  registrar:
+    source: Registrar.cs.tpl
+    file_suffix: Registrar.cs
+    destination_suffix: Application
+    force_separate_dll: false
+    destination_language: CS

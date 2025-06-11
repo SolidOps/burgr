@@ -3,7 +3,7 @@ using SolidOps.Burgr.Core.Generators;
 
 namespace SolidOps.Burgr.Essential.Generators.Objects;
 
-public class DependentForGenerator : BaseNORADGenerator, IGenerator
+public class DependentForGenerator : BaseBurgrGenerator, IGenerator
 {
     public static string Name = "DependentFor";
     public override string DescriptorType => Name;
