@@ -4,7 +4,7 @@ using SolidOps.Burgr.Core.Generators;
 using SolidOps.Burgr.Core.Outputs;
 using SolidOps.Burgr.Core.Template;
 
-namespace SolidOps.Burgr
+namespace SolidOps.Burgr.Core
 {
     public class OutputGenerator
     {

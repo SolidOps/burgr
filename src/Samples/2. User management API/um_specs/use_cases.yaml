@@ -1,0 +1,108 @@
+burgr-model-version: 1.0.0
+
+use_cases:
+  # ---- #
+  authentication:
+    is_anonymous: true
+    steps:
+      login:
+        create_component: true
+        inputs:
+          request: login_request
+      
+      set_initial_password:
+        inputs:
+          email:
+          password:
+      
+      need_initial_password:
+        result: bool
+        inputs:
+          email:
+    dependencies:
+      user:
+      local_user:
+
+  # ---- #
+  invites:
+    is_anonymous: true
+    steps:
+      check_invite:
+        result: invite_result
+        inputs:
+          invite_id: guid
+      use_invite:
+        inputs:
+          invite_id: guid
+          password:
+    dependencies:
+      invite:
+
+  # ---- #
+  self_user_creation:
+    is_anonymous: true
+    steps:
+      create_user:
+        result: identity
+        inputs:
+          request: self_user_creation_request
+    dependencies:
+      user:
+      local_user:
+
+  # ---- #
+  server_status:
+    is_anonymous: true
+    steps:
+      need_tech_user_password_update:
+        result: bool
+        inputs:
+          tech_user:
+    dependencies:
+      local_user:
+      user:
+  
+  # ---- #
+  token_validation:
+    steps:
+      validate:
+        result: string
+
+  # ---- #
+  user_creation:
+    steps:
+      create_user:
+        result: identity
+        mandatory_right: CreateUser
+        inputs:
+          user_creation_info: user_creation_info
+    dependencies:
+      local_user:
+      user:
+
+transients:
+  # ---- #
+  invite_result:
+    properties:
+      email:
+      creator:
+      message:
+
+  # ---- #
+  login_request:
+    properties:
+      login:
+      password:
+
+  # ---- #
+  self_user_creation_request:
+    properties:
+      email:
+      password:
+      
+  # ---- #
+  user_creation_info:
+    properties:
+      user_email:
+      password:
+      rights: user_right[]

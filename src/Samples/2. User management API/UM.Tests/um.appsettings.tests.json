@@ -1,0 +1,9 @@
+{
+    "Burgr": {
+        "Databases": {
+            "Main": {
+                "ConnectionString": "DataSource=%TEMP%\\UM_TESTS.db;Pooling=false"
+            }
+        }
+    }
+}

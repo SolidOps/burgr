@@ -7,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace SolidOps.Burgr
+namespace SolidOps.Burgr.Core
 {
     public static class BurgrLauncher
     {
@@ -37,6 +37,13 @@ namespace SolidOps.Burgr
 
             string[] templates;
             string[] generatorTypeNames;
+
+            string workingFolder = "";
+
+            if (args.Length == 1 && !args[0].StartsWith("{"))
+            {
+                Environment.CurrentDirectory = args[0];
+            }
 
             string jsonFileContent = null;
             if (args.Length == 1 && !args[0].StartsWith("/") && args[0].StartsWith("{"))

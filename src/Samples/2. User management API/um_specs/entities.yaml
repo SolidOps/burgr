@@ -1,0 +1,18 @@
+burgr-model-version: 1.0.0
+
+entities:
+  # ---- #
+  right:
+    properties:
+      name:
+        field_size: 50
+        is_unique: true
+
+  # ---- #
+  user_right:
+    properties:
+      user: user
+      right: right
+
+
+    

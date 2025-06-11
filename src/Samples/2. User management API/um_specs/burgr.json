@@ -1,0 +1,26 @@
+﻿{
+    "ModuleName": "UM",
+    "NamespaceName": "SolidOps",
+    "ModelParserEngineType": "SolidOps.Burgr.Essential.Yaml.ModelParserEngine, SolidOps.Burgr.Essential",
+    "TemplateParserEngineType": "SolidOps.Burgr.Essential.Yaml.TemplateParserEngine, SolidOps.Burgr.Essential",
+    "BuildingDirectory": "../",
+    "ModelSpecDirectory": "",
+    "BinaryDirectories": [],
+    "TemplateSpecDirectory": "../um_templates",
+    "ModelMonitored": false,
+    "Templates": [
+        "Contracts",
+        "Domain",
+        "Application",
+        "Infrastructure",
+        "EF",
+        "Presentation",
+        "Tests"
+    ],
+    "Generators": [
+        "SolidOps.Burgr.Essential.Generators.Enums.EnumGenerator, SolidOps.Burgr.Essential",
+        "SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential",
+        "SolidOps.Burgr.Essential.Generators.UseCases.UseCaseGenerator, SolidOps.Burgr.Essential",
+        "SolidOps.Burgr.Essential.Generators.Rights.RightGenerator, SolidOps.Burgr.Essential"
+    ]
+}

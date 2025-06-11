@@ -1,0 +1,28 @@
+source_templates:
+  repository:
+    source: Repository.cs.tpl
+    file_suffix: Repository.cs
+    destination_suffix: Infrastructure
+    force_separate_dll: false
+    options:
+      model_prefix: .Domain._DOMAINTYPE_.
+      model_suffix: ''
+    destination_language: CS
+  registrar:
+    source: Registrar.cs.tpl
+    file_suffix: Registrar.cs
+    destination_suffix: Infrastructure
+    force_separate_dll: false
+    options:
+      model_prefix: .Domain._DOMAINTYPE_.
+      model_suffix: ''
+    destination_language: CS
+  ef:
+    source: EF.cs.tpl
+    file_suffix: EF.cs
+    destination_suffix: Infrastructure
+    force_separate_dll: false
+    options:
+      model_prefix: .Domain._DOMAINTYPE_.
+      model_suffix: ''
+    destination_language: CS

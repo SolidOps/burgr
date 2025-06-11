@@ -1,0 +1,57 @@
+{
+    "AllowedHosts": "*",
+    "Jwt": {
+        "Key": "isitagameorisitrealisitagameorisitrealisitagameorisitrealisitagameorisitrealisitagameorisitrealisitagameorisitreal"
+    },
+    "Serilog": {
+        "Enrich": [ "FromLogContext" ],
+        "WriteTo": [
+            {
+                "Name": "File",
+                "Args": {
+                    "path": "logs/um-api.log",
+                    "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}",
+                    "rollingInterval": "Day"
+                }
+            },
+            {
+                "Name": "Console",
+                "Args": {
+                    "outputTemplate": "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] ({SourceContext}) {Message:lj}{NewLine}{Exception}"
+                }
+            }
+        ],
+        "MinimumLevel": {
+            "Default": "Information",
+            "Override": {
+                "Microsoft": "Warning",
+                "System": "Warning"
+            }
+        }
+    },
+    "Burgr": {
+        "Origins": "http://localhost:4201|http://localhost:4202",
+        "Databases": {
+            "Main": {
+                "ConnectionString": "DataSource=%TEMP%\\UM_API.db;Pooling=false"
+            }
+        },
+        "DataAccessFactories": {
+            "UMModule": {
+                "DataAccessFactory": "SolidOps.UM.Infrastructure.EF.UMEFDataAccessFactory, SolidOps.UM"
+            }
+        },
+        "SendErrorToClient": true,
+        "EnableSelfUserCreation": true,
+        "Endpoints": {
+            "Skynet": "http://localhost:5000",
+            "UM": "http://localhost:5002",
+            "Catalog": "http://localhost:5004",
+            "CustomerAccount": "http://localhost:5006",
+            "OrderPreparation": "http://localhost:5008",
+            "Reference": "http://localhost:5010",
+            "Stain": "http://localhost:5005"
+        },
+        "EnableSwagger": true
+    }
+}

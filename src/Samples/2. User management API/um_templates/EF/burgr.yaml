@@ -1,0 +1,19 @@
+source_templates:
+  entity:
+    source: Entity.cs.tpl
+    file_suffix: EFEntity.cs
+    destination_suffix: Domain|EF
+    force_separate_dll: false
+    destination_language: CS
+  ef:
+    source: EF.cs.tpl
+    file_suffix: EF.cs
+    destination_suffix: Infrastructure|EF
+    force_separate_dll: false
+    destination_language: CS
+  repository:
+    source: Repository.cs.tpl
+    file_suffix: EFRepository.cs
+    destination_suffix: Infrastructure|EF
+    force_separate_dll: false
+    destination_language: CS

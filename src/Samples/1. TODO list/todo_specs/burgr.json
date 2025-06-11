@@ -1,0 +1,24 @@
+﻿{
+    "ModuleName": "TODO",
+    "NamespaceName": "SolidOps",
+    "ModelParserEngineType": "SolidOps.Burgr.Essential.Yaml.ModelParserEngine, SolidOps.Burgr.Essential",
+    "TemplateParserEngineType": "SolidOps.Burgr.Essential.Yaml.TemplateParserEngine, SolidOps.Burgr.Essential",
+    "BuildingDirectory": "../src/",
+    "ModelSpecDirectory": "",
+    "BinaryDirectories": [],
+    "TemplateSpecDirectory": "../todo_templates",
+    "ModelMonitored": false,
+    "Templates": [
+        "Contracts",
+        "Domain",
+        "Infrastructure",
+        "Application",
+        "Presentation"
+    ],
+    "Generators": [
+        "SolidOps.Burgr.Essential.Generators.Enums.EnumGenerator, SolidOps.Burgr.Essential",
+        "SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential",
+        "SolidOps.Burgr.Essential.Generators.UseCases.UseCaseGenerator, SolidOps.Burgr.Essential",
+        "SolidOps.Burgr.Essential.Generators.Rights.RightGenerator, SolidOps.Burgr.Essential"
+    ]
+}

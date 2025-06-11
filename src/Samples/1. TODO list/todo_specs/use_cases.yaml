@@ -1,0 +1,32 @@
+burgr-model-version: 1.0.0
+
+use_cases:
+
+  add_item:
+    is_anonymous: true
+    steps:
+      execute:
+        inputs:
+          item: item
+    dependencies:
+      item:
+
+  update_item:
+    is_anonymous: true
+    steps:
+      execute:
+        inputs:
+          id:
+          name:
+          status:
+          due_date: datetime
+    dependencies:
+      item:
+
+  get_items:
+    is_anonymous: true
+    steps:
+      execute:
+        result: item[]
+    dependencies:
+      item:
