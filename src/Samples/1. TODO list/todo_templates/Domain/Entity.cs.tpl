@@ -261,7 +261,7 @@ namespace MetaCorp.Template.Domain._DOMAINTYPE_
 
         #endregion
 
-        #region Methods
+        #region Steps
 
         public IOpsResult Validate(ValidationStep validationStep, IUnitOfWork unitOfWork)
         {

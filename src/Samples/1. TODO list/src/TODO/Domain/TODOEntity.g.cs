@@ -66,7 +66,7 @@ namespace SolidOps.TODO.Domain.AggregateRoots
         public SolidOps.TODO.Contracts.Enums.ItemStatusEnum Status { get; set; }
 
         #endregion
-        #region Methods
+        #region Steps
         public IOpsResult Validate(ValidationStep validationStep, IUnitOfWork unitOfWork)
         {
             // Property 

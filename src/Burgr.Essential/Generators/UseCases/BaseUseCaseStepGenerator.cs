@@ -45,29 +45,29 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
 
     protected string GetMandatoryRight(ModelDescriptor model)
     {
-        ModelDescriptor method = model;
-        ModelDescriptor service = model.Parent;
+        ModelDescriptor step = model;
+        ModelDescriptor useCase = model.Parent;
 
-        if(method.Get("MethodMandatoryRight") != null)
+        if(step.Get("StepMandatoryRight") != null)
         {
-            return method.Get("MethodMandatoryRight");
+            return step.Get("StepMandatoryRight");
         }
-        return service.Get("MandatoryRight");
+        return useCase.Get("MandatoryRight");
     }
 
     protected string GetOwnershipOverrideRight(ModelDescriptor model)
     {
-        ModelDescriptor method = model;
-        ModelDescriptor service = model.Parent;
+        ModelDescriptor step = model;
+        ModelDescriptor useCase = model.Parent;
 
-        if (method.Get("MethodOwnershipOverrideRight") != null)
+        if (step.Get("StepOwnershipOverrideRight") != null)
         {
-            return method.Get("MethodOwnershipOverrideRight");
+            return step.Get("StepOwnershipOverrideRight");
         }
-        return service.Get("OwnershipOverrideRight");
+        return useCase.Get("OwnershipOverrideRight");
     }
 
-    protected string ReplaceParameters(ModelDescriptor service, IConversionService conversionService, ModelDescriptor method, string initialText, string modelPrefix, string modelSuffix, out bool hasPost)
+    protected string ReplaceParameters(ModelDescriptor service, IConversionService conversionService, ModelDescriptor step, string initialText, string modelPrefix, string modelSuffix, out bool hasPost)
     {
         StringBuilder parameterDefinition = new();
         StringBuilder parameters = new();
@@ -77,7 +77,7 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
         StringBuilder parameterDefRef = new();
         StringBuilder parameterDefApi = new();
         StringBuilder parameterJson = new();
-        parameterJson.Append("json " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + "Input as \"Input\" { \n");
+        parameterJson.Append("json " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(step.Name) + "Input as \"Input\" { \n");
         string parameterImports = "";
         string parameterdata = "default";
         var language = conversionService.Language;
@@ -90,7 +90,7 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
         hasPost = false;
         int fromBodyCount = 0;
         string singleBodyParameterType = string.Empty;
-        foreach (ModelDescriptor parameterInfo in method.GetChildren(DescriptorTypes.USECASE_STEP_PARAMETER_DESCRIPTOR))
+        foreach (ModelDescriptor parameterInfo in step.GetChildren(DescriptorTypes.USECASE_STEP_PARAMETER_DESCRIPTOR))
         {
             if (parameterInfo.Get("SimpleType") != null || parameterInfo.Is("Enum"))
             {
@@ -142,7 +142,7 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
                 fromBodyCount++;
                 if (fromBodyCount > 1)
                 {
-                    throw new Exception(string.Format("object parameter limited to only one: {0} {1}", service.Name, method.Name));
+                    throw new Exception(string.Format("object parameter limited to only one: {0} {1}", service.Name, step.Name));
                 }
 
                 if (parameterDefinition.Length > 0)
@@ -167,7 +167,7 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
                 else
                 {
                     _ = parameterDefinition.AppendFormat("{0} {1}", conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false, true), ConversionHelper.ConvertToCamelCase(parameterInfo.Name));
-                    _ = method.Get("ReturnType") == ReturnType.Void.ToString() || method.Get("ReturnType") == ReturnType.Identity.ToString() || method.Is("ForcePost")
+                    _ = step.Get("ReturnType") == ReturnType.Void.ToString() || step.Get("ReturnType") == ReturnType.Identity.ToString() || step.Is("ForcePost")
                         ? parameterDefApi.AppendFormat("[FromBody] {0} {1}", conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false, true), ConversionHelper.ConvertToCamelCase(parameterInfo.Name))
                         : parameterDefApi.AppendFormat("[FromQuery] {0} {1}", conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false, true), ConversionHelper.ConvertToCamelCase(parameterInfo.Name));
                     _ = parameterDefRef.AppendFormat("ref {0} {1}", conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false, true), ConversionHelper.ConvertToCamelCase(parameterInfo.Name));
@@ -199,18 +199,18 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
         }
 
         _ = parameterJson.Append("\n}\n");
-        parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + " <.down. " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + "Input\n");
+        parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(step.Name) + " <.down. " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(step.Name) + "Input\n");
         if (fromBodyCount > 0)
         {
             parameterJson = new StringBuilder();
-            parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + " <.down. " + singleBodyParameterType + "\n");
+            parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(step.Name) + " <.down. " + singleBodyParameterType + "\n");
         }
 
         initialText = initialText.Replace("PARAMETER_DEFINITION", parameterDefinition.ToString());
         initialText = initialText.Replace("PARAMETER_INTERNAL_DEFINITION", parameterDefinition.ToString());
         initialText = initialText.Replace("CONVERTED_PARAMETERS", convertedParameters.ToString());
         initialText = initialText.Replace("PARAMETERS", parameters.ToString());
-        if (method.GetChildren(DescriptorTypes.USECASE_STEP_PARAMETER_DESCRIPTOR).Any())
+        if (step.GetChildren(DescriptorTypes.USECASE_STEP_PARAMETER_DESCRIPTOR).Any())
         {
             initialText = initialText.Replace("PARAMETER_JSON", parameterJson.ToString());
         }

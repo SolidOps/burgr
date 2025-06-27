@@ -100,7 +100,7 @@ public partial class TemplateConsoleSession
                 Console.WriteLine("_DOVOIDACTION_ for USECASENAME use case called");
                 var useCase = serviceProvider.GetRequiredService<IUSECASENAMEUseCase>();
 
-                #region foreach SERVICE_METHOD_PARAMETER[S]
+                #region foreach USECASE_STEP_PARAMETER[S]
                 Console.WriteLine("_PARAMETER_:");
                 var _PARAMETER_Result = DisplayConverter.ConvertTo_SHORTPARAMTYPE_(Console.ReadLine());
                 if(_PARAMETER_Result.HasError)
@@ -109,9 +109,9 @@ public partial class TemplateConsoleSession
                     return;
                 }
                 var _PARAMETER_ = _PARAMETER_Result.Data;
-                #endregion foreach SERVICE_METHOD_PARAMETER
+                #endregion foreach USECASE_STEP_PARAMETER
             
-                #region foreach SERVICE_METHOD_PARAMETER[M]
+                #region foreach USECASE_STEP_PARAMETER[M]
                 Console.WriteLine("_PARAMETER_:");
                 var _PARAMETER_Result = _SHORTPARAMTYPE_ConsoleReader.ReadFromInput();
                 if(_PARAMETER_Result.HasError)
@@ -120,7 +120,7 @@ public partial class TemplateConsoleSession
                     return;
                 }
                 var _PARAMETER_ = _PARAMETER_Result.Data;
-                #endregion foreach SERVICE_METHOD_PARAMETER
+                #endregion foreach USECASE_STEP_PARAMETER
             
                 var result = await useCase._DOVOIDACTION_(/*PARAMETERS*/);
                 if (result.HasError)
@@ -139,7 +139,7 @@ public partial class TemplateConsoleSession
                 Console.WriteLine("_DOIDENTITYACTION_ for USECASENAME use case called");
                 var useCase = serviceProvider.GetRequiredService<IUSECASENAMEUseCase>();
             
-                #region foreach SERVICE_METHOD_PARAMETER[S]
+                #region foreach USECASE_STEP_PARAMETER[S]
                 Console.WriteLine("_PARAMETER_:");
                  var _PARAMETER_Result = DisplayConverter.ConvertTo_SHORTPARAMTYPE_(Console.ReadLine());
                 if(_PARAMETER_Result.HasError)
@@ -148,9 +148,9 @@ public partial class TemplateConsoleSession
                     return;
                 }
                 var _PARAMETER_ = _PARAMETER_Result.Data;
-                #endregion foreach SERVICE_METHOD_PARAMETER
+                #endregion foreach USECASE_STEP_PARAMETER
             
-                #region foreach SERVICE_METHOD_PARAMETER[M]
+                #region foreach USECASE_STEP_PARAMETER[M]
                 Console.WriteLine("_PARAMETER_:");
                 var _PARAMETER_Result = _SHORTPARAMTYPE_ConsoleReader.ReadFromInput();
                 if(_PARAMETER_Result.HasError)
@@ -159,7 +159,7 @@ public partial class TemplateConsoleSession
                     return;
                 }
                 var _PARAMETER_ = _PARAMETER_Result.Data;
-                #endregion foreach SERVICE_METHOD_PARAMETER
+                #endregion foreach USECASE_STEP_PARAMETER
             
                 var result = await useCase._DOIDENTITYACTION_(/*PARAMETERS*/);
                 if (result.HasError)
@@ -178,7 +178,7 @@ public partial class TemplateConsoleSession
                 Console.WriteLine("_DOSIMPLEACTION_ for USECASENAME use case called");
                 var useCase = serviceProvider.GetRequiredService<IUSECASENAMEUseCase>();
             
-                #region foreach SERVICE_METHOD_PARAMETER[S]
+                #region foreach USECASE_STEP_PARAMETER[S]
                 Console.WriteLine("_PARAMETER_:");
                  var _PARAMETER_Result = DisplayConverter.ConvertTo_SHORTPARAMTYPE_(Console.ReadLine());
                 if(_PARAMETER_Result.HasError)
@@ -187,9 +187,9 @@ public partial class TemplateConsoleSession
                     return;
                 }
                 var _PARAMETER_ = _PARAMETER_Result.Data;
-                #endregion foreach SERVICE_METHOD_PARAMETER
+                #endregion foreach USECASE_STEP_PARAMETER
             
-                #region foreach SERVICE_METHOD_PARAMETER[M]
+                #region foreach USECASE_STEP_PARAMETER[M]
                 Console.WriteLine("_PARAMETER_:");
                 var _PARAMETER_Result = _SHORTPARAMTYPE_ConsoleReader.ReadFromInput();
                 if(_PARAMETER_Result.HasError)
@@ -198,7 +198,7 @@ public partial class TemplateConsoleSession
                     return;
                 }
                 var _PARAMETER_ = _PARAMETER_Result.Data;
-                #endregion foreach SERVICE_METHOD_PARAMETER
+                #endregion foreach USECASE_STEP_PARAMETER
             
                 var result = await useCase._DOSIMPLEACTION_(/*PARAMETERS*/);
                 if (result.HasError)
@@ -217,7 +217,7 @@ public partial class TemplateConsoleSession
                 Console.WriteLine("_DOMODELACTION_ for USECASENAME use case called");
                 var useCase = serviceProvider.GetRequiredService<IUSECASENAMEUseCase>();
             
-                #region foreach SERVICE_METHOD_PARAMETER[S]
+                #region foreach USECASE_STEP_PARAMETER[S]
                 Console.WriteLine("_PARAMETER_:");
                 var _PARAMETER_Result = DisplayConverter.ConvertTo_SHORTPARAMTYPE_(Console.ReadLine());
                 if(_PARAMETER_Result.HasError)
@@ -226,9 +226,9 @@ public partial class TemplateConsoleSession
                     return;
                 }
                 var _PARAMETER_ = _PARAMETER_Result.Data;
-                #endregion foreach SERVICE_METHOD_PARAMETER
+                #endregion foreach USECASE_STEP_PARAMETER
             
-                #region foreach SERVICE_METHOD_PARAMETER[M]
+                #region foreach USECASE_STEP_PARAMETER[M]
                 Console.WriteLine("_PARAMETER_:");
                 var _PARAMETER_Result = _SHORTPARAMTYPE_ConsoleReader.ReadFromInput();
                 if(_PARAMETER_Result.HasError)
@@ -237,7 +237,7 @@ public partial class TemplateConsoleSession
                     return;
                 }
                 var _PARAMETER_ = _PARAMETER_Result.Data;
-                #endregion foreach SERVICE_METHOD_PARAMETER
+                #endregion foreach USECASE_STEP_PARAMETER
             
                 var result = await useCase._DOMODELACTION_(/*PARAMETERS*/);
                 if (result.HasError)
@@ -256,7 +256,7 @@ public partial class TemplateConsoleSession
                 Console.WriteLine("_DOMODELLISTACTION_ for USECASENAME use case called");
                 var useCase = serviceProvider.GetRequiredService<IUSECASENAMEUseCase>();
             
-                #region foreach SERVICE_METHOD_PARAMETER[S]
+                #region foreach USECASE_STEP_PARAMETER[S]
                 Console.WriteLine("_PARAMETER_:");
                  var _PARAMETER_Result = DisplayConverter.ConvertTo_SHORTPARAMTYPE_(Console.ReadLine());
                 if(_PARAMETER_Result.HasError)
@@ -265,9 +265,9 @@ public partial class TemplateConsoleSession
                     return;
                 }
                 var _PARAMETER_ = _PARAMETER_Result.Data;
-                #endregion foreach SERVICE_METHOD_PARAMETER
+                #endregion foreach USECASE_STEP_PARAMETER
             
-                #region foreach SERVICE_METHOD_PARAMETER[M]
+                #region foreach USECASE_STEP_PARAMETER[M]
                 Console.WriteLine("_PARAMETER_:");
                 var _PARAMETER_Result = _SHORTPARAMTYPE_ConsoleReader.ReadFromInput();
                 if(_PARAMETER_Result.HasError)
@@ -276,7 +276,7 @@ public partial class TemplateConsoleSession
                     return;
                 }
                 var _PARAMETER_ = _PARAMETER_Result.Data;
-                #endregion foreach SERVICE_METHOD_PARAMETER
+                #endregion foreach USECASE_STEP_PARAMETER
             
                 var result = await useCase._DOMODELLISTACTION_(/*PARAMETERS*/);
                 if (result.HasError)

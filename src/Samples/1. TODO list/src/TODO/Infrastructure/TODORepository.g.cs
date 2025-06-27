@@ -76,6 +76,19 @@ public abstract partial class BaseItemRepository
         unitOfWork.Complete();
         return entity;
     }
+    public async Task<Domain.AggregateRoots.Item> GetSingleByIdInJustAdded(Guid id)
+    {
+        using var unitOfWork = userContext.StartUnitOfWork(UnitOfWorkType.Read);
+
+        var entity = DbContext.ChangeTracker.Entries()
+        .Where(x => x.State == EntityState.Added && x.Entity is Domain.AggregateRoots.Item)
+        .Select(x => x.Entity as Domain.AggregateRoots.Item)
+        .Where(u => u.Id.Equals(id))
+        .SingleOrDefault();
+
+        unitOfWork.Complete();
+        return entity;
+    }
     public async Task<Domain.AggregateRoots.Item> GetSingleByComposedId(string composedId, string includes = null)
     {
         using var unitOfWork = userContext.StartUnitOfWork(UnitOfWorkType.Read);

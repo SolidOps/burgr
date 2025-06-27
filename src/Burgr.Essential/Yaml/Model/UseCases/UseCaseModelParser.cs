@@ -95,11 +95,11 @@ public class UseCaseModelParser : BaseYamlModelParser, IModelParser
         modelDescriptor.Set("Internal", useCase.is_internal.ToString());
         modelDescriptor.Set("ImplementsInterfaces", useCase.implements_interfaces);
 
-        foreach (var kvpMethod in useCase.steps)
+        foreach (var kvpStep in useCase.steps)
         {
-            step method = kvpMethod.Value ?? new step();
+            step step = kvpStep.Value ?? new step();
 
-            ReturnType returnType = GetReturnType(method.result, moduleName);
+            ReturnType returnType = GetReturnType(step.result, moduleName);
 
             string descriptorType = returnType switch
             {
@@ -110,7 +110,7 @@ public class UseCaseModelParser : BaseYamlModelParser, IModelParser
                 ReturnType.Identity => IdentityUseCaseStepGenerator.Name,
                 _ => throw new NotImplementedException("Unimplemented return type"),
             };
-            ModelDescriptor modelServiceMethod = new(kvpMethod.Key, descriptorType)
+            ModelDescriptor modelServiceMethod = new(kvpStep.Key, descriptorType)
             {
                 NamespaceName = namespaceName,
                 ModuleName = moduleName
@@ -118,7 +118,7 @@ public class UseCaseModelParser : BaseYamlModelParser, IModelParser
 
             if (returnType != ReturnType.Void)
             {
-                var typeInfo = new TypeInfo(method.result, moduleName);
+                var typeInfo = new TypeInfo(step.result, moduleName);
 
                 if (typeInfo.IsEnum)
                 {
@@ -143,15 +143,15 @@ public class UseCaseModelParser : BaseYamlModelParser, IModelParser
                 }
             }
 
-            if (method.result == "System.IO.Stream")
+            if (step.result == "System.IO.Stream")
             {
                 modelDescriptor.Set("UseStreaming", "true");
             }
 
-            modelServiceMethod.Set("NoTransaction", method.no_transaction.ToString());
+            modelServiceMethod.Set("NoTransaction", step.no_transaction.ToString());
 
-            modelServiceMethod.Set("MethodMandatoryRight", method.mandatory_right);
-            modelServiceMethod.Set("OwnershipOverrideRight", method.ownership_override_right);
+            modelServiceMethod.Set("StepMandatoryRight", step.mandatory_right);
+            modelServiceMethod.Set("OwnershipOverrideRight", step.ownership_override_right);
 
             if (returnType == ReturnType.Identity)
             {
@@ -160,9 +160,9 @@ public class UseCaseModelParser : BaseYamlModelParser, IModelParser
 
             modelServiceMethod.Set("ReturnType", returnType.ToString());
 
-            modelServiceMethod.Set("ForcePost", method.force_post.ToString());
+            modelServiceMethod.Set("ForcePost", step.force_post.ToString());
 
-            modelServiceMethod.Set("Component", method.create_component.ToString());
+            modelServiceMethod.Set("Component", step.create_component.ToString());
 
             if (modelDescriptor.Is("CreateRestServices"))
             {
@@ -174,13 +174,13 @@ public class UseCaseModelParser : BaseYamlModelParser, IModelParser
             }
             modelDescriptor.AddChild(modelServiceMethod);
 
-            if (method.inputs != null)
+            if (step.inputs != null)
             {
-                foreach (var kvpInput in method.inputs)
+                foreach (var kvpInput in step.inputs)
                 {
                     if (kvpInput.Key.ToLower() != kvpInput.Key)
                     {
-                        throw new Exception($"use case parameter method name must be in lower case : {kvpInput.Key} of {kvpMethod.Key} of {name}");
+                        throw new Exception($"use case parameter step name must be in lower case : {kvpInput.Key} of {kvpStep.Key} of {name}");
                     }
 
                     ModelDescriptor modelServiceMethodParameter = new(kvpInput.Key, DescriptorTypes.USECASE_STEP_PARAMETER_DESCRIPTOR)
@@ -225,7 +225,7 @@ public class UseCaseModelParser : BaseYamlModelParser, IModelParser
                 }
             }
 
-            if (method.create_component)
+            if (step.create_component)
             {
                 var result = modelServiceMethod.GetRelated("Object");
                 if (result != null)

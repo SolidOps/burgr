@@ -96,7 +96,7 @@ public class ParameterGenerator : BaseBurgrGenerator, IGenerator
 
 public class ParameterTemplateParser : ITemplateParser
 {
-    public string LoopIdentifier => "foreach SERVICE_METHOD_PARAMETER";
+    public string LoopIdentifier => "foreach USECASE_STEP_PARAMETER";
     public List<string> AdditionalLoopIdentifiers => new List<string>();
 
     public List<TemplateOption> Options { get; } = new List<TemplateOption>();

@@ -165,7 +165,11 @@ namespace MetaCorp.Template.Domain._DOMAINTYPE_.Rules
                 var result = await repo.GetSingleById(entity._PROPERTYNAME_Id, null);
                 if (result == null)
                 {
-                    return IOpsResult.Invalid("_PROPERTYNAME_", "_PROPERTYNAME_ does not exists");
+                    result = await repo.GetSingleByIdInJustAdded(entity._PROPERTYNAME_Id);
+                    if (result == null)
+                    {
+                        return IOpsResult.Invalid("_PROPERTYNAME_", "_PROPERTYNAME_ does not exists");
+                    }
                 }
             }
             #endregion foreach PROPERTY

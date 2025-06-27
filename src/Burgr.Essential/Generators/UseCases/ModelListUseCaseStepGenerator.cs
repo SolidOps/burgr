@@ -15,9 +15,9 @@ public class ModelListUseCaseStepGenerator : BaseUseCaseStepGenerator, IGenerato
         TemplateParser = new ModelListMethodTemplateParser();
     }
 
-    protected override string CheckIfApply(ModelDescriptor method, TemplateDescriptor template)
+    protected override string CheckIfApply(ModelDescriptor step, TemplateDescriptor template)
     {
-        return method.Get("ReturnType") != ReturnType.ModelList.ToString() ? "use case step is not model list" : null;
+        return step.Get("ReturnType") != ReturnType.ModelList.ToString() ? "use case step is not model list" : null;
     }
 
     public override string Generate(string content, ModelDescriptor model, TemplateDescriptor template, string modelPrefix, string modelSuffix)

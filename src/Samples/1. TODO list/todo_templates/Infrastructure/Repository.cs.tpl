@@ -98,6 +98,19 @@ public abstract partial class BaseCLASSNAMERepository
         unitOfWork.Complete();
         return entity;
     }
+    public async Task<Domain._DOMAINTYPE_.CLASSNAME> GetSingleByIdInJustAdded(_IDENTITY_KEY_TYPE_ id)
+    {
+        using var unitOfWork = userContext.StartUnitOfWork(UnitOfWorkType.Read);
+        
+        var entity = DbContext.ChangeTracker.Entries()
+        .Where(x => x.State == EntityState.Added && x.Entity is Domain._DOMAINTYPE_.CLASSNAME)
+        .Select(x => x.Entity as Domain._DOMAINTYPE_.CLASSNAME)
+        .Where(u => u.Id.Equals(id))
+        .SingleOrDefault();
+        
+        unitOfWork.Complete();
+        return entity;
+    }
     public async Task<Domain._DOMAINTYPE_.CLASSNAME> GetSingleByComposedId(string composedId, string includes = null)
     {
         using var unitOfWork = userContext.StartUnitOfWork(UnitOfWorkType.Read);

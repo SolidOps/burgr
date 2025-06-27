@@ -85,9 +85,9 @@ public partial class CLASSNAMEDTOMapper : IDTOMapper<Contracts.DTO.CLASSNAMEDTO,
         #region foreach PROPERTY[M][NO][NP][CA][PUO][EN][AG][TR][NAR]
         if (entity._PROPERTYNAME_ != null && !preventLazyLoading.Contains(parentPath + "_PROPERTYNAME_"))
         {
-            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id))
+            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id.ToString()))
             {
-                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
+                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id.ToString()] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
             }
             else
             {
@@ -114,9 +114,9 @@ public partial class CLASSNAMEDTOMapper : IDTOMapper<Contracts.DTO.CLASSNAMEDTO,
         // nullable entity and transient
         if (entity._PROPERTYNAME_ != null && !preventLazyLoading.Contains(parentPath + "_NULL__PROPERTYNAME_"))
         {
-            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id))
+            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id.ToString()))
             {
-                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
+                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id.ToString()] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
             }
             else
             {
@@ -147,9 +147,9 @@ public partial class CLASSNAMEDTOMapper : IDTOMapper<Contracts.DTO.CLASSNAMEDTO,
         #region foreach PROPERTY[R][NO][NP][CA][PUO]
         if (entity._REF__PROPERTYNAME_ != null && !preventLazyLoading.Contains(parentPath + "_REF__PROPERTYNAME_"))
         {
-            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id))
+            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id.ToString()))
             {
-                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
+                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id.ToString()] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
             }
             else
             {
@@ -161,9 +161,9 @@ public partial class CLASSNAMEDTOMapper : IDTOMapper<Contracts.DTO.CLASSNAMEDTO,
         #region foreach PROPERTY[R][N][NO][NP][CA][NA][PUO]
         if (entity._REF__PROPERTYNAME_ != null && !preventLazyLoading.Contains(parentPath + "_NULL__REF__PROPERTYNAME_"))
         {
-            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id))
+            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id.ToString()))
             {
-                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
+                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id.ToString()] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
             }
             else
             {
@@ -287,7 +287,7 @@ public partial class CLASSNAMEDTOMapper : IDTOMapper<Contracts.DTO.CLASSNAMEDTO,
         #endregion foreach PROPERTY
 
         #region foreach PROPERTY[M][CA][NAR]
-        if (entity._PROPERTYNAME_ != null && !preventLazyLoading.Contains(parentPath + "_PROPERTYNAME_") && !preventLazyLoading.Contains("_PROPERTYTYPE_|" + entity._PROPERTYNAME_.Id))
+        if (entity._PROPERTYNAME_ != null && !preventLazyLoading.Contains(parentPath + "_PROPERTYNAME_") && !preventLazyLoading.Contains("_PROPERTYTYPE_|" + entity._PROPERTYNAME_.Id.ToString()))
         {
             _ = new _PROPERTYTYPE_DTOMapper(serviceProvider).Convert(entity._PROPERTYNAME_, preventLazyLoading, parentPath + "_PROPERTYNAME_" + ".", references);
         }
@@ -308,9 +308,9 @@ public partial class CLASSNAMEDTOMapper : IDTOMapper<Contracts.DTO.CLASSNAMEDTO,
         #region foreach PROPERTY[M][NO][NP][CA][PUO][EN][AG][TR][NAR]
         if (entity._PROPERTYNAME_ != null && !preventLazyLoading.Contains(parentPath + "_PROPERTYNAME_"))
         {
-            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id))
+            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id.ToString()))
             {
-                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
+                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id.ToString()] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
             }
             else
             {
@@ -337,9 +337,9 @@ public partial class CLASSNAMEDTOMapper : IDTOMapper<Contracts.DTO.CLASSNAMEDTO,
         // nullable entity and transient
         if (entity._PROPERTYNAME_ != null && !preventLazyLoading.Contains(parentPath + "_NULL__PROPERTYNAME_"))
         {
-            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id))
+            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id.ToString()))
             {
-                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
+                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id.ToString()] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
             }
             else
             {
@@ -370,9 +370,9 @@ public partial class CLASSNAMEDTOMapper : IDTOMapper<Contracts.DTO.CLASSNAMEDTO,
         #region foreach PROPERTY[R][NO][NP][CA][PUO]
         if (entity._REF__PROPERTYNAME_ != null && !preventLazyLoading.Contains(parentPath + "_REF__PROPERTYNAME_"))
         {
-            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id))
+            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id.ToString()))
             {
-                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
+                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id.ToString()] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
             }
             else
             {
@@ -384,9 +384,9 @@ public partial class CLASSNAMEDTOMapper : IDTOMapper<Contracts.DTO.CLASSNAMEDTO,
         #region foreach PROPERTY[R][N][NO][NP][CA][NA][PUO]
         if (entity._REF__PROPERTYNAME_ != null && !preventLazyLoading.Contains(parentPath + "_NULL__REF__PROPERTYNAME_"))
         {
-            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id))
+            if (references.ContainsKey("_PROPERTYTYPE_") && references["_PROPERTYTYPE_"].ContainsKey(entity._PROPERTYNAME_.Id.ToString()))
             {
-                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
+                dto._PROPERTYNAME_ = references["_PROPERTYTYPE_"][entity._PROPERTYNAME_.Id.ToString()] as DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO;
             }
             else
             {
