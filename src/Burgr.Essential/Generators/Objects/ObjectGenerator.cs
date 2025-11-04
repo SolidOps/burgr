@@ -281,7 +281,8 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
         }
         else
         {
-            // do nothing for now
+            var includes = definition.Get("Includes") ?? string.Empty;
+            result = result.Replace("_INCLUDES_", includes);
         }
         return result;
     }

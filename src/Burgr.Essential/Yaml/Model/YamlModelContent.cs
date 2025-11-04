@@ -67,7 +67,7 @@ public class entity : base_object
 public class property
 {
     public string type { get; set; }
-    public int? max_size { get; set; }
+    public bool? is_max_size { get; set; }
     public int? field_size { get; set; }
     public bool is_unique { get; set; }
     public bool is_unique_case_sensitive { get; set; }
@@ -94,12 +94,11 @@ public class api_description
 
 public class component_description
 {
-
+    public string includes { get; set; }
 }
 
 public class view_description
 {
-
 }
 
 // service

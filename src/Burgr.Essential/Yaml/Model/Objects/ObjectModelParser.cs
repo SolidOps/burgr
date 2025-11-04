@@ -294,9 +294,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                         };
                         if (componentType != null)
                         {
-                            //componentDescriptor.Set("Anonymous", componentType.is_anonymous.ToString());
-                            //componentDescriptor.Set("MandatoryRight", componentType.mandatory_right);
-                            //componentDescriptor.Set("OwnershipOverrideRight", componentType.ownership_override_right);
+                            componentDescriptor.Set("Includes", kvp.Value.includes);
                         }
                         descriptor.AddChild(componentDescriptor);
                     }
@@ -332,9 +330,6 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                         };
                         if (viewType != null)
                         {
-                            //componentDescriptor.Set("Anonymous", componentType.is_anonymous.ToString());
-                            //componentDescriptor.Set("MandatoryRight", componentType.mandatory_right);
-                            //componentDescriptor.Set("OwnershipOverrideRight", componentType.ownership_override_right);
                         }
                         descriptor.AddChild(viewDescriptor);
                     }
@@ -599,7 +594,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                 bProp.Set("SimpleType", typeInfo.Name);
             }
             bProp.Set("FieldSize", property.field_size?.ToString());
-            bProp.Set("MaxSize", property.max_size?.ToString());
+            bProp.Set("MaxSize", property.is_max_size?.ToString());
             SetBasePropertyParameter(bProp, propName, property, objectName, baseObject, objectDescriptor);
             if (typeInfo.IsCalculated)
             {
