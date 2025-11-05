@@ -125,7 +125,7 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
             }
         }
 
-        // Resource Use Cases
+        // Resources
         List<ModelDescriptor> resourceDefinitions = model.GetChildren(DescriptorTypes.RESOURCE_DEFINITION_DESCRIPTOR);
         result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLower() == "query").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTGETBYQUERY);
         result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLower() == "get").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTGETBYID);
@@ -133,15 +133,15 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
         result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLower() == "update").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTUPDATE);
         result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLower() == "remove").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTREMOVE);
 
-        // Component Use Cases
+        // Components
         List<ModelDescriptor> componentDefinitions = model.GetChildren(DescriptorTypes.COMPONENT_DEFINITION_DESCRIPTOR);
         result = HandleComponent(result, componentDefinitions.Where(r => r.Name.ToLower() == "list").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTLISTCOMPONENT);
         result = HandleComponent(result, componentDefinitions.Where(r => r.Name.ToLower() == "details").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTDETAILSCOMPONENT);
 
-        // Component Use Cases
+        // Views
         List<ModelDescriptor> viewDefinitions = model.GetChildren(DescriptorTypes.VIEW_DEFINITION_DESCRIPTOR);
-        result = HandleView(result, viewDefinitions.Where(r => r.Name.ToLower() == "list").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTLISTVIEW);
-        result = HandleView(result, viewDefinitions.Where(r => r.Name.ToLower() == "details").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTDETAILSVIEW);
+        result = HandleView(result, viewDefinitions.Where(r => r.Name.ToLower() == "list").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTLISTVIEW, resourceDefinitions.Where(r => r.Name.ToLower() == "query").SingleOrDefault()?.Is("Anonymous"));
+        result = HandleView(result, viewDefinitions.Where(r => r.Name.ToLower() == "details").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTDETAILSVIEW, false);
 
         List<ModelDescriptor> eventDefinitions = model.GetChildren(DescriptorTypes.PRODUCED_EVENT_DESCRIPTOR);
         result = HandleEvent(result, eventDefinitions.Where(r => r.Name.ToLower() == "add").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOADDEVENT);
@@ -287,7 +287,7 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
         return result;
     }
 
-    private string HandleView(string result, ModelDescriptor definition, string identifier)
+    private string HandleView(string result, ModelDescriptor definition, string identifier, bool? isAnonymous)
     {
         if (definition == null)
         {
@@ -298,7 +298,7 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
         }
         else
         {
-            // do nothing for now
+            result = result.Replace("_HIDDEN_FUNC_RESULT_", isAnonymous ?? false ? "!this.isUserLogged" : "false");
         }
         return result;
     }
