@@ -298,7 +298,7 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
         }
         else
         {
-            result = result.Replace("_HIDDEN_FUNC_RESULT_", isAnonymous ?? false ? "!this.isUserLogged" : "false");
+            result = result.Replace("_HIDDEN_FUNC_RESULT_", isAnonymous ?? false ? "false" : "!this.isUserLogged");
         }
         return result;
     }
