@@ -66,7 +66,7 @@ public abstract class BaseConversionService : IConversionService
             Type simpleType = GetSimpleType(parameter.Get("SimpleType"));
             string simpleTypeName = simpleType.Name;
             string simpleFullName = simpleType.FullName;
-            return ConvertParameterType(simpleTypeName, simpleFullName, simpleType.IsEnum, parameter.NamespaceName, parameter.ModuleName, modelPrefix, modelSuffix, convertList, isInterface, fullName);
+            return ConvertParameterType(simpleTypeName, simpleFullName, simpleType.IsEnum, parameter.Is("Null"), parameter.NamespaceName, parameter.ModuleName, modelPrefix, modelSuffix, convertList, isInterface, fullName);
         }
 
         var related = parameter.GetRelated("Object");
@@ -88,14 +88,14 @@ public abstract class BaseConversionService : IConversionService
             relatedFullname += "[]";
         }
 
-        return ConvertParameterType(relatedName, relatedFullname, parameter.Is("Enum"), related.NamespaceName, related.ModuleName, modelPrefix, modelSuffix, convertList, isInterface, fullName);
+        return ConvertParameterType(relatedName, relatedFullname, parameter.Is("Enum"), parameter.Is("Null"), related.NamespaceName, related.ModuleName, modelPrefix, modelSuffix, convertList, isInterface, fullName);
     }
 
-    public virtual string ConvertParameterType(string typeName, string fullTypeName, bool isEnum, string namespaceName, string moduleName, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false)
+    public virtual string ConvertParameterType(string typeName, string fullTypeName, bool isEnum, bool isNull, string namespaceName, string moduleName, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false)
     {
         if (fullTypeName.StartsWith("System."))
         {
-            if (fullTypeName.StartsWith("System.Nullable"))
+            if (fullTypeName.StartsWith("System.Nullable") || isNull)
             {
                 return fullTypeName + "?";
             }

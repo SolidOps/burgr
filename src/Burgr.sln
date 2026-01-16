@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.32210.238
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11408.102 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Burgr", "Burgr\Burgr.csproj", "{86F7602C-D55B-81A7-8302-341F4445C32C}"
 EndProject
@@ -116,6 +116,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO.Shared", "Samples\1. TODO list\src\TODO.Shared\TODO.Shared.csproj", "{EB8FAD16-60A8-45C7-890F-F73181266B81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO.ConsoleApp", "Samples\1. TODO list\src\TODO.ConsoleApp\TODO.ConsoleApp.csproj", "{BB2A44CC-4D10-AA83-0DAC-E5EF5BB344FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7FA6F724-6389-4CB5-A9D3-C17D46DF919A}"
+	ProjectSection(SolutionItems) = preProject
+		makefile = makefile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

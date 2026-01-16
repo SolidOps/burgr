@@ -1,5 +1,11 @@
 MY_VAR := $(shell echo %date:~6,4%%date:~3,2%%date:~0,2%%time:~1,1%%time:~3,2%%time:~6,2%)
 
+list:
+	@echo set_hour
+	@echo install
+	@echo generate_um
+	@echo generate_todo
+
 set_hour:
 	set hour=%time:~0,2%
 	if "%hour:~0,1%" == " " set hour=0%hour:~1,1%

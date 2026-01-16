@@ -8,7 +8,7 @@ public class PUMLConversionService : BaseConversionService
     {
     }
 
-    public override string ConvertParameterType(string typeName, string fullTypeName, bool isEnum, string namespaceName, string moduleName, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false)
+    public override string ConvertParameterType(string typeName, string fullTypeName, bool isEnum, bool isNull, string namespaceName, string moduleName, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false)
     {
         if (fullTypeName.StartsWith("System."))
         {

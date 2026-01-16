@@ -9,7 +9,7 @@ public interface IConversionService
     string ConvertToLabel(string name);
     string ConvertParameterType(ModelDescriptor parameter, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false);
     string ConvertRelatedParameterType(ModelDescriptor parameter, ModelDescriptor related, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false);
-    string ConvertParameterType(string typeName, string fullTypeName, bool isEnum, string namespaceName, string moduleName, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false);
+    string ConvertParameterType(string typeName, string fullTypeName, bool isEnum, bool isNull, string namespaceName, string moduleName, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false);
     string ConvertParameterType(string typeName, string namespaceName, string moduleName, string modelPrefix, string modelSuffix, bool convertList, bool isInterface, bool fullName);
     string ConvertPropertyName(string propertyName);
 

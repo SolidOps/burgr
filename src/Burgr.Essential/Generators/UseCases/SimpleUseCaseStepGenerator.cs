@@ -42,7 +42,7 @@ public class SimpleUseCaseStepGenerator : BaseUseCaseStepGenerator, IGenerator
             typeName += "?";
             fullName += "?";
         }
-        result = result.Replace("_SIMPLE__TYPE_", conversionService.ConvertParameterType(typeName, fullName, resultType.IsEnum, step.NamespaceName, step.ModuleName, null, null));
+        result = result.Replace("_SIMPLE__TYPE_", conversionService.ConvertParameterType(typeName, fullName, resultType.IsEnum, false, step.NamespaceName, step.ModuleName, null, null));
         result = result.Replace("_DOSIMPLEACTION_", ConversionHelper.ConvertToPascalCase(step.Name));
         result = result.Replace("_DOSIMPLEACTIONURL_", TextHelper.GenerateSlug(step.Name));
 
