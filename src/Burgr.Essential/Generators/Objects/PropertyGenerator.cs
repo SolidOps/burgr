@@ -265,41 +265,27 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         }
         if (model.Get("PropertyType") == "ReferencedModel" && template.Is("ReferencedModel"))
         {
-            if (!model.Is("Null") && !model.Is("List") && !templateNullable)
+            if (model.Is("Null") || model.Is("List") && templateNullable)
             {
-                foreach (string suffix in KnownSuffixes)
-                {
-                    result = result.Replace("_PROPERTYFULLTYPE_" + suffix, model.GetPropertyType(conversionService, string.Empty, suffix, false));
-                    result = result.Replace("_PROPERTYFULLINTERFACE_" + suffix, model.GetPropertyType(conversionService, "I", suffix, true));
-                }
-                result = result.Replace("_PROPERTYTYPE_", model.GetPropertyType(conversionService, string.Empty, string.Empty, true));
-                result = result.Replace("_PROPERTYINTERFACE_", "I" + model.GetPropertyType(conversionService, string.Empty, string.Empty, true));
-
-                result = result.Replace(Tags.Namespace, conversionService.ConvertModuleName(model.GetRelated("Object").FullModuleName));
-                result = result.Replace("_COLUMNNAME_", model.Get("ColumnName"));
-                result = result.Replace("_ISLIST_", model.Is("List") ? "List" : string.Empty);
-                result = result.Replace("_ISQUERY_", model.Is("List") ? "Query" : "Get");
-                result = result.Replace("DEPENDENCYNAMESPACE", model.GetRelated("Object").FullModuleName);
-            }
-            if ((model.Is("Null") || model.Is("List")) && templateNullable)
-            {
-                foreach (string suffix in KnownSuffixes)
-                {
-                    result = result.Replace("_PROPERTYFULLTYPE_" + suffix, model.GetPropertyType(conversionService, string.Empty, suffix, false));
-                    result = result.Replace("_PROPERTYFULLINTERFACE_" + suffix, model.GetPropertyType(conversionService, "I", suffix, true));
-                }
-                result = result.Replace("_PROPERTYTYPE_", model.GetPropertyType(conversionService, string.Empty, string.Empty, true));
-                result = result.Replace("_PROPERTYINTERFACE_", "I" + model.GetPropertyType(conversionService, string.Empty, string.Empty, true));
-                result = result.Replace(Tags.Namespace, conversionService.ConvertModuleName(model.GetRelated("Object").FullModuleName));
-                result = result.Replace("_COLUMNNAME_", model.Get("ColumnName"));
-                result = result.Replace("_ISLIST_", model.Is("List") ? "List" : string.Empty);
-                result = result.Replace("_ISQUERY_", model.Is("List") ? "Query" : "Get");
                 result = result.Replace("_NULL_", "");
-                result = result.Replace("DEPENDENCYNAMESPACE", model.GetRelated("Object").FullModuleName);
             }
+
+            foreach (string suffix in KnownSuffixes)
+            {
+                result = result.Replace("_PROPERTYFULLTYPE_" + suffix, model.GetPropertyType(conversionService, string.Empty, suffix, false));
+                result = result.Replace("_PROPERTYFULLINTERFACE_" + suffix, model.GetPropertyType(conversionService, "I", suffix, true));
+            }
+            result = result.Replace("_PROPERTYTYPE_", ConversionHelper.ConvertToPascalCase(model.GetRelated("Object").Name));
+            result = result.Replace("_PROPERTYINTERFACE_", "I" + ConversionHelper.ConvertToPascalCase(model.GetRelated("Object").Name));
+
+            result = result.Replace(Tags.Namespace, conversionService.ConvertModuleName(model.GetRelated("Object").FullModuleName));
+
+            result = result.Replace("_COLUMNNAME_", model.Get("ColumnName"));
+            result = result.Replace("_ISLIST_", model.Is("List") ? "List" : string.Empty);
+            result = result.Replace("_ISQUERY_", model.Is("List") ? "Query" : "Get");
+            result = result.Replace("DEPENDENCYNAMESPACE", model.GetRelated("Object").FullModuleName);
 
             result = result.Replace("_REF_", "");
-            result = result.Replace("_FORLIST_", "");
         }
 
         if (result.Contains("_BACKLINK_"))
