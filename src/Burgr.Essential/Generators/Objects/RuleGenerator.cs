@@ -56,5 +56,6 @@ public class RuleTemplateParser : ITemplateParser
         Options.Add(new TemplateOption() { Name = "after_update", Tag = "[AU]" });
         Options.Add(new TemplateOption() { Name = "before_remove", Tag = "[BR]" });
         Options.Add(new TemplateOption() { Name = "after_remove", Tag = "[AR]" });
+        Options.Add(new TemplateOption() { Name = "after_mapping", Tag = "[AM]" });
     }
 }
