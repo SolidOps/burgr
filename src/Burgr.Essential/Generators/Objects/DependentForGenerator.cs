@@ -49,6 +49,7 @@ public class DependentForGenerator : BaseBurgrGenerator, IGenerator
         var related = model.GetRelated("Object");
         result = result.Replace("DEPENDENCYNAMESPACE", ConversionHelper.ConvertToPascalCase(related.FullModuleName));
         result = result.Replace("_PROPERTYFULLINTERFACE_", "I" + ConversionHelper.ConvertToPascalCase(related.Name));
+        result = result.Replace("_PROPERTYTYPE_", ConversionHelper.ConvertToPascalCase(related.Name));
         result = result.Replace("_PROPERTYNAME_", ConversionHelper.ConvertToPascalCase(model.Name));
 
 
