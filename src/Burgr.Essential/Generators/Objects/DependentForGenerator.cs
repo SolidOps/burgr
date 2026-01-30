@@ -50,6 +50,7 @@ public class DependentForGenerator : BaseBurgrGenerator, IGenerator
         result = result.Replace("DEPENDENCYNAMESPACE", ConversionHelper.ConvertToPascalCase(related.FullModuleName));
         result = result.Replace("_PROPERTYFULLINTERFACE_", "I" + ConversionHelper.ConvertToPascalCase(related.Name));
         result = result.Replace("_PROPERTYTYPE_", ConversionHelper.ConvertToPascalCase(related.Name));
+        result = result.Replace("_PROPERTYTYPES_", ConversionHelper.ConvertToPascalCase(related.PluralName));
         result = result.Replace("_PROPERTYNAME_", ConversionHelper.ConvertToPascalCase(model.Name));
 
 

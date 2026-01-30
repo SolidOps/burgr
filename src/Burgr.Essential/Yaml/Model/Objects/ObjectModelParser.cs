@@ -145,6 +145,16 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                 descriptor.Set("Interfaces", value.@interface);
             }
 
+            if (value.plural != null)
+            {
+                var parts = value.plural.Split("|");
+                descriptor.Set("Plural", parts[0]);
+                if(parts.Length > 1)
+                {
+                    descriptor.Set("PluralIndex", parts[1]);
+                }
+            }
+
             FullModelDescription modelDescription = GetModelDescription(namespaceName, moduleName);
 
             if (value.properties != null)

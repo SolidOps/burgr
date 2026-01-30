@@ -256,6 +256,7 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
                 result = result.Replace("_PROPERTYFULLINTERFACE_" + suffix, model.GetPropertyType(conversionService, "I", suffix, true));
             }
             result = result.Replace("_PROPERTYTYPE_", ConversionHelper.ConvertToPascalCase(model.GetRelated("Object").Name));
+            result = result.Replace("_PROPERTYTYPES_", ConversionHelper.ConvertToPascalCase(model.GetRelated("Object").PluralName));
             result = result.Replace("_PROPERTYINTERFACE_", "I" + ConversionHelper.ConvertToPascalCase(model.GetRelated("Object").Name));
 
             result = result.Replace("_COLUMNNAME_", model.Get("ColumnName"));
@@ -276,6 +277,7 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
                 result = result.Replace("_PROPERTYFULLINTERFACE_" + suffix, model.GetPropertyType(conversionService, "I", suffix, true));
             }
             result = result.Replace("_PROPERTYTYPE_", ConversionHelper.ConvertToPascalCase(model.GetRelated("Object").Name));
+            result = result.Replace("_PROPERTYTYPES_", ConversionHelper.ConvertToPascalCase(model.GetRelated("Object").PluralName));
             result = result.Replace("_PROPERTYINTERFACE_", "I" + ConversionHelper.ConvertToPascalCase(model.GetRelated("Object").Name));
 
             result = result.Replace(Tags.Namespace, conversionService.ConvertModuleName(model.GetRelated("Object").FullModuleName));
@@ -292,7 +294,7 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         {
             result = model.Get("SpecialType") == SpecialType.Navigation.ToString() && model.Get("BackLinkNavigation") != null
                 ? result.Replace("_BACKLINK_", ConversionHelper.ConvertToPascalCase(model.Get("BackLinkNavigation")))
-                : result.Replace("_BACKLINK_", "CLASSNAME");
+                : result.Replace("_BACKLINK_", "_CLASSNAME_");
         }
 
         if (result.Contains("_FROMLISTID_"))

@@ -26,5 +26,20 @@
         {
             return DescriptorType + ":" + Name;
         }
+
+        public string PluralName
+        {
+            get
+            {
+                string plural = Get("Plural") ?? "s";
+                string pluralIndexString = Get("PluralIndex");
+                int pluralIndex;
+                if (string.IsNullOrEmpty(pluralIndexString) || !int.TryParse(pluralIndexString, out pluralIndex))
+                {
+                    pluralIndex = 0;
+                }
+                return Name.Substring(0, Name.Length + pluralIndex) + plural;
+            }
+        }
     }
 }

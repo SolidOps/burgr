@@ -53,7 +53,10 @@ public class base_object
     public Dictionary<string, view_description> views { get; set; }
 
     public Dictionary<string, List<string>> rules { get; set; }
+
+    public string plural { get; set; }
 }
+
 public class aggregate_root : base_object
 {
 

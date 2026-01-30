@@ -148,8 +148,15 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
         result = HandleEvent(result, eventDefinitions.Where(r => r.Name.ToLower() == "update").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOUPDATEEVENT);
         result = HandleEvent(result, eventDefinitions.Where(r => r.Name.ToLower() == "remove").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOREMOVEEVENT);
 
+        result = result.Replace("Slug_CLASSNAME_", TextHelper.GenerateSlug(ConversionHelper.ConvertToPascalCase(model.Name)));
+        result = result.Replace("Slug_CLASSNAMES_", TextHelper.GenerateSlug(ConversionHelper.ConvertToPascalCase(model.PluralName)));
+        result = result.Replace("_CLASSNAME_", ConversionHelper.ConvertToPascalCase(model.Name));
+        result = result.Replace("_CLASSNAMES_", ConversionHelper.ConvertToPascalCase(model.PluralName));
+        
+        // legacy
         result = result.Replace("SlugCLASSNAME", TextHelper.GenerateSlug(ConversionHelper.ConvertToPascalCase(model.Name)));
         result = result.Replace("CLASSNAME", ConversionHelper.ConvertToPascalCase(model.Name));
+        
         result = result.Replace("FULLTABLE", conversionService.ConvertToFullTableName(model.FullModuleName, model.Name, GeneratorOptions.ForcedPrefix, model.Get("TableName")));
         result = result.Replace("FULLMYSQLTABLE", conversionService.ConvertToFullMySQLTableName(model.ModuleName, model.Name, GeneratorOptions.ForcedPrefix, model.Get("TableName")));
 
