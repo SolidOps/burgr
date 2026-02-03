@@ -2,6 +2,7 @@
 using SolidOps.Burgr.Core.Descriptors;
 using SolidOps.Burgr.Core.Generators;
 using SolidOps.Burgr.Essential.Generators.Common;
+using SolidOps.Burgr.Essential.Generators.Objects.Factory;
 using SolidOps.Burgr.Essential.Yaml.Model;
 using SolidOps.SubZero;
 
@@ -23,6 +24,7 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
         SubGenerators.Add(new ConsumedEventGenerator());
         SubGenerators.Add(new DependentForGenerator());
         SubGenerators.Add(new RuleGenerator());
+        SubGenerators.Add(new FactoryMethodGenerator());
     }
 
     protected override IModelParser InstantiateModelParser(string modelParserType)

@@ -4,107 +4,16 @@ using SolidOps.Burgr.Essential.Generators.Common;
 using SolidOps.Burgr.Essential.Generators.ConversionServices;
 using System.Text;
 
-namespace SolidOps.Burgr.Essential.Generators.Services;
+namespace SolidOps.Burgr.Essential.Generators.Objects.Factory;
 
-public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
+public abstract class BaseFactoryMethodGenerator : BaseBurgrGenerator
 {
-    protected BaseServiceMethodGenerator()
+    protected BaseFactoryMethodGenerator()
     {
         SubGenerators.Add(new ParameterGenerator());
     }
 
-    protected override string CheckIfApply(ModelDescriptor model, TemplateDescriptor template)
-    {
-        var result = base.CheckIfApply(model, template);
-        if (result != null)
-            return result;
-
-        if (template.Is("Anonymous") && !model.Is("Anonymous"))
-        {
-            return "model is not anonymous";
-        }
-
-        if (template.Is("NonAnonymous") && model.Is("Anonymous"))
-        {
-            return "model is anonymous";
-        }
-
-        if (!model.Is("External") && template.Is("External"))
-        {
-            return "model is not external";
-        }
-
-        return null;
-    }
-
-    public override string Generate(string content, ModelDescriptor model, TemplateDescriptor template, string modelPrefix, string modelSuffix)
-    {
-        content = base.Generate(content, model, template, modelPrefix, modelSuffix);
-
-        ModelDescriptor method = model;
-        ModelDescriptor service = model.Parent;
-
-        string actor = "User";
-        if (method.Is("Anonymous"))
-        {
-            actor = "Anonymous";
-
-            foreach (string anonymousTemplate in Utilities.GetInnerTemplates(content, Utilities.GetLoopIdentifiers(ServiceTemplateParser.TOREMOVEIFANONYMOUS)))
-            {
-                content = content.Replace(anonymousTemplate, Utilities.SingleNewLine);
-            }
-        }
-        else
-        {
-            foreach (string anonymousTemplate in Utilities.GetInnerTemplates(content, Utilities.GetLoopIdentifiers(ServiceTemplateParser.TOREMOVEIFNOTANONYMOUS)))
-            {
-                content = content.Replace(anonymousTemplate, Utilities.SingleNewLine);
-            }
-        }
-
-        if (GetMandatoryRight(method) != null)
-        {
-            actor = $"User with {GetMandatoryRight(method)}";
-        }
-
-        if (GetOwnershipOverrideRight(method) != null)
-        {
-            actor = $"User with {GetOwnershipOverrideRight(method)}";
-        }
-
-        content = content.Replace("_ACTOR_", actor);
-
-        content = content.Replace("MANDATORYRIGHT", GetMandatoryRight(method));
-        content = content.Replace("OWNERSHIPOVERRIDERIGHT", GetOwnershipOverrideRight(method));
-
-        return content;
-    }
-
-    protected string GetMandatoryRight(ModelDescriptor model)
-    {
-        ModelDescriptor method = model;
-        ModelDescriptor service = model.Parent;
-
-        if (method.Get("MethodMandatoryRight") != null)
-        {
-            return method.Get("MethodMandatoryRight");
-        }
-        return service.Get("MandatoryRight");
-    }
-
-    protected string GetOwnershipOverrideRight(ModelDescriptor model)
-    {
-        ModelDescriptor method = model;
-        ModelDescriptor service = model.Parent;
-
-        if (method.Get("MethodOwnershipOverrideRight") != null)
-        {
-            return method.Get("MethodOwnershipOverrideRight");
-        }
-        return service.Get("OwnershipOverrideRight");
-    }
-
-    protected string ReplaceParameters(ModelDescriptor service, IConversionService conversionService, ModelDescriptor method, string initialText, string modelPrefix, string modelSuffix, out bool hasPost)
+    protected string ReplaceParameters(ModelDescriptor factory, IConversionService conversionService, ModelDescriptor method, string initialText, string modelPrefix, string modelSuffix, out bool hasPost)
     {
         StringBuilder parameterDefinition = new();
         StringBuilder parameters = new();
@@ -114,7 +23,7 @@ public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
         StringBuilder parameterDefRef = new();
         StringBuilder parameterDefApi = new();
         StringBuilder parameterJson = new();
-        parameterJson.Append("json " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + "Input as \"Input\" { \n");
+        parameterJson.Append("json " + ConversionHelper.ConvertToPascalCase(factory.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + "Input as \"Input\" { \n");
         string parameterImports = "";
         string parameterdata = "default";
         var language = conversionService.Language;
@@ -127,7 +36,7 @@ public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
         hasPost = false;
         int fromBodyCount = 0;
         string singleBodyParameterType = string.Empty;
-        foreach (ModelDescriptor parameterInfo in method.GetChildren(DescriptorTypes.SERVICE_METHOD_PARAMETER_DESCRIPTOR))
+        foreach (ModelDescriptor parameterInfo in method.GetChildren(DescriptorTypes.FACTORY_METHOD_PARAMETER_DESCRIPTOR))
         {
             if (parameterInfo.Get("SimpleType") != null || parameterInfo.Is("Enum"))
             {
@@ -179,7 +88,7 @@ public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
                 fromBodyCount++;
                 if (fromBodyCount > 1)
                 {
-                    throw new Exception(string.Format("object parameter limited to only one: {0} {1}", service.Name, method.Name));
+                    throw new Exception(string.Format("object parameter limited to only one: {0} {1}", factory.Name, method.Name));
                 }
 
                 if (parameterDefinition.Length > 0)
@@ -236,18 +145,18 @@ public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
         }
 
         _ = parameterJson.Append("\n}\n");
-        parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + " <.down. " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + "Input\n");
+        parameterJson.Append(ConversionHelper.ConvertToPascalCase(factory.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + " <.down. " + ConversionHelper.ConvertToPascalCase(factory.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + "Input\n");
         if (fromBodyCount > 0)
         {
             parameterJson = new StringBuilder();
-            parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + " <.down. " + singleBodyParameterType + "\n");
+            parameterJson.Append(ConversionHelper.ConvertToPascalCase(factory.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + " <.down. " + singleBodyParameterType + "\n");
         }
 
         initialText = initialText.Replace("PARAMETER_DEFINITION", parameterDefinition.ToString());
         initialText = initialText.Replace("PARAMETER_INTERNAL_DEFINITION", parameterDefinition.ToString());
         initialText = initialText.Replace("CONVERTED_PARAMETERS", convertedParameters.ToString());
         initialText = initialText.Replace("PARAMETERS", parameters.ToString());
-        if (method.GetChildren(DescriptorTypes.SERVICE_METHOD_PARAMETER_DESCRIPTOR).Any())
+        if (method.GetChildren(DescriptorTypes.FACTORY_METHOD_PARAMETER_DESCRIPTOR).Any())
         {
             initialText = initialText.Replace("PARAMETER_JSON", parameterJson.ToString());
         }

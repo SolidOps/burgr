@@ -56,7 +56,7 @@ public class base_object
 
     public string plural { get; set; }
 
-    public List<string> factories { get; set; }
+    public Dictionary<string, method_description> factories { get; set; }
 }
 
 public class aggregate_root : base_object
@@ -117,16 +117,20 @@ public class service
 {
     public string @namespace { get; set; }
     public string implements_interfaces { get; set; }
-    public Dictionary<string, service_method> methods { get; set; }
+    public Dictionary<string, service_method_description> methods { get; set; }
     public Dictionary<string, string> dependencies { get; set; }
     public bool api { get; set; }
     public api_description api_description { get; set; }
 }
 
-public class service_method
+public class method_description
 {
     public Dictionary<string, string> inputs { get; set; } // value is type as string
     public string result { get; set; } // value is type as string
+}
+
+public class service_method_description : method_description
+{
     public bool no_transaction { get; set; }
     public bool api { get; set; }
     public method_api_description api_description { get; set; }

@@ -84,7 +84,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
 
         foreach (var kvpMethods in service.methods)
         {
-            service_method method = kvpMethods.Value ?? new service_method();
+            service_method_description method = kvpMethods.Value ?? new service_method_description();
 
             ReturnType returnType = GetReturnType(method.result, moduleName);
 

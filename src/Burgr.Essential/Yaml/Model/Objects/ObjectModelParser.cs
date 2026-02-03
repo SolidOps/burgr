@@ -5,6 +5,7 @@ using SolidOps.Burgr.Essential.Generators;
 using SolidOps.Burgr.Essential.Generators.Common;
 using SolidOps.Burgr.Essential.Generators.Enums;
 using SolidOps.Burgr.Essential.Generators.Objects;
+using SolidOps.Burgr.Essential.Generators.Objects.Factory;
 using SolidOps.Burgr.Essential.Generators.Rights;
 using SolidOps.Burgr.Essential.Yaml.Model.Enums;
 using System.Globalization;
@@ -149,7 +150,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
             {
                 var parts = value.plural.Split("|");
                 descriptor.Set("Plural", parts[0]);
-                if(parts.Length > 1)
+                if (parts.Length > 1)
                 {
                     descriptor.Set("PluralIndex", parts[1]);
                 }
@@ -238,6 +239,73 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                         NamespaceName = namespaceName,
                         ModuleName = moduleName
                     });
+                }
+            }
+
+            if (value.factories != null)
+            {
+                foreach (var kvpMethods in value.factories)
+                {
+                    method_description method = kvpMethods.Value ?? new method_description();
+
+                    ModelDescriptor modelFactoryMethod = new(kvpMethods.Key, FactoryMethodGenerator.Name)
+                    {
+                        NamespaceName = namespaceName,
+                        ModuleName = moduleName
+                    };
+                    var typeInfo = new TypeInfo(descriptor.Name, moduleName);
+                    
+                    AddRelatedDescriptor(modelFactoryMethod, typeInfo, Generators.Objects.ObjectGenerator.Name);
+                    
+                    modelFactoryMethod.Set("ReturnType", ReturnType.Model.ToString());
+
+                    descriptor.AddChild(modelFactoryMethod);
+
+                    if (method.inputs != null)
+                    {
+                        foreach (var kvpInput in method.inputs)
+                        {
+                            if (kvpInput.Key.ToLower() != kvpInput.Key)
+                            {
+                                throw new Exception($"factory parameter method name must be in lower case : {kvpInput.Key} of {kvpMethods.Key} of {name}");
+                            }
+
+                            ModelDescriptor modelFactoryMethodParameter = new(kvpInput.Key, DescriptorTypes.FACTORY_METHOD_PARAMETER_DESCRIPTOR)
+                            {
+                                NamespaceName = namespaceName,
+                                ModuleName = moduleName
+                            };
+
+                            string inputValue = kvpInput.Value ?? "string";
+
+                            var inputTypeInfo = new TypeInfo(inputValue, moduleName);
+
+                            if (inputTypeInfo.IsEnum)
+                            {
+                                modelFactoryMethodParameter.Set("Enum", "true");
+                                AddRelatedDescriptor(modelFactoryMethodParameter, inputTypeInfo, Generators.Enums.EnumGenerator.Name);
+                            }
+                            else if (inputTypeInfo.TypeType != TypeType.Simple)
+                            {
+                                modelFactoryMethodParameter.Set("Model", "true");
+                                if (inputTypeInfo.IsArray)
+                                {
+                                    AddRelatedDescriptor(modelFactoryMethodParameter, inputTypeInfo, Generators.Objects.ObjectGenerator.Name);
+                                    modelFactoryMethodParameter.Set("List", "true");
+                                }
+                                else
+                                    AddRelatedDescriptor(modelFactoryMethodParameter, inputTypeInfo, Generators.Objects.ObjectGenerator.Name);
+                            }
+                            else
+                            {
+                                modelFactoryMethodParameter.Set("SimpleType", inputTypeInfo.Name);
+                                modelFactoryMethodParameter.Set("List", inputTypeInfo.IsArray.ToString());
+                                modelFactoryMethodParameter.Set("Null", inputTypeInfo.IsNull.ToString());
+                            }
+
+                            modelFactoryMethod.AddChild(modelFactoryMethodParameter);
+                        }
+                    }
                 }
             }
 

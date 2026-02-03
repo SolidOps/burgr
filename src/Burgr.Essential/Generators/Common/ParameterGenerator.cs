@@ -4,7 +4,7 @@ using SolidOps.Burgr.Essential.Generators.Objects;
 using System.Reflection;
 using System.Reflection.Metadata;
 
-namespace SolidOps.Burgr.Essential.Generators.Services;
+namespace SolidOps.Burgr.Essential.Generators.Common;
 
 public class ParameterGenerator : BaseBurgrGenerator, IGenerator
 {

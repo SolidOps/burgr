@@ -13,6 +13,7 @@ public static class DescriptorTypes
     public const string PRODUCED_EVENT_DESCRIPTOR = "ProducedEvent";
     public const string RESOURCE_DEFINITION_DESCRIPTOR = "ResourceDefinition";
     public const string SERVICE_METHOD_PARAMETER_DESCRIPTOR = "ServiceMethodParameter";
+    public const string FACTORY_METHOD_PARAMETER_DESCRIPTOR = "FactoryMethodParameter";
     public const string COMPONENT_DEFINITION_DESCRIPTOR = "ComponentDefinition";
     public const string VIEW_DEFINITION_DESCRIPTOR = "ViewDefinition";
 }
