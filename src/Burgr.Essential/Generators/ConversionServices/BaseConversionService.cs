@@ -79,7 +79,7 @@ public abstract class BaseConversionService : IConversionService
         string relatedFullname = related.FullModuleName + "." + related.Name;
         string relatedDomainType = related.Get("DomainType");
 
-        if (modelPrefix != null)
+        if (modelPrefix != null && related.DescriptorType != "Enum")
             modelPrefix = DomainTypeHelper.ReplaceDomainType(modelPrefix, related.Get("DomainType"));
 
         if (parameter.Is("List"))
@@ -103,7 +103,10 @@ public abstract class BaseConversionService : IConversionService
         }
         if (isEnum)
         {
-            return ConvertParameterType(typeName, namespaceName, moduleName, ".Contracts.Enums.", "Enum", convertList, false, true);
+            var suffix = "Enum";
+            if (isNull)
+                suffix += "?";
+            return ConvertParameterType(typeName, namespaceName, moduleName, ".Contracts.Enums.", suffix, convertList, false, true);
         }
         return ConvertParameterType(typeName, namespaceName, moduleName, modelPrefix, modelSuffix, convertList, isInterface, fullName);
 

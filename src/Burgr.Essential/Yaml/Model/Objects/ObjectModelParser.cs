@@ -283,18 +283,33 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                             if (inputTypeInfo.IsEnum)
                             {
                                 modelFactoryMethodParameter.Set("Enum", "true");
+                                modelFactoryMethodParameter.Set("List", inputTypeInfo.IsArray.ToString());
+                                modelFactoryMethodParameter.Set("Null", inputTypeInfo.IsNull.ToString());
                                 AddRelatedDescriptor(modelFactoryMethodParameter, inputTypeInfo, Generators.Enums.EnumGenerator.Name);
                             }
                             else if (inputTypeInfo.TypeType != TypeType.Simple)
                             {
-                                modelFactoryMethodParameter.Set("Model", "true");
-                                if (inputTypeInfo.IsArray)
+                                if (inputTypeInfo.TypeType == TypeType.Model)
                                 {
+                                    modelFactoryMethodParameter.Set("Model", "true");
                                     AddRelatedDescriptor(modelFactoryMethodParameter, inputTypeInfo, Generators.Objects.ObjectGenerator.Name);
-                                    modelFactoryMethodParameter.Set("List", "true");
+                                    if (inputTypeInfo.IsArray)
+                                    {
+                                        modelFactoryMethodParameter.Set("List", "true");
+                                    }
                                 }
                                 else
-                                    AddRelatedDescriptor(modelFactoryMethodParameter, inputTypeInfo, Generators.Objects.ObjectGenerator.Name);
+                                {
+                                    var parts = inputTypeInfo.ModuleName.Split(".");
+                                    var related = new ModelDescriptor(inputTypeInfo.Name, "Object")
+                                    {
+                                        ModuleName = string.Join(".", parts.Skip(1)),
+                                        NamespaceName = parts[0]
+                                    };
+                                    related.Set("DomainType", DomainType.Aggregate.ToString()); // only aggregates should be referenced in other library?
+                                    modelFactoryMethodParameter.AddRelated("Object", related);
+                                    modelFactoryMethodParameter.Set("PropertyType", "ReferencedModel");
+                                }
                             }
                             else
                             {
