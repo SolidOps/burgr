@@ -13,9 +13,9 @@ public partial class TemplateApplicationServiceRegistrar : IServiceRegistrar
     public int Priority => 1;
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        #region foreach DOMAIN_USECASE[I]
-        services.AddTransient<Contracts.UseCases.IUSECASENAMEUseCase, Application.UseCases.USECASENAMEUseCase>();
-        #endregion foreach DOMAIN_USECASE
+        #region foreach DOMAIN_SERVICE
+        services.AddTransient<Contracts.Services.ISERVICENAMEService, Application.Services.SERVICENAMEService>();
+        #endregion foreach DOMAIN_SERVICE
 
         ConfigureAdditionalServices(services, configuration);
     }

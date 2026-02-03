@@ -29,9 +29,9 @@ public partial class TemplateApplicationServiceRegistrar : IServiceRegistrar
 
         if (configuration["Legacy:Template"] != "True")
         {
-            #region foreach DOMAIN_USECASE[I]
-            services.AddTransient<Application.UseCases.IUSECASENAMEUseCase, Application.UseCases.USECASENAMEUseCase>();
-            #endregion foreach DOMAIN_USECASE
+            #region foreach DOMAIN_SERVICE
+            services.AddTransient<Application.Services.ISERVICENAMEService, Application.Services.SERVICENAMEService>();
+            #endregion foreach DOMAIN_SERVICE
         }
 
         ConfigureAdditionalServices(services, configuration);

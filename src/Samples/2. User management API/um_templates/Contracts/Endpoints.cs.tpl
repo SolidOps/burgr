@@ -24,59 +24,59 @@ public class TemplateServiceAccess
 
 public static class TemplateAppServiceClientExtension
 {
-    #region foreach DOMAIN_USECASE
-    #region foreach STEP_IN_USECASE_WITH_VOID_RETURN
-    public static async Task<IOpsResult> TemplateFacade_USECASENAME__DOVOIDACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, bool ensureSuccess = true)
+    #region foreach DOMAIN_SERVICE
+    #region foreach METHOD_IN_SERVICE_WITH_VOID_RETURN[EXT]
+    public static async Task<IOpsResult> TemplateFacade_SERVICENAME__DOVOIDACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(ensureSuccess, "_VERB_", "SlugTemplate/SlugUSECASENAME/_DOVOIDACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
+        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(ensureSuccess, "_VERB_", "SlugTemplate/SlugSERVICENAME/_DOVOIDACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
         await client.Send</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure);
         return IOpsResult.Ok();
     }
-    #endregion foreach STEP_IN_USECASE_WITH_VOID_RETURN
-    #region foreach STEP_IN_USECASE_WITH_IDENTITY_RETURN
-    public static async Task<IOpsResult<string>> TemplateFacade_USECASENAME__DOIDENTITYACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, bool ensureSuccess = true)
+    #endregion foreach METHOD_IN_SERVICE_WITH_VOID_RETURN
+    #region foreach METHOD_IN_SERVICE_WITH_IDENTITY_RETURN[EXT]
+    public static async Task<IOpsResult<string>> TemplateFacade_SERVICENAME__DOIDENTITYACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(ensureSuccess, "_VERB_", "SlugTemplate/SlugUSECASENAME/_DOIDENTITYACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
+        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(ensureSuccess, "_VERB_", "SlugTemplate/SlugSERVICENAME/_DOIDENTITYACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
         requestParameters.DeserializeResponse = false;
         var result = await client.Send</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure).ToResult<string>();
         return IOpsResult.Ok(result);
     }
-    #endregion foreach STEP_IN_USECASE_WITH_IDENTITY_RETURN
-    #region foreach STEP_IN_USECASE_WITH_SIMPLE_RETURN
-    public static async Task<IOpsResult<_SIMPLE__TYPE_>> TemplateFacade_USECASENAME__DOSIMPLEACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, bool ensureSuccess = true)
+    #endregion foreach METHOD_IN_SERVICE_WITH_IDENTITY_RETURN
+    #region foreach METHOD_IN_SERVICE_WITH_SIMPLE_RETURN[EXT]
+    public static async Task<IOpsResult<_SIMPLE__TYPE_>> TemplateFacade_SERVICENAME__DOSIMPLEACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/_SIMPLE__TYPE_>(ensureSuccess, "_VERB_", "SlugTemplate/SlugUSECASENAME/_DOSIMPLEACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
+        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/_SIMPLE__TYPE_>(ensureSuccess, "_VERB_", "SlugTemplate/SlugSERVICENAME/_DOSIMPLEACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
         var result = await client.Send</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/_SIMPLE__TYPE_>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure).ToResult<_SIMPLE__TYPE_>();
         return IOpsResult.Ok(result);
     }
-    #endregion foreach STEP_IN_USECASE_WITH_SIMPLE_RETURN
-    #region foreach STEP_IN_USECASE_WITH_MODEL_RETURN
-    public static async Task<IOpsResult<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>> TemplateFacade_USECASENAME__DOMODELACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, bool ensureSuccess = true)
+    #endregion foreach METHOD_IN_SERVICE_WITH_SIMPLE_RETURN
+    #region foreach METHOD_IN_SERVICE_WITH_MODEL_RETURN[EXT]
+    public static async Task<IOpsResult<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>> TemplateFacade_SERVICENAME__DOMODELACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>(ensureSuccess, "_VERB_", "SlugTemplate/SlugUSECASENAME/_DOMODELACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
+        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>(ensureSuccess, "_VERB_", "SlugTemplate/SlugSERVICENAME/_DOMODELACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
         var result = await client.Send</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure).ToResult<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>();
         return IOpsResult.Ok(result);
     }
-    #endregion foreach STEP_IN_USECASE_WITH_MODEL_RETURN
-    #region foreach STEP_IN_USECASE_WITH_MODEL_LIST_RETURN
-    public static async Task<IOpsResult<List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>>> TemplateFacade_USECASENAME__DOMODELLISTACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, bool ensureSuccess = true)
+    #endregion foreach METHOD_IN_SERVICE_WITH_MODEL_RETURN
+    #region foreach METHOD_IN_SERVICE_WITH_MODEL_LIST_RETURN[EXT]
+    public static async Task<IOpsResult<List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>>> TemplateFacade_SERVICENAME__DOMODELLISTACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>>(ensureSuccess, "_VERB_", "SlugTemplate/SlugUSECASENAME/_DOMODELLISTACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
+        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>>(ensureSuccess, "_VERB_", "SlugTemplate/SlugSERVICENAME/_DOMODELLISTACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
         var result = await client.Send</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure).ToResult<List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>>();
         return IOpsResult.Ok(result);
     }
-    #endregion foreach STEP_IN_USECASE_WITH_MODEL_LIST_RETURN
-    #endregion foreach DOMAIN_USECASE
+    #endregion foreach METHOD_IN_SERVICE_WITH_MODEL_LIST_RETURN
+    #endregion foreach DOMAIN_SERVICE
 
     #region foreach MODEL[R]
 

@@ -3,7 +3,7 @@ using SolidOps.Burgr.Core.Descriptors;
 using SolidOps.Burgr.Core.Generators;
 using SolidOps.Burgr.Essential.Generators;
 using SolidOps.Burgr.Essential.Generators.Objects;
-using SolidOps.Burgr.Essential.Generators.UseCases;
+using SolidOps.Burgr.Essential.Generators.Services;
 using SolidOps.Burgr.Essential.Yaml.Model;
 
 namespace SolidOps.Burgr.Essential.Yaml;
@@ -93,9 +93,9 @@ public class ModelParserEngine : IModelParserEngine
                     {
                         yamlModelContent.transients.Add(transient.Key, transient.Value);
                     }
-                    foreach (var use_case in fileContent.use_cases)
+                    foreach (var service in fileContent.services)
                     {
-                        yamlModelContent.use_cases.Add(use_case.Key, use_case.Value);
+                        yamlModelContent.services.Add(service.Key, service.Value);
                     }
                     foreach (var value_object in fileContent.value_objects)
                     {
@@ -130,21 +130,21 @@ public class ModelParserEngine : IModelParserEngine
                 }
             }
 
-            // foreach model as output or param of a use case
-            foreach (ModelDescriptor useCase in description.ModelDescriptors.Where(m => m.DescriptorType == UseCaseGenerator.Name))
+            // foreach model as output or param of a service
+            foreach (ModelDescriptor service in description.ModelDescriptors.Where(m => m.DescriptorType == ServiceGenerator.Name))
             {
                 string[] descriptors = new string[] {
-                    VoidUseCaseStepGenerator.Name,
-                    SimpleUseCaseStepGenerator.Name,
-                    ModelUseCaseStepGenerator.Name,
-                    ModelListUseCaseStepGenerator.Name,
-                    IdentityUseCaseStepGenerator.Name
+                    VoidServiceMethodGenerator.Name,
+                    SimpleServiceMethodGenerator.Name,
+                    ModelServiceMethodGenerator.Name,
+                    ModelListServiceMethodGenerator.Name,
+                    IdentityServiceMethodGenerator.Name
                 };
-                foreach (ModelDescriptor step in useCase.GetChildren(descriptors))
+                foreach (ModelDescriptor method in service.GetChildren(descriptors))
                 {
-                    AddRelatedType(exposedTypes, step, modelsRepository);
+                    AddRelatedType(exposedTypes, method, modelsRepository);
 
-                    foreach (ModelDescriptor parameter in step.GetChildren(DescriptorTypes.USECASE_STEP_PARAMETER_DESCRIPTOR))
+                    foreach (ModelDescriptor parameter in method.GetChildren(DescriptorTypes.SERVICE_METHOD_PARAMETER_DESCRIPTOR))
                     {
                         AddRelatedType(exposedTypes, parameter, modelsRepository);
                     }

@@ -22,7 +22,7 @@ public class UMTestsServiceAccess
 }
 public static class UMAppServiceClientExtension
 {
-    // UseCase 
+    // Service 
 
     public static async Task UMFacade_Authentication_Login(this AppServiceClient client, SolidOps.UM.Contracts.DTO.LoginRequestDTO request, AssertParameters assertParameters = null)
     {

@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using SolidOps.TODO.Contracts.UseCases;
+using SolidOps.TODO.Contracts.Services;
 using SolidOps.TODO.Shared;
 using SolidOps.TODO.Shared.Domain.Results;
 namespace SolidOps.TODO.Presentation;
@@ -8,7 +8,7 @@ public partial class TODOConsoleSession
     #region static
     public static bool IsCommand(string command)
     {
-        // UseCase 
+        // Service 
 
         if(command == "AddItem_Execute")
         {
@@ -29,13 +29,13 @@ public partial class TODOConsoleSession
     }
     public static void DisplayCommands()
     {
-        // UseCase 
+        // Service 
 
-        Console.WriteLine("AddItem_Execute: Execute for AddItem use case");
+        Console.WriteLine("AddItem_Execute: Execute for AddItem service");
 
-        Console.WriteLine("UpdateItem_Execute: Execute for UpdateItem use case");
+        Console.WriteLine("UpdateItem_Execute: Execute for UpdateItem service");
 
-        Console.WriteLine("GetItems_Execute: Execute for GetItems use case");
+        Console.WriteLine("GetItems_Execute: Execute for GetItems service");
 
     }
     #endregion
@@ -53,14 +53,14 @@ public partial class TODOConsoleSession
     {
         try
         {
-            // UseCase 
+            // Service 
 
             if(command == "AddItem_Execute")
             {
-                Console.WriteLine("Execute for AddItem use case called");
-                var useCase = serviceProvider.GetRequiredService<IAddItemUseCase>();
+                Console.WriteLine("Execute for AddItem service called");
+                var service = serviceProvider.GetRequiredService<IAddItemService>();
 
-                // UseCaseStepParameter [M]
+                // ServiceMethodParameter [M]
                 Console.WriteLine("item:");
                 var itemResult = ItemConsoleReader.ReadFromInput();
                 if(itemResult.HasError)
@@ -70,7 +70,7 @@ public partial class TODOConsoleSession
                 }
                 var item = itemResult.Data;
 
-                var result = await useCase.Execute(item);
+                var result = await service.Execute(item);
                 if (result.HasError)
                 {
                     Console.WriteLine("an error occured");
@@ -81,9 +81,9 @@ public partial class TODOConsoleSession
 
             if(command == "UpdateItem_Execute")
             {
-                Console.WriteLine("Execute for UpdateItem use case called");
-                var useCase = serviceProvider.GetRequiredService<IUpdateItemUseCase>();
-                // UseCaseStepParameter [S]
+                Console.WriteLine("Execute for UpdateItem service called");
+                var service = serviceProvider.GetRequiredService<IUpdateItemService>();
+                // ServiceMethodParameter [S]
                 Console.WriteLine("id:");
                 var idResult = DisplayConverter.ConvertToString(Console.ReadLine());
                 if(idResult.HasError)
@@ -120,7 +120,7 @@ public partial class TODOConsoleSession
                 }
                 var dueDate = dueDateResult.Data;
 
-                var result = await useCase.Execute(id, name, status, dueDate);
+                var result = await service.Execute(id, name, status, dueDate);
                 if (result.HasError)
                 {
                     Console.WriteLine("an error occured");
@@ -131,10 +131,10 @@ public partial class TODOConsoleSession
 
             if(command == "GetItems_Execute")
             {
-                Console.WriteLine("Execute for GetItems use case called");
-                var useCase = serviceProvider.GetRequiredService<IGetItemsUseCase>();
+                Console.WriteLine("Execute for GetItems service called");
+                var service = serviceProvider.GetRequiredService<IGetItemsService>();
 
-                var result = await useCase.Execute();
+                var result = await service.Execute();
                 if (result.HasError)
                 {
                     Console.WriteLine("an error occured");

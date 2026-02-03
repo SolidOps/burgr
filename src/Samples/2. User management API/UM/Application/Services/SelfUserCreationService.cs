@@ -7,14 +7,14 @@ using SolidOps.UM.Domain.AggregateRoots;
 using SolidOps.UM.Domain.Services;
 using SolidOps.UM.Domain.Transients;
 
-namespace SolidOps.UM.Application.UseCases;
+namespace SolidOps.UM.Application.Services;
 
-public partial interface ISelfUserCreationUseCase
+public partial interface ISelfUserCreationService
 {
     Task<IOpsResult<Guid>> SafeCreateUser(string email, string password);
 }
 
-public partial class SelfUserCreationUseCase
+public partial class SelfUserCreationService
 {
     public override async Task<IOpsResult<Guid>> CreateUser(SelfUserCreationRequest request)
     {

@@ -2,9 +2,9 @@
 using SolidOps.TODO.Presentation.Mappers;
 using SolidOps.TODO.Shared.Domain.Results;
 
-namespace SolidOps.TODO.Application.UseCases;
+namespace SolidOps.TODO.Application.Services;
 
-public partial class GetItemsUseCase
+public partial class GetItemsService
 {
     public override async Task<IOpsResult<IEnumerable<ItemDTO>>> InternalExecute()
     {

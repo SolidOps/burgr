@@ -28,18 +28,18 @@ public class TemplateTestsServiceAccess
 
 public static class TemplateAppServiceClientExtension
 {
-    #region foreach DOMAIN_USECASE
-    #region foreach STEP_IN_USECASE_WITH_VOID_RETURN
-    public static async Task TemplateFacade_USECASENAME__DOVOIDACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, AssertParameters assertParameters = null)
+    #region foreach DOMAIN_SERVICE
+    #region foreach METHOD_IN_SERVICE_WITH_VOID_RETURN[EXT]
+    public static async Task TemplateFacade_SERVICENAME__DOVOIDACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(assertParameters, "_VERB_", "SlugTemplate/SlugUSECASENAME/_DOVOIDACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
+        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(assertParameters, "_VERB_", "SlugTemplate/SlugSERVICENAME/_DOVOIDACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
         await client.Send</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(requestParameters);
     }
-    #endregion foreach STEP_IN_USECASE_WITH_VOID_RETURN
-    #region foreach STEP_IN_USECASE_WITH_IDENTITY_RETURN
-    public static async Task<string> TemplateFacade_USECASENAME__DOIDENTITYACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, AssertParameters assertParameters = null)
+    #endregion foreach METHOD_IN_SERVICE_WITH_VOID_RETURN
+    #region foreach METHOD_IN_SERVICE_WITH_IDENTITY_RETURN[EXT]
+    public static async Task<string> TemplateFacade_SERVICENAME__DOIDENTITYACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(assertParameters, "_VERB_", "SlugTemplate/SlugUSECASENAME/_DOIDENTITYACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
+        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(assertParameters, "_VERB_", "SlugTemplate/SlugSERVICENAME/_DOIDENTITYACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
         requestParameters.DeserializeResponse = false;
         var res = await client.Send</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/string>(requestParameters);
         if (assertParameters == null || assertParameters.EnsureSuccess)
@@ -48,29 +48,29 @@ public static class TemplateAppServiceClientExtension
         }
         return default;
     }
-    #endregion foreach STEP_IN_USECASE_WITH_IDENTITY_RETURN
-    #region foreach STEP_IN_USECASE_WITH_SIMPLE_RETURN
-    public static async Task<_SIMPLE__TYPE_> TemplateFacade_USECASENAME__DOSIMPLEACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, AssertParameters assertParameters = null)
+    #endregion foreach METHOD_IN_SERVICE_WITH_IDENTITY_RETURN
+    #region foreach METHOD_IN_SERVICE_WITH_SIMPLE_RETURN[EXT]
+    public static async Task<_SIMPLE__TYPE_> TemplateFacade_SERVICENAME__DOSIMPLEACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/_SIMPLE__TYPE_>(assertParameters, "_VERB_", "SlugTemplate/SlugUSECASENAME/_DOSIMPLEACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
+        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/_SIMPLE__TYPE_>(assertParameters, "_VERB_", "SlugTemplate/SlugSERVICENAME/_DOSIMPLEACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
         return await client.Send</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/_SIMPLE__TYPE_>(requestParameters);
     }
-    #endregion foreach STEP_IN_USECASE_WITH_SIMPLE_RETURN
-    #region foreach STEP_IN_USECASE_WITH_MODEL_RETURN
-    public static async Task<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO> TemplateFacade_USECASENAME__DOMODELACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, AssertParameters assertParameters = null)
+    #endregion foreach METHOD_IN_SERVICE_WITH_SIMPLE_RETURN
+    #region foreach METHOD_IN_SERVICE_WITH_MODEL_RETURN[EXT]
+    public static async Task<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO> TemplateFacade_SERVICENAME__DOMODELACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>(assertParameters, "_VERB_", "SlugTemplate/SlugUSECASENAME/_DOMODELACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
+        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>(assertParameters, "_VERB_", "SlugTemplate/SlugSERVICENAME/_DOMODELACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
         return await client.Send</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>(requestParameters);
     }
-    #endregion foreach STEP_IN_USECASE_WITH_MODEL_RETURN
-    #region foreach STEP_IN_USECASE_WITH_MODEL_LIST_RETURN
-    public static async Task<List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>> TemplateFacade_USECASENAME__DOMODELLISTACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, AssertParameters assertParameters = null)
+    #endregion foreach METHOD_IN_SERVICE_WITH_MODEL_RETURN
+    #region foreach METHOD_IN_SERVICE_WITH_MODEL_LIST_RETURN[EXT]
+    public static async Task<List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>> TemplateFacade_SERVICENAME__DOMODELLISTACTION_(this AppServiceClient client/*COMMA*//*PARAMETER_DEFINITION*/, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>>(assertParameters, "_VERB_", "SlugTemplate/SlugUSECASENAME/_DOMODELLISTACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
+        var requestParameters = new RequestParameters</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>>(assertParameters, "_VERB_", "SlugTemplate/SlugSERVICENAME/_DOMODELLISTACTIONURL_"/*PARAMETER_URL*//*COMMA_DATA*//*PARAMETER_DATA*/);
         return await client.Send</*PARAMETER_DATA_TYPE*//*COMMA_TYPE*/List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO>>(requestParameters);
     }
-    #endregion foreach STEP_IN_USECASE_WITH_MODEL_LIST_RETURN
-    #endregion foreach DOMAIN_USECASE
+    #endregion foreach METHOD_IN_SERVICE_WITH_MODEL_LIST_RETURN
+    #endregion foreach DOMAIN_SERVICE
 
     #region foreach MODEL[R]
 

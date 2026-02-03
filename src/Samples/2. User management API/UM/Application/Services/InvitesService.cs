@@ -2,9 +2,9 @@
 using SolidOps.UM.Shared.Contracts.Results;
 using SolidOps.UM.Domain.Transients;
 
-namespace SolidOps.UM.Application.UseCases;
+namespace SolidOps.UM.Application.Services;
 
-public partial class InvitesUseCase
+public partial class InvitesService
 {
     public override async Task<IOpsResult<InviteResult>> CheckInvite(Guid inviteId)
     {
@@ -31,7 +31,7 @@ public partial class InvitesUseCase
         if (invite == null)
             return IOpsResult.Invalid("invalid id");
 
-        var userCreationService = serviceProvider.GetRequiredService<ISelfUserCreationUseCase>();
+        var userCreationService = serviceProvider.GetRequiredService<ISelfUserCreationService>();
         var result = await userCreationService.SafeCreateUser(invite.Email, password);
         if (result.HasError) return result;
 

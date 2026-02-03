@@ -3,9 +3,9 @@ using SolidOps.UM.Shared.Domain.UnitOfWork;
 using SolidOps.UM.Domain.Services;
 using SolidOps.UM.Domain.Transients;
 
-namespace SolidOps.UM.Application.UseCases;
+namespace SolidOps.UM.Application.Services;
 
-public partial class AuthenticationUseCase
+public partial class AuthenticationService
 {
     public override async Task<IOpsResult> Login(LoginRequest authentication)
     {

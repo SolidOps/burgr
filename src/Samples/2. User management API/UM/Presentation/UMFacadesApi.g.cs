@@ -1,22 +1,22 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SolidOps.UM.Application.UseCases;
+using SolidOps.UM.Application.Services;
 using System.Diagnostics;
 using SolidOps.UM.Shared.Presentation;
 using SolidOps.UM.Shared.Domain.UnitOfWork;
 using SolidOps.UM.Shared.Domain.Configuration;
 using SolidOps.UM.Shared.Contracts.Results;
 namespace SolidOps.UM.Presentation.Controllers;
-// UseCase 
+// Service 
 [Route("um/authentication/[action]")]
 public partial class AuthenticationController : BaseController
 {
-    private readonly IAuthenticationUseCase service;
+    private readonly IAuthenticationService service;
     private readonly IOutputSerializer serializer;
-    public AuthenticationController(IAuthenticationUseCase service
+    public AuthenticationController(IAuthenticationService service
         , IExecutionContext executionContext
-        , IServiceProvider serviceProvider        
+        , IServiceProvider serviceProvider
         , IExtendedConfiguration configuration
         , IOutputSerializer serializer
         ) : base(executionContext, configuration, serviceProvider)
@@ -88,11 +88,11 @@ public partial class AuthenticationController : BaseController
 [Route("um/invites/[action]")]
 public partial class InvitesController : BaseController
 {
-    private readonly IInvitesUseCase service;
+    private readonly IInvitesService service;
     private readonly IOutputSerializer serializer;
-    public InvitesController(IInvitesUseCase service
+    public InvitesController(IInvitesService service
         , IExecutionContext executionContext
-        , IServiceProvider serviceProvider        
+        , IServiceProvider serviceProvider
         , IExtendedConfiguration configuration
         , IOutputSerializer serializer
         ) : base(executionContext, configuration, serviceProvider)
@@ -147,11 +147,11 @@ public partial class InvitesController : BaseController
 [Route("um/self-user-creation/[action]")]
 public partial class SelfUserCreationController : BaseController
 {
-    private readonly ISelfUserCreationUseCase service;
+    private readonly ISelfUserCreationService service;
     private readonly IOutputSerializer serializer;
-    public SelfUserCreationController(ISelfUserCreationUseCase service
+    public SelfUserCreationController(ISelfUserCreationService service
         , IExecutionContext executionContext
-        , IServiceProvider serviceProvider        
+        , IServiceProvider serviceProvider
         , IExtendedConfiguration configuration
         , IOutputSerializer serializer
         ) : base(executionContext, configuration, serviceProvider)
@@ -184,11 +184,11 @@ public partial class SelfUserCreationController : BaseController
 [Route("um/server-status/[action]")]
 public partial class ServerStatusController : BaseController
 {
-    private readonly IServerStatusUseCase service;
+    private readonly IServerStatusService service;
     private readonly IOutputSerializer serializer;
-    public ServerStatusController(IServerStatusUseCase service
+    public ServerStatusController(IServerStatusService service
         , IExecutionContext executionContext
-        , IServiceProvider serviceProvider        
+        , IServiceProvider serviceProvider
         , IExtendedConfiguration configuration
         , IOutputSerializer serializer
         ) : base(executionContext, configuration, serviceProvider)
@@ -222,11 +222,11 @@ public partial class ServerStatusController : BaseController
 [Route("um/token-validation/[action]")]
 public partial class TokenValidationController : BaseController
 {
-    private readonly ITokenValidationUseCase service;
+    private readonly ITokenValidationService service;
     private readonly IOutputSerializer serializer;
-    public TokenValidationController(ITokenValidationUseCase service
+    public TokenValidationController(ITokenValidationService service
         , IExecutionContext executionContext
-        , IServiceProvider serviceProvider        
+        , IServiceProvider serviceProvider
         , IExtendedConfiguration configuration
         , IOutputSerializer serializer
         ) : base(executionContext, configuration, serviceProvider)
@@ -261,11 +261,11 @@ public partial class TokenValidationController : BaseController
 [Route("um/user-creation/[action]")]
 public partial class UserCreationController : BaseController
 {
-    private readonly IUserCreationUseCase service;
+    private readonly IUserCreationService service;
     private readonly IOutputSerializer serializer;
-    public UserCreationController(IUserCreationUseCase service
+    public UserCreationController(IUserCreationService service
         , IExecutionContext executionContext
-        , IServiceProvider serviceProvider        
+        , IServiceProvider serviceProvider
         , IExtendedConfiguration configuration
         , IOutputSerializer serializer
         ) : base(executionContext, configuration, serviceProvider)

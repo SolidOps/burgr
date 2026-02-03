@@ -2,9 +2,9 @@
 //using SolidOps.SubZero;
 //using System.Text.Json;
 
-//namespace SolidOps.UM.Application.UseCases;
+//namespace SolidOps.UM.Application.Services;
 
-//public partial class ConfigurationsUseCase
+//public partial class ConfigurationsService
 //{
 //    public override async Task<IOpsResult<string>> GetConfiguration(string application, string environment)
 //    {

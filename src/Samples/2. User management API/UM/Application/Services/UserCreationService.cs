@@ -3,9 +3,9 @@ using SolidOps.UM.Domain.AggregateRoots;
 using SolidOps.UM.Domain.Entities;
 using SolidOps.UM.Domain.Transients;
 
-namespace SolidOps.UM.Application.UseCases;
+namespace SolidOps.UM.Application.Services;
 
-public partial class UserCreationUseCase
+public partial class UserCreationService
 {
     public override async Task<IOpsResult<Guid>> CreateUser(UserCreationInfo user_creation_info)
     {

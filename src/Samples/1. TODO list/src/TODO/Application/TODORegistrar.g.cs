@@ -10,12 +10,12 @@ public partial class TODOApplicationServiceRegistrar : IServiceRegistrar
     public int Priority => 1;
     public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
-        // UseCase [I]
-        services.AddTransient<Contracts.UseCases.IAddItemUseCase, Application.UseCases.AddItemUseCase>();
+        // Service 
+        services.AddTransient<Contracts.Services.IAddItemService, Application.Services.AddItemService>();
 
-        services.AddTransient<Contracts.UseCases.IUpdateItemUseCase, Application.UseCases.UpdateItemUseCase>();
+        services.AddTransient<Contracts.Services.IUpdateItemService, Application.Services.UpdateItemService>();
 
-        services.AddTransient<Contracts.UseCases.IGetItemsUseCase, Application.UseCases.GetItemsUseCase>();
+        services.AddTransient<Contracts.Services.IGetItemsService, Application.Services.GetItemsService>();
 
         ConfigureAdditionalServices(services, configuration);
     }

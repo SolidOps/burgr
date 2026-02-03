@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MetaCorp.Template.Application.UseCases;
+using MetaCorp.Template.Application.Services;
 using System.Diagnostics;
 using SolidOps.UM.Shared.Presentation;
 using SolidOps.UM.Shared.Domain.UnitOfWork;
@@ -10,16 +10,16 @@ using SolidOps.UM.Shared.Contracts.Results;
 
 namespace MetaCorp.Template.Presentation.Controllers;
 
-#region foreach DOMAIN_USECASE
-[Route("SlugTemplate/SlugUSECASENAME/[action]")]
-public partial class USECASENAMEController : BaseController
+#region foreach DOMAIN_SERVICE
+[Route("SlugTemplate/SlugSERVICENAME/[action]")]
+public partial class SERVICENAMEController : BaseController
 {
-    private readonly IUSECASENAMEUseCase service;
+    private readonly ISERVICENAMEService service;
     private readonly IOutputSerializer serializer;
 
-    public USECASENAMEController(IUSECASENAMEUseCase service
+    public SERVICENAMEController(ISERVICENAMEService service
         , IExecutionContext executionContext
-        , IServiceProvider serviceProvider        
+        , IServiceProvider serviceProvider
         , IExtendedConfiguration configuration
         , IOutputSerializer serializer
         ) : base(executionContext, configuration, serviceProvider)
@@ -28,8 +28,8 @@ public partial class USECASENAMEController : BaseController
         this.serializer = serializer;
     }
 
-    #region foreach STEP_IN_USECASE_WITH_VOID_RETURN
-    /*[Http_VERB_(Name = "TemplateFacade_USECASENAME__DOVOIDACTION_")]*/
+    #region foreach METHOD_IN_SERVICE_WITH_VOID_RETURN[EXT]
+    /*[Http_VERB_(Name = "TemplateFacade_SERVICENAME__DOVOIDACTION_")]*/
     #region to remove if NOT_ANONYMOUS
     [AllowAnonymous]
     #endregion to remove if NOT_ANONYMOUS
@@ -40,7 +40,7 @@ public partial class USECASENAMEController : BaseController
         executionContext.OwnershipOverrideRights.Add("OWNERSHIPOVERRIDERIGHT");
         #endregion to remove if ANONYMOUS
         IOpsResult result;
-        using (var unitOfWork = executionContext.StartUnitOfWork("Template", "USECASENAMEController _DOVOIDACTION_", UnitOfWorkType.UNITOFWORKTYPE))
+        using (var unitOfWork = executionContext.StartUnitOfWork("Template", "SERVICENAMEController _DOVOIDACTION_", UnitOfWorkType.UNITOFWORKTYPE))
         {
             result = await this.service._DOVOIDACTION_(/*CONVERTED_PARAMETERS*/);
             if (result.HasError) return Failure(result.Error);
@@ -51,10 +51,10 @@ public partial class USECASENAMEController : BaseController
         return Ok();
     }
     partial void AddAdditionalHeadersFor_DOVOIDACTION_(Microsoft.AspNetCore.Http.HttpContext httpContext);
-    #endregion foreach STEP_IN_USECASE_WITH_VOID_RETURN
+    #endregion foreach METHOD_IN_SERVICE_WITH_VOID_RETURN
 
-    #region foreach STEP_IN_USECASE_WITH_IDENTITY_RETURN
-    /*[Http_VERB_(Name = "TemplateFacade_USECASENAME__DOIDENTITYACTION_")]*/
+    #region foreach METHOD_IN_SERVICE_WITH_IDENTITY_RETURN[EXT]
+    /*[Http_VERB_(Name = "TemplateFacade_SERVICENAME__DOIDENTITYACTION_")]*/
     #region to remove if NOT_ANONYMOUS
     [AllowAnonymous]
     #endregion to remove if NOT_ANONYMOUS
@@ -65,7 +65,7 @@ public partial class USECASENAMEController : BaseController
         executionContext.OwnershipOverrideRights.Add("OWNERSHIPOVERRIDERIGHT");
         #endregion to remove if ANONYMOUS
         IOpsResult<_IDENTITY_KEY_TYPE_> result;
-        using (var unitOfWork = executionContext.StartUnitOfWork("Template", "USECASENAMEController _DOIDENTITYACTION_", UnitOfWorkType.UNITOFWORKTYPE))
+        using (var unitOfWork = executionContext.StartUnitOfWork("Template", "SERVICENAMEController _DOIDENTITYACTION_", UnitOfWorkType.UNITOFWORKTYPE))
         {
             result = await this.service._DOIDENTITYACTION_(/*CONVERTED_PARAMETERS*/);
             if (result.HasError) return Failure(result.Error);
@@ -77,10 +77,10 @@ public partial class USECASENAMEController : BaseController
         return Ok();
     }
     partial void AddAdditionalHeadersFor_DOIDENTITYACTION_(Microsoft.AspNetCore.Http.HttpContext httpContext);
-    #endregion foreach STEP_IN_USECASE_WITH_IDENTITY_RETURN
+    #endregion foreach METHOD_IN_SERVICE_WITH_IDENTITY_RETURN
 
-    #region foreach STEP_IN_USECASE_WITH_SIMPLE_RETURN
-    /*[Http_VERB_(Name = "TemplateFacade_USECASENAME__DOSIMPLEACTION_")]*/
+    #region foreach METHOD_IN_SERVICE_WITH_SIMPLE_RETURN[EXT]
+    /*[Http_VERB_(Name = "TemplateFacade_SERVICENAME__DOSIMPLEACTION_")]*/
     #region to remove if NOT_ANONYMOUS
     [AllowAnonymous]
     #endregion to remove if NOT_ANONYMOUS
@@ -91,7 +91,7 @@ public partial class USECASENAMEController : BaseController
         executionContext.OwnershipOverrideRights.Add("OWNERSHIPOVERRIDERIGHT");
         #endregion to remove if ANONYMOUS
         IOpsResult<_SIMPLE__TYPE_> result;
-        using (var unitOfWork = executionContext.StartUnitOfWork("Template", "USECASENAMEController _DOSIMPLEACTION_", UnitOfWorkType.UNITOFWORKTYPE))
+        using (var unitOfWork = executionContext.StartUnitOfWork("Template", "SERVICENAMEController _DOSIMPLEACTION_", UnitOfWorkType.UNITOFWORKTYPE))
         {
             result = await this.service._DOSIMPLEACTION_(/*CONVERTED_PARAMETERS*/);
             if (result.HasError) return Failure(result.Error);
@@ -104,10 +104,10 @@ public partial class USECASENAMEController : BaseController
         return Ok(result.Data);
     }
     partial void AddAdditionalHeadersFor_DOSIMPLEACTION_(Microsoft.AspNetCore.Http.HttpContext httpContext);
-    #endregion foreach STEP_IN_USECASE_WITH_SIMPLE_RETURN
+    #endregion foreach METHOD_IN_SERVICE_WITH_SIMPLE_RETURN
 
-    #region foreach STEP_IN_USECASE_WITH_MODEL_RETURN
-    /*[Http_VERB_(Name = "TemplateFacade_USECASENAME__DOMODELACTION_")]*/
+    #region foreach METHOD_IN_SERVICE_WITH_MODEL_RETURN[EXT]
+    /*[Http_VERB_(Name = "TemplateFacade_SERVICENAME__DOMODELACTION_")]*/
     #region to remove if NOT_ANONYMOUS
     [AllowAnonymous]
     #endregion to remove if NOT_ANONYMOUS
@@ -118,7 +118,7 @@ public partial class USECASENAMEController : BaseController
         executionContext.OwnershipOverrideRights.Add("OWNERSHIPOVERRIDERIGHT");
         #endregion to remove if ANONYMOUS
         DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO result;
-        using (var unitOfWork = executionContext.StartUnitOfWork("Template", "USECASENAMEController _DOMODELACTION_", UnitOfWorkType.UNITOFWORKTYPE))
+        using (var unitOfWork = executionContext.StartUnitOfWork("Template", "SERVICENAMEController _DOMODELACTION_", UnitOfWorkType.UNITOFWORKTYPE))
         {
             var domainResult = await this.service._DOMODELACTION_(/*CONVERTED_PARAMETERS*/);
             if (domainResult.HasError) return Failure(domainResult.Error);
@@ -133,10 +133,10 @@ public partial class USECASENAMEController : BaseController
     }
     partial void SetPreventLazyLoadingFor_DOMODELACTION_(ref List<string> preventLazyLoading);
     partial void AddAdditionalHeadersFor_DOMODELACTION_(Microsoft.AspNetCore.Http.HttpContext httpContext);
-    #endregion foreach STEP_IN_USECASE_WITH_MODEL_RETURN 
+    #endregion foreach METHOD_IN_SERVICE_WITH_MODEL_RETURN 
 
-    #region foreach STEP_IN_USECASE_WITH_MODEL_LIST_RETURN
-    /*[Http_VERB_(Name = "TemplateFacade_USECASENAME__DOMODELLISTACTION_")]*/
+    #region foreach METHOD_IN_SERVICE_WITH_MODEL_LIST_RETURN[EXT]
+    /*[Http_VERB_(Name = "TemplateFacade_SERVICENAME__DOMODELLISTACTION_")]*/
     #region to remove if NOT_ANONYMOUS
     [AllowAnonymous]
     #endregion to remove if NOT_ANONYMOUS
@@ -147,7 +147,7 @@ public partial class USECASENAMEController : BaseController
         executionContext.OwnershipOverrideRights.Add("OWNERSHIPOVERRIDERIGHT");
         #endregion to remove if ANONYMOUS
         List<DEPENDENCYNAMESPACE.Contracts.DTO._PROPERTYTYPE_DTO> result;
-        using (var unitOfWork = executionContext.StartUnitOfWork("Template", "USECASENAMEController _DOMODELLISTACTION_", UnitOfWorkType.UNITOFWORKTYPE))
+        using (var unitOfWork = executionContext.StartUnitOfWork("Template", "SERVICENAMEController _DOMODELLISTACTION_", UnitOfWorkType.UNITOFWORKTYPE))
         {
             var domainResult = await this.service._DOMODELLISTACTION_(/*CONVERTED_PARAMETERS*/);
             if (domainResult.HasError) return Failure(domainResult.Error);
@@ -162,6 +162,6 @@ public partial class USECASENAMEController : BaseController
     }
     partial void SetPreventLazyLoadingFor_DOMODELLISTACTION_(ref List<string> preventLazyLoading);
     partial void AddAdditionalHeadersFor_DOMODELLISTACTION_(Microsoft.AspNetCore.Http.HttpContext httpContext);
-    #endregion foreach STEP_IN_USECASE_WITH_MODEL_LIST_RETURN 
+    #endregion foreach METHOD_IN_SERVICE_WITH_MODEL_LIST_RETURN 
 }
-#endregion foreach DOMAIN_USECASE
+#endregion foreach DOMAIN_SERVICE

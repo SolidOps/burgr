@@ -18,7 +18,7 @@ public class UMServiceAccess
 }
 public static class UMAppServiceClientExtension
 {
-    // UseCase 
+    // Service 
 
     public static async Task<IOpsResult> UMFacade_Authentication_Login(this AppServiceClient client, SolidOps.UM.Contracts.DTO.LoginRequestDTO request, bool ensureSuccess = true)
     {

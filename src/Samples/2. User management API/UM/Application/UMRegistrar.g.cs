@@ -16,18 +16,18 @@ public partial class UMApplicationServiceRegistrar : IServiceRegistrar
 
         if (configuration["Legacy:UM"] != "True")
         {
-            // UseCase [I]
-            services.AddTransient<Application.UseCases.IAuthenticationUseCase, Application.UseCases.AuthenticationUseCase>();
+            // Service 
+            services.AddTransient<Application.Services.IAuthenticationService, Application.Services.AuthenticationService>();
 
-            services.AddTransient<Application.UseCases.IInvitesUseCase, Application.UseCases.InvitesUseCase>();
+            services.AddTransient<Application.Services.IInvitesService, Application.Services.InvitesService>();
 
-            services.AddTransient<Application.UseCases.ISelfUserCreationUseCase, Application.UseCases.SelfUserCreationUseCase>();
+            services.AddTransient<Application.Services.ISelfUserCreationService, Application.Services.SelfUserCreationService>();
 
-            services.AddTransient<Application.UseCases.IServerStatusUseCase, Application.UseCases.ServerStatusUseCase>();
+            services.AddTransient<Application.Services.IServerStatusService, Application.Services.ServerStatusService>();
 
-            services.AddTransient<Application.UseCases.ITokenValidationUseCase, Application.UseCases.TokenValidationUseCase>();
+            services.AddTransient<Application.Services.ITokenValidationService, Application.Services.TokenValidationService>();
 
-            services.AddTransient<Application.UseCases.IUserCreationUseCase, Application.UseCases.UserCreationUseCase>();
+            services.AddTransient<Application.Services.IUserCreationService, Application.Services.UserCreationService>();
 
         }
         ConfigureAdditionalServices(services, configuration);

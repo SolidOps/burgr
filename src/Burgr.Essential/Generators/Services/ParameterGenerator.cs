@@ -4,11 +4,11 @@ using SolidOps.Burgr.Essential.Generators.Objects;
 using System.Reflection;
 using System.Reflection.Metadata;
 
-namespace SolidOps.Burgr.Essential.Generators.UseCases;
+namespace SolidOps.Burgr.Essential.Generators.Services;
 
 public class ParameterGenerator : BaseBurgrGenerator, IGenerator
 {
-    public static string Name = DescriptorTypes.USECASE_STEP_PARAMETER_DESCRIPTOR;
+    public static string Name = DescriptorTypes.SERVICE_METHOD_PARAMETER_DESCRIPTOR;
     public override string DescriptorType => Name;
 
     public ParameterGenerator()
@@ -96,7 +96,7 @@ public class ParameterGenerator : BaseBurgrGenerator, IGenerator
 
 public class ParameterTemplateParser : ITemplateParser
 {
-    public string LoopIdentifier => "foreach USECASE_STEP_PARAMETER";
+    public string LoopIdentifier => "foreach SERVICE_METHOD_PARAMETER";
     public List<string> AdditionalLoopIdentifiers => new List<string>();
 
     public List<TemplateOption> Options { get; } = new List<TemplateOption>();

@@ -1,5 +1,5 @@
 ﻿namespace SolidOps.UM.Shared.Application;
 
-public interface IDomainUseCase
+public interface IDomainService
 {
 }

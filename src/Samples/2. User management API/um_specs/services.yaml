@@ -1,12 +1,12 @@
 burgr-model-version: 1.0.0
 
-use_cases:
+services:
   # ---- #
   authentication:
-    is_anonymous: true
-    steps:
+    api_description:
+      is_anonymous: true
+    methods:
       login:
-        create_component: true
         inputs:
           request: login_request
       
@@ -25,8 +25,9 @@ use_cases:
 
   # ---- #
   invites:
-    is_anonymous: true
-    steps:
+    api_description:
+      is_anonymous: true
+    methods:
       check_invite:
         result: invite_result
         inputs:
@@ -40,8 +41,9 @@ use_cases:
 
   # ---- #
   self_user_creation:
-    is_anonymous: true
-    steps:
+    api_description:
+      is_anonymous: true
+    methods:
       create_user:
         result: identity
         inputs:
@@ -52,8 +54,9 @@ use_cases:
 
   # ---- #
   server_status:
-    is_anonymous: true
-    steps:
+    api_description:
+      is_anonymous: true
+    methods:
       need_tech_user_password_update:
         result: bool
         inputs:
@@ -64,18 +67,21 @@ use_cases:
   
   # ---- #
   token_validation:
-    steps:
+    api: true
+    methods:
       validate:
         result: string
 
   # ---- #
   user_creation:
-    steps:
+    api: true
+    methods:
       create_user:
         result: identity
-        mandatory_right: CreateUser
         inputs:
           user_creation_info: user_creation_info
+        api_description:
+          mandatory_right: CreateUser
     dependencies:
       local_user:
       user:

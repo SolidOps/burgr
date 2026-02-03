@@ -1,9 +1,9 @@
 ﻿using SolidOps.UM.Shared.Contracts.Results;
 using SolidOps.UM.Domain.AggregateRoots;
 
-namespace SolidOps.UM.Application.UseCases;
+namespace SolidOps.UM.Application.Services;
 
-public partial class ServerStatusUseCase
+public partial class ServerStatusService
 {
     public override async Task<IOpsResult<bool>> NeedTechUserPasswordUpdate(string techUser)
     {

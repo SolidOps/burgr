@@ -2,9 +2,9 @@
 using SolidOps.UM.Shared.Contracts.Results;
 using SolidOps.SubZero;
 
-namespace SolidOps.UM.Application.UseCases;
+namespace SolidOps.UM.Application.Services;
 
-public partial class TokenValidationUseCase
+public partial class TokenValidationService
 {
     public override async Task<IOpsResult<string>> Validate()
     {

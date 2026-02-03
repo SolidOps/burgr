@@ -1,17 +1,17 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SolidOps.TODO.Shared.Domain.Results;
-using SolidOps.TODO.Contracts.UseCases;
+using SolidOps.TODO.Contracts.Services;
 using SolidOps.TODO.Shared;
-namespace SolidOps.TODO.Application.UseCases;
-// UseCase [I]
-public partial class AddItemUseCase : BaseAddItemUseCase, IAddItemUseCase
+namespace SolidOps.TODO.Application.Services;
+// Service 
+public partial class AddItemService : BaseAddItemService, IAddItemService
 {
     private readonly IUserContext userContext;
     // Dependency [EN][AG]
     private readonly SolidOps.TODO.Domain.Repositories.IItemRepository _dependencyItemRepository;
 
-    public AddItemUseCase(IUserContext userContext, IServiceProvider serviceProvider
+    public AddItemService(IUserContext userContext, IServiceProvider serviceProvider
     // Dependency [EN][AG]
         , SolidOps.TODO.Domain.Repositories.IItemRepository dependencyItemRepository
 
@@ -36,13 +36,13 @@ public partial class AddItemUseCase : BaseAddItemUseCase, IAddItemUseCase
     }
 
 }
-public partial class UpdateItemUseCase : BaseUpdateItemUseCase, IUpdateItemUseCase
+public partial class UpdateItemService : BaseUpdateItemService, IUpdateItemService
 {
     private readonly IUserContext userContext;
     // Dependency [EN][AG]
     private readonly SolidOps.TODO.Domain.Repositories.IItemRepository _dependencyItemRepository;
 
-    public UpdateItemUseCase(IUserContext userContext, IServiceProvider serviceProvider
+    public UpdateItemService(IUserContext userContext, IServiceProvider serviceProvider
     // Dependency [EN][AG]
         , SolidOps.TODO.Domain.Repositories.IItemRepository dependencyItemRepository
 
@@ -67,13 +67,13 @@ public partial class UpdateItemUseCase : BaseUpdateItemUseCase, IUpdateItemUseCa
     }
 
 }
-public partial class GetItemsUseCase : BaseGetItemsUseCase, IGetItemsUseCase
+public partial class GetItemsService : BaseGetItemsService, IGetItemsService
 {
     private readonly IUserContext userContext;
     // Dependency [EN][AG]
     private readonly SolidOps.TODO.Domain.Repositories.IItemRepository _dependencyItemRepository;
 
-    public GetItemsUseCase(IUserContext userContext, IServiceProvider serviceProvider
+    public GetItemsService(IUserContext userContext, IServiceProvider serviceProvider
     // Dependency [EN][AG]
         , SolidOps.TODO.Domain.Repositories.IItemRepository dependencyItemRepository
 
@@ -98,11 +98,11 @@ public partial class GetItemsUseCase : BaseGetItemsUseCase, IGetItemsUseCase
     }
 
 }
-// UseCase [I]
-public abstract class BaseAddItemUseCase
+// Service 
+public abstract class BaseAddItemService
 {
     protected readonly IServiceProvider serviceProvider;
-    public BaseAddItemUseCase(IServiceProvider serviceProvider)
+    public BaseAddItemService(IServiceProvider serviceProvider)
     {
         this.serviceProvider = serviceProvider;
     }
@@ -117,10 +117,10 @@ public abstract class BaseAddItemUseCase
     }
 
 }
-public abstract class BaseUpdateItemUseCase
+public abstract class BaseUpdateItemService
 {
     protected readonly IServiceProvider serviceProvider;
-    public BaseUpdateItemUseCase(IServiceProvider serviceProvider)
+    public BaseUpdateItemService(IServiceProvider serviceProvider)
     {
         this.serviceProvider = serviceProvider;
     }
@@ -135,10 +135,10 @@ public abstract class BaseUpdateItemUseCase
     }
 
 }
-public abstract class BaseGetItemsUseCase
+public abstract class BaseGetItemsService
 {
     protected readonly IServiceProvider serviceProvider;
-    public BaseGetItemsUseCase(IServiceProvider serviceProvider)
+    public BaseGetItemsService(IServiceProvider serviceProvider)
     {
         this.serviceProvider = serviceProvider;
     }

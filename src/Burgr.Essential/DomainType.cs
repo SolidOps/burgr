@@ -6,7 +6,7 @@ public enum DomainType
     Aggregate,
     Entity,
     ValueObject,
-    UseCase,
+    Service,
     Transient,
     Event
 }

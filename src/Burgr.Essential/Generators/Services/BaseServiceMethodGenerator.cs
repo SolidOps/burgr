@@ -3,71 +3,107 @@ using SolidOps.Burgr.Core.Descriptors;
 using SolidOps.Burgr.Essential.Generators.ConversionServices;
 using System.Text;
 
-namespace SolidOps.Burgr.Essential.Generators.UseCases;
+namespace SolidOps.Burgr.Essential.Generators.Services;
 
-public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
+public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
 {
-    protected BaseUseCaseStepGenerator()
+    protected BaseServiceMethodGenerator()
     {
         SubGenerators.Add(new ParameterGenerator());
+    }
+
+    protected override string CheckIfApply(ModelDescriptor model, TemplateDescriptor template)
+    {
+        var result = base.CheckIfApply(model, template);
+        if (result != null)
+            return result;
+
+        if (template.Is("Anonymous") && !model.Is("Anonymous"))
+        {
+            return "model is not anonymous";
+        }
+
+        if (template.Is("NonAnonymous") && model.Is("Anonymous"))
+        {
+            return "model is anonymous";
+        }
+
+        if (!model.Is("External") && template.Is("External"))
+        {
+            return "model is not external";
+        }
+
+        return null;
     }
 
     public override string Generate(string content, ModelDescriptor model, TemplateDescriptor template, string modelPrefix, string modelSuffix)
     {
         content = base.Generate(content, model, template, modelPrefix, modelSuffix);
 
-        ModelDescriptor step = model;
-        ModelDescriptor useCase = model.Parent;
+        ModelDescriptor method = model;
+        ModelDescriptor service = model.Parent;
 
         string actor = "User";
-        if (useCase.Is("Anonymous"))
+        if (method.Is("Anonymous"))
         {
             actor = "Anonymous";
+
+            foreach (string anonymousTemplate in Utilities.GetInnerTemplates(content, Utilities.GetLoopIdentifiers(ServiceTemplateParser.TOREMOVEIFANONYMOUS)))
+            {
+                content = content.Replace(anonymousTemplate, Utilities.SingleNewLine);
+            }
+        }
+        else
+        {
+            foreach (string anonymousTemplate in Utilities.GetInnerTemplates(content, Utilities.GetLoopIdentifiers(ServiceTemplateParser.TOREMOVEIFNOTANONYMOUS)))
+            {
+                content = content.Replace(anonymousTemplate, Utilities.SingleNewLine);
+            }
         }
 
-        if (GetMandatoryRight(step) != null)
+        if (GetMandatoryRight(method) != null)
         {
-            actor = $"User with {GetMandatoryRight(step)}";
+            actor = $"User with {GetMandatoryRight(method)}";
         }
 
-        if (GetOwnershipOverrideRight(step) != null)
+        if (GetOwnershipOverrideRight(method) != null)
         {
-            actor = $"User with {GetOwnershipOverrideRight(step)}";
+            actor = $"User with {GetOwnershipOverrideRight(method)}";
         }
 
         content = content.Replace("_ACTOR_", actor);
 
-        content = content.Replace("MANDATORYRIGHT", GetMandatoryRight(step));
-        content = content.Replace("OWNERSHIPOVERRIDERIGHT", GetOwnershipOverrideRight(step));
+        content = content.Replace("MANDATORYRIGHT", GetMandatoryRight(method));
+        content = content.Replace("OWNERSHIPOVERRIDERIGHT", GetOwnershipOverrideRight(method));
 
         return content;
     }
 
     protected string GetMandatoryRight(ModelDescriptor model)
     {
-        ModelDescriptor step = model;
-        ModelDescriptor useCase = model.Parent;
+        ModelDescriptor method = model;
+        ModelDescriptor service = model.Parent;
 
-        if(step.Get("StepMandatoryRight") != null)
+        if (method.Get("MethodMandatoryRight") != null)
         {
-            return step.Get("StepMandatoryRight");
+            return method.Get("MethodMandatoryRight");
         }
-        return useCase.Get("MandatoryRight");
+        return service.Get("MandatoryRight");
     }
 
     protected string GetOwnershipOverrideRight(ModelDescriptor model)
     {
-        ModelDescriptor step = model;
-        ModelDescriptor useCase = model.Parent;
+        ModelDescriptor method = model;
+        ModelDescriptor service = model.Parent;
 
-        if (step.Get("StepOwnershipOverrideRight") != null)
+        if (method.Get("MethodOwnershipOverrideRight") != null)
         {
-            return step.Get("StepOwnershipOverrideRight");
+            return method.Get("MethodOwnershipOverrideRight");
         }
-        return useCase.Get("OwnershipOverrideRight");
+        return service.Get("OwnershipOverrideRight");
     }
 
-    protected string ReplaceParameters(ModelDescriptor service, IConversionService conversionService, ModelDescriptor step, string initialText, string modelPrefix, string modelSuffix, out bool hasPost)
+    protected string ReplaceParameters(ModelDescriptor service, IConversionService conversionService, ModelDescriptor method, string initialText, string modelPrefix, string modelSuffix, out bool hasPost)
     {
         StringBuilder parameterDefinition = new();
         StringBuilder parameters = new();
@@ -77,7 +113,7 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
         StringBuilder parameterDefRef = new();
         StringBuilder parameterDefApi = new();
         StringBuilder parameterJson = new();
-        parameterJson.Append("json " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(step.Name) + "Input as \"Input\" { \n");
+        parameterJson.Append("json " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + "Input as \"Input\" { \n");
         string parameterImports = "";
         string parameterdata = "default";
         var language = conversionService.Language;
@@ -90,7 +126,7 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
         hasPost = false;
         int fromBodyCount = 0;
         string singleBodyParameterType = string.Empty;
-        foreach (ModelDescriptor parameterInfo in step.GetChildren(DescriptorTypes.USECASE_STEP_PARAMETER_DESCRIPTOR))
+        foreach (ModelDescriptor parameterInfo in method.GetChildren(DescriptorTypes.SERVICE_METHOD_PARAMETER_DESCRIPTOR))
         {
             if (parameterInfo.Get("SimpleType") != null || parameterInfo.Is("Enum"))
             {
@@ -142,7 +178,7 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
                 fromBodyCount++;
                 if (fromBodyCount > 1)
                 {
-                    throw new Exception(string.Format("object parameter limited to only one: {0} {1}", service.Name, step.Name));
+                    throw new Exception(string.Format("object parameter limited to only one: {0} {1}", service.Name, method.Name));
                 }
 
                 if (parameterDefinition.Length > 0)
@@ -167,7 +203,7 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
                 else
                 {
                     _ = parameterDefinition.AppendFormat("{0} {1}", conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false, true), ConversionHelper.ConvertToCamelCase(parameterInfo.Name));
-                    _ = step.Get("ReturnType") == ReturnType.Void.ToString() || step.Get("ReturnType") == ReturnType.Identity.ToString() || step.Is("ForcePost")
+                    _ = method.Get("ReturnType") == ReturnType.Void.ToString() || method.Get("ReturnType") == ReturnType.Identity.ToString() || method.Is("ForcePost")
                         ? parameterDefApi.AppendFormat("[FromBody] {0} {1}", conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false, true), ConversionHelper.ConvertToCamelCase(parameterInfo.Name))
                         : parameterDefApi.AppendFormat("[FromQuery] {0} {1}", conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false, true), ConversionHelper.ConvertToCamelCase(parameterInfo.Name));
                     _ = parameterDefRef.AppendFormat("ref {0} {1}", conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false, true), ConversionHelper.ConvertToCamelCase(parameterInfo.Name));
@@ -199,18 +235,18 @@ public abstract class BaseUseCaseStepGenerator : BaseBurgrGenerator
         }
 
         _ = parameterJson.Append("\n}\n");
-        parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(step.Name) + " <.down. " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(step.Name) + "Input\n");
+        parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + " <.down. " + ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + "Input\n");
         if (fromBodyCount > 0)
         {
             parameterJson = new StringBuilder();
-            parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(step.Name) + " <.down. " + singleBodyParameterType + "\n");
+            parameterJson.Append(ConversionHelper.ConvertToPascalCase(service.Name) + ConversionHelper.ConvertToPascalCase(method.Name) + " <.down. " + singleBodyParameterType + "\n");
         }
 
         initialText = initialText.Replace("PARAMETER_DEFINITION", parameterDefinition.ToString());
         initialText = initialText.Replace("PARAMETER_INTERNAL_DEFINITION", parameterDefinition.ToString());
         initialText = initialText.Replace("CONVERTED_PARAMETERS", convertedParameters.ToString());
         initialText = initialText.Replace("PARAMETERS", parameters.ToString());
-        if (step.GetChildren(DescriptorTypes.USECASE_STEP_PARAMETER_DESCRIPTOR).Any())
+        if (method.GetChildren(DescriptorTypes.SERVICE_METHOD_PARAMETER_DESCRIPTOR).Any())
         {
             initialText = initialText.Replace("PARAMETER_JSON", parameterJson.ToString());
         }

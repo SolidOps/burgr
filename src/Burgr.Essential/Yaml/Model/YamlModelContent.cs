@@ -6,7 +6,7 @@ public class YamlModelContentV1
 
     public Dictionary<string, entity> entities { get; set; } = new Dictionary<string, entity>();
 
-    public Dictionary<string, use_case> use_cases { get; set; } = new Dictionary<string, use_case>();
+    public Dictionary<string, service> services { get; set; } = new Dictionary<string, service>();
 
     public Dictionary<string, transient> transients { get; set; } = new Dictionary<string, transient>();
 
@@ -55,6 +55,8 @@ public class base_object
     public Dictionary<string, List<string>> rules { get; set; }
 
     public string plural { get; set; }
+
+    public List<string> factories { get; set; }
 }
 
 public class aggregate_root : base_object
@@ -86,9 +88,15 @@ public class property
     public string multiple_unique_constraint_with { get; set; }
 }
 
+public class method_api_description : api_description
+{
+    public bool force_post { get; set; }
+    public bool create_component { get; set; }
+}
+
 public class api_description
 {
-    public bool is_anonymous { get; set; }
+    public bool? is_anonymous { get; set; }
 
     public string mandatory_right { get; set; }
 
@@ -105,28 +113,23 @@ public class view_description
 }
 
 // service
-public class use_case
+public class service
 {
     public string @namespace { get; set; }
-    public bool is_anonymous { get; set; }
-    public bool create_rest_services { get; set; }
-    public string mandatory_right { get; set; }
-    public string ownership_override_right { get; set; }
-    public bool is_internal { get; set; }
     public string implements_interfaces { get; set; }
-    public Dictionary<string, step> steps { get; set; }
+    public Dictionary<string, service_method> methods { get; set; }
     public Dictionary<string, string> dependencies { get; set; }
+    public bool api { get; set; }
+    public api_description api_description { get; set; }
 }
 
-public class step
+public class service_method
 {
     public Dictionary<string, string> inputs { get; set; } // value is type as string
     public string result { get; set; } // value is type as string
     public bool no_transaction { get; set; }
-    public string mandatory_right { get; set; }
-    public string ownership_override_right { get; set; }
-    public bool force_post { get; set; }
-    public bool create_component { get; set; }
+    public bool api { get; set; }
+    public method_api_description api_description { get; set; }
 }
 
 // transient

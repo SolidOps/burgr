@@ -1,7 +1,7 @@
 source_templates:
-  use_case:
-    source: UseCase.cs.tpl
-    file_suffix: UseCase.cs
+  service:
+    source: Service.cs.tpl
+    file_suffix: Service.cs
     destination_suffix: Application
     force_separate_dll: false
     options:

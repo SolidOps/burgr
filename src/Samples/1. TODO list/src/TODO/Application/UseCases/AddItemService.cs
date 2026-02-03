@@ -2,9 +2,9 @@
 using SolidOps.TODO.Domain.AggregateRoots;
 using SolidOps.TODO.Shared.Domain.Results;
 
-namespace SolidOps.TODO.Application.UseCases;
+namespace SolidOps.TODO.Application.Services;
 
-public partial class AddItemUseCase
+public partial class AddItemService
 {
     public override async Task<IOpsResult> InternalExecute(ItemDTO item)
     {

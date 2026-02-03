@@ -1,9 +1,9 @@
 ﻿using SolidOps.TODO.Contracts.Enums;
 using SolidOps.TODO.Shared.Domain.Results;
 
-namespace SolidOps.TODO.Application.UseCases;
+namespace SolidOps.TODO.Application.Services;
 
-public partial class UpdateItemUseCase
+public partial class UpdateItemService
 {
     public override async Task<IOpsResult> InternalExecute(string id, string name, string status, DateTime dueDate)
     {

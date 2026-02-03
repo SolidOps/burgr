@@ -3,9 +3,9 @@ using Microsoft.Extensions.Logging;
 using SolidOps.UM.Shared.Application;
 using SolidOps.UM.Shared.Contracts.Results;
 using SolidOps.UM.Shared.Domain.UnitOfWork;
-namespace SolidOps.UM.Application.UseCases;
-// UseCase [I]
-public partial interface IAuthenticationUseCase : IDomainUseCase
+namespace SolidOps.UM.Application.Services;
+// Service 
+public partial interface IAuthenticationService : IDomainService
 {
 
     Task<IOpsResult> Login(SolidOps.UM.Domain.Transients.LoginRequest request);
@@ -15,7 +15,7 @@ public partial interface IAuthenticationUseCase : IDomainUseCase
     Task<IOpsResult<System.Boolean>> NeedInitialPassword(System.String email);
 
 }
-public partial class AuthenticationUseCase : BaseAuthenticationUseCase, IAuthenticationUseCase
+public partial class AuthenticationService : BaseAuthenticationService, IAuthenticationService
 {
     private readonly IExecutionContext executionContext;
     // Dependency [EN][AG]
@@ -23,7 +23,7 @@ public partial class AuthenticationUseCase : BaseAuthenticationUseCase, IAuthent
 
     private readonly SolidOps.UM.Domain.Repositories.ILocalUserRepository _dependencyLocalUserRepository;
 
-    public AuthenticationUseCase(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
+    public AuthenticationService(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
     // Dependency [EN][AG]
         , SolidOps.UM.Domain.Repositories.IUserRepository dependencyUserRepository
 
@@ -39,7 +39,7 @@ public partial class AuthenticationUseCase : BaseAuthenticationUseCase, IAuthent
 
     }
 }
-public partial interface IInvitesUseCase : IDomainUseCase
+public partial interface IInvitesService : IDomainService
 {
 
     Task<IOpsResult> UseInvite(System.Guid inviteId, System.String password);
@@ -47,13 +47,13 @@ public partial interface IInvitesUseCase : IDomainUseCase
     Task<IOpsResult<SolidOps.UM.Domain.Transients.InviteResult>> CheckInvite(System.Guid inviteId);
 
 }
-public partial class InvitesUseCase : BaseInvitesUseCase, IInvitesUseCase
+public partial class InvitesService : BaseInvitesService, IInvitesService
 {
     private readonly IExecutionContext executionContext;
     // Dependency [EN][AG]
     private readonly SolidOps.UM.Domain.Repositories.IInviteRepository _dependencyInviteRepository;
 
-    public InvitesUseCase(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
+    public InvitesService(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
     // Dependency [EN][AG]
         , SolidOps.UM.Domain.Repositories.IInviteRepository dependencyInviteRepository
 
@@ -65,13 +65,13 @@ public partial class InvitesUseCase : BaseInvitesUseCase, IInvitesUseCase
 
     }
 }
-public partial interface ISelfUserCreationUseCase : IDomainUseCase
+public partial interface ISelfUserCreationService : IDomainService
 {
 
     Task<IOpsResult<Guid>> CreateUser(SolidOps.UM.Domain.Transients.SelfUserCreationRequest request);
 
 }
-public partial class SelfUserCreationUseCase : BaseSelfUserCreationUseCase, ISelfUserCreationUseCase
+public partial class SelfUserCreationService : BaseSelfUserCreationService, ISelfUserCreationService
 {
     private readonly IExecutionContext executionContext;
     // Dependency [EN][AG]
@@ -79,7 +79,7 @@ public partial class SelfUserCreationUseCase : BaseSelfUserCreationUseCase, ISel
 
     private readonly SolidOps.UM.Domain.Repositories.ILocalUserRepository _dependencyLocalUserRepository;
 
-    public SelfUserCreationUseCase(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
+    public SelfUserCreationService(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
     // Dependency [EN][AG]
         , SolidOps.UM.Domain.Repositories.IUserRepository dependencyUserRepository
 
@@ -95,13 +95,13 @@ public partial class SelfUserCreationUseCase : BaseSelfUserCreationUseCase, ISel
 
     }
 }
-public partial interface IServerStatusUseCase : IDomainUseCase
+public partial interface IServerStatusService : IDomainService
 {
 
     Task<IOpsResult<System.Boolean>> NeedTechUserPasswordUpdate(System.String techUser);
 
 }
-public partial class ServerStatusUseCase : BaseServerStatusUseCase, IServerStatusUseCase
+public partial class ServerStatusService : BaseServerStatusService, IServerStatusService
 {
     private readonly IExecutionContext executionContext;
     // Dependency [EN][AG]
@@ -109,7 +109,7 @@ public partial class ServerStatusUseCase : BaseServerStatusUseCase, IServerStatu
 
     private readonly SolidOps.UM.Domain.Repositories.IUserRepository _dependencyUserRepository;
 
-    public ServerStatusUseCase(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
+    public ServerStatusService(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
     // Dependency [EN][AG]
         , SolidOps.UM.Domain.Repositories.ILocalUserRepository dependencyLocalUserRepository
 
@@ -125,17 +125,17 @@ public partial class ServerStatusUseCase : BaseServerStatusUseCase, IServerStatu
 
     }
 }
-public partial interface ITokenValidationUseCase : IDomainUseCase
+public partial interface ITokenValidationService : IDomainService
 {
 
     Task<IOpsResult<System.String>> Validate();
 
 }
-public partial class TokenValidationUseCase : BaseTokenValidationUseCase, ITokenValidationUseCase
+public partial class TokenValidationService : BaseTokenValidationService, ITokenValidationService
 {
     private readonly IExecutionContext executionContext;
 
-    public TokenValidationUseCase(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
+    public TokenValidationService(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
 
         ) : base(serviceProvider, loggerFactory)
     {
@@ -143,13 +143,13 @@ public partial class TokenValidationUseCase : BaseTokenValidationUseCase, IToken
 
     }
 }
-public partial interface IUserCreationUseCase : IDomainUseCase
+public partial interface IUserCreationService : IDomainService
 {
 
     Task<IOpsResult<Guid>> CreateUser(SolidOps.UM.Domain.Transients.UserCreationInfo userCreationInfo);
 
 }
-public partial class UserCreationUseCase : BaseUserCreationUseCase, IUserCreationUseCase
+public partial class UserCreationService : BaseUserCreationService, IUserCreationService
 {
     private readonly IExecutionContext executionContext;
     // Dependency [EN][AG]
@@ -157,7 +157,7 @@ public partial class UserCreationUseCase : BaseUserCreationUseCase, IUserCreatio
 
     private readonly SolidOps.UM.Domain.Repositories.IUserRepository _dependencyUserRepository;
 
-    public UserCreationUseCase(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
+    public UserCreationService(IExecutionContext executionContext, IServiceProvider serviceProvider, ILoggerFactory loggerFactory
     // Dependency [EN][AG]
         , SolidOps.UM.Domain.Repositories.ILocalUserRepository dependencyLocalUserRepository
 
@@ -173,15 +173,15 @@ public partial class UserCreationUseCase : BaseUserCreationUseCase, IUserCreatio
 
     }
 }
-// UseCase [I]
-public abstract class BaseAuthenticationUseCase
+// Service 
+public abstract class BaseAuthenticationService
 {
-    protected readonly ILogger<IAuthenticationUseCase> logger;
+    protected readonly ILogger<IAuthenticationService> logger;
     protected readonly IServiceProvider serviceProvider;
-    public BaseAuthenticationUseCase(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
+    public BaseAuthenticationService(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
     {
         this.serviceProvider = serviceProvider;
-        this.logger = loggerFactory.CreateLogger<IAuthenticationUseCase>();
+        this.logger = loggerFactory.CreateLogger<IAuthenticationService>();
     }
     protected T GetService<T>()
     {
@@ -204,14 +204,14 @@ public abstract class BaseAuthenticationUseCase
     }
 
 }
-public abstract class BaseInvitesUseCase
+public abstract class BaseInvitesService
 {
-    protected readonly ILogger<IInvitesUseCase> logger;
+    protected readonly ILogger<IInvitesService> logger;
     protected readonly IServiceProvider serviceProvider;
-    public BaseInvitesUseCase(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
+    public BaseInvitesService(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
     {
         this.serviceProvider = serviceProvider;
-        this.logger = loggerFactory.CreateLogger<IInvitesUseCase>();
+        this.logger = loggerFactory.CreateLogger<IInvitesService>();
     }
     protected T GetService<T>()
     {
@@ -229,14 +229,14 @@ public abstract class BaseInvitesUseCase
     }
 
 }
-public abstract class BaseSelfUserCreationUseCase
+public abstract class BaseSelfUserCreationService
 {
-    protected readonly ILogger<ISelfUserCreationUseCase> logger;
+    protected readonly ILogger<ISelfUserCreationService> logger;
     protected readonly IServiceProvider serviceProvider;
-    public BaseSelfUserCreationUseCase(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
+    public BaseSelfUserCreationService(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
     {
         this.serviceProvider = serviceProvider;
-        this.logger = loggerFactory.CreateLogger<ISelfUserCreationUseCase>();
+        this.logger = loggerFactory.CreateLogger<ISelfUserCreationService>();
     }
     protected T GetService<T>()
     {
@@ -249,14 +249,14 @@ public abstract class BaseSelfUserCreationUseCase
     }
 
 }
-public abstract class BaseServerStatusUseCase
+public abstract class BaseServerStatusService
 {
-    protected readonly ILogger<IServerStatusUseCase> logger;
+    protected readonly ILogger<IServerStatusService> logger;
     protected readonly IServiceProvider serviceProvider;
-    public BaseServerStatusUseCase(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
+    public BaseServerStatusService(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
     {
         this.serviceProvider = serviceProvider;
-        this.logger = loggerFactory.CreateLogger<IServerStatusUseCase>();
+        this.logger = loggerFactory.CreateLogger<IServerStatusService>();
     }
     protected T GetService<T>()
     {
@@ -269,14 +269,14 @@ public abstract class BaseServerStatusUseCase
     }
 
 }
-public abstract class BaseTokenValidationUseCase
+public abstract class BaseTokenValidationService
 {
-    protected readonly ILogger<ITokenValidationUseCase> logger;
+    protected readonly ILogger<ITokenValidationService> logger;
     protected readonly IServiceProvider serviceProvider;
-    public BaseTokenValidationUseCase(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
+    public BaseTokenValidationService(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
     {
         this.serviceProvider = serviceProvider;
-        this.logger = loggerFactory.CreateLogger<ITokenValidationUseCase>();
+        this.logger = loggerFactory.CreateLogger<ITokenValidationService>();
     }
     protected T GetService<T>()
     {
@@ -289,14 +289,14 @@ public abstract class BaseTokenValidationUseCase
     }
 
 }
-public abstract class BaseUserCreationUseCase
+public abstract class BaseUserCreationService
 {
-    protected readonly ILogger<IUserCreationUseCase> logger;
+    protected readonly ILogger<IUserCreationService> logger;
     protected readonly IServiceProvider serviceProvider;
-    public BaseUserCreationUseCase(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
+    public BaseUserCreationService(IServiceProvider serviceProvider, ILoggerFactory loggerFactory)
     {
         this.serviceProvider = serviceProvider;
-        this.logger = loggerFactory.CreateLogger<IUserCreationUseCase>();
+        this.logger = loggerFactory.CreateLogger<IUserCreationService>();
     }
     protected T GetService<T>()
     {

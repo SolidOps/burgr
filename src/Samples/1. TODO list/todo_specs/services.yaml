@@ -1,19 +1,19 @@
 burgr-model-version: 1.0.0
 
-use_cases:
+services:
 
   add_item:
-    is_anonymous: true
-    steps:
+    methods:
       execute:
         inputs:
           item: item
     dependencies:
       item:
+    api:
+      is_anonymous: true
 
   update_item:
-    is_anonymous: true
-    steps:
+    methods:
       execute:
         inputs:
           id:
@@ -22,11 +22,14 @@ use_cases:
           due_date: datetime
     dependencies:
       item:
+    api:
+      is_anonymous: true
 
   get_items:
-    is_anonymous: true
-    steps:
+    methods:
       execute:
         result: item[]
     dependencies:
       item:
+    api:
+      is_anonymous: true
