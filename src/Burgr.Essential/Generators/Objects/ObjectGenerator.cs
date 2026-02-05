@@ -69,6 +69,9 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
         if (template.Is("OnlyExposed") && !model.Is("Exposed"))
             return "model not exposed";
 
+        if (template.Is("ChangeTracking") && !model.Is("TrackingChanges"))
+            return "model does not track changes";
+
         if (template.Is("Cacheable") && !model.Is("Cacheable"))
             return "model not cacheable";
 
@@ -125,6 +128,18 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
             {
                 result = result.Replace(removeTemplate, Utilities.SingleNewLine);
             }
+        }
+
+        if (!model.Is("TrackingChanges"))
+        {
+            foreach (string removeTemplate in Utilities.GetInnerTemplates(result, Utilities.GetLoopIdentifiers(ObjectTemplateParser.TOREMOVEIFNOCHANGETRACKING)))
+            {
+                result = result.Replace(removeTemplate, Utilities.SingleNewLine);
+            }
+        }
+        else
+        {
+
         }
 
         // Resources
@@ -359,6 +374,8 @@ public class ObjectTemplateParser : ITemplateParser
 
     public const string TOREMOVEIFNOLABEL = "to remove if NO_LABEL";
 
+    public const string TOREMOVEIFNOCHANGETRACKING = "to remove if NO_CHANGE_TRACKING";
+
     public List<string> AdditionalLoopIdentifiers => new List<string>() {
         TOREMOVEIFPRIVATEID,
         TOREMOVEIFANONYMOUS,
@@ -378,7 +395,8 @@ public class ObjectTemplateParser : ITemplateParser
         TOREMOVEIFNOTDETAILSCOMPONENT,
         TOREMOVEIFNOTLISTVIEW,
         TOREMOVEIFNOTDETAILSVIEW,
-        TOREMOVEIFNOLABEL
+        TOREMOVEIFNOLABEL,
+        TOREMOVEIFNOCHANGETRACKING
     };
 
     public List<TemplateOption> Options { get; } = new List<TemplateOption>();
@@ -392,6 +410,7 @@ public class ObjectTemplateParser : ITemplateParser
         Options.Add(new TemplateOption() { Name = "AtLeastOneResource", Tag = "[R]", });
         Options.Add(new TemplateOption() { Name = "OnlyEvent", Tag = "[EVT]", });
         Options.Add(new TemplateOption() { Name = "Cacheable", Tag = "[CACHE]", });
+        Options.Add(new TemplateOption() { Name = "ChangeTracking", Tag = "[CT]", });
         Options.Add(new TemplateOption() { Name = "OnlyExposed", Tag = "[EXP]", });
         // for dto used in component
         Options.Add(new TemplateOption() { Name = "Component", Tag = "[C]" });

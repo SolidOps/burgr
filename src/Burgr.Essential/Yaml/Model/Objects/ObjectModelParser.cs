@@ -141,6 +141,11 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                 descriptor.Set("Cacheable", "true");
             }
 
+            if (value.enable_change_tracking)
+            {
+                descriptor.Set("TrackingChanges", "true");
+            }
+
             if (value.@interface != null)
             {
                 descriptor.Set("Interfaces", value.@interface);

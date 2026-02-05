@@ -86,10 +86,6 @@ public abstract class BaseFactoryMethodGenerator : BaseBurgrGenerator
             else
             {
                 fromBodyCount++;
-                if (fromBodyCount > 1)
-                {
-                    throw new Exception(string.Format("object parameter limited to only one: {0} {1}", factory.Name, method.Name));
-                }
 
                 if (parameterDefinition.Length > 0)
                 {

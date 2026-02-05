@@ -13,7 +13,6 @@
 
         public static string NamespaceName { get; set; }
 
-        public static bool ModelMonitored { get; set; }
         public static string IdentityKeysType { get; set; }
         public static string ForcedPrefix { get; set; }
         public static Dictionary<string, string> OverrideDestinations { get; set; }

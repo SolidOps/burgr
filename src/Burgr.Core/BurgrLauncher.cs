@@ -21,7 +21,6 @@ namespace SolidOps.Burgr.Core
             var binaryDirectories = new List<string>();
             string templateSpecDirectory = null;
 
-            bool ObjectsMonitored = true;
             string identityKeysType = "Guid";
             string forcedPrefix = null;
             string overrideDestination = null;
@@ -32,7 +31,6 @@ namespace SolidOps.Burgr.Core
             string generatedFileSuffix = ".g";
 
             string toRemoveAtGenerationIdentifier = "to remove at generation";
-            string toRemoveIfNotMonitoredIdentifier = "to remove if NOT_MONITORED";
             string toRemoveIfNoAPIIdentifier = "to remove if NO_API";
 
             string[] templates;
@@ -70,7 +68,6 @@ namespace SolidOps.Burgr.Core
                 generatedFilePrefix = config.GeneratedFilePrefix;
                 generatedFileSuffix = config.GeneratedFileSuffix;
                 toRemoveAtGenerationIdentifier = config.ToRemoveAtGenerationIdentifier ?? "to remove at generation";
-                toRemoveIfNotMonitoredIdentifier = config.ToRemoveIfNotMonitoredIdentifier ?? "to remove if NOT_MONITORED";
                 toRemoveIfNoAPIIdentifier = config.ToRemoveIfNoAPIIdentifier ?? "to remove if NO_API";
                 overrideDestination = config.OverrideDestination;
 
@@ -101,10 +98,6 @@ namespace SolidOps.Burgr.Core
                     {
                         templateSpecDirectory = Path.Combine(Directory.GetCurrentDirectory(), templateSpecDirectory);
                     }
-                }
-                if (config.ModelMonitored.HasValue)
-                {
-                    ObjectsMonitored = config.ModelMonitored.Value;
                 }
                 if (config.IdentityKeysType != null)
                 {
@@ -147,13 +140,6 @@ namespace SolidOps.Burgr.Core
                     if (arg.StartsWith("/dllFolderPath:", StringComparison.Ordinal))
                     {
                         binaryDirectories = arg.Replace("/dllFolderPath:", string.Empty).Split("|").ToList();
-                    }
-                    if (arg.StartsWith("/objectsMonitored:", StringComparison.Ordinal))
-                    {
-                        if (bool.TryParse(arg.Replace("/objectsMonitored:", string.Empty), out bool tempObjectsMonitored))
-                        {
-                            ObjectsMonitored = tempObjectsMonitored;
-                        }
                     }
                     if (arg.StartsWith("/identityKeysType:", StringComparison.Ordinal))
                     {
@@ -246,7 +232,6 @@ namespace SolidOps.Burgr.Core
                 NamespaceName = namespaceName,
                 TemplateSpecDirectory = templateSpecDirectory ?? modelSpecDirectory,
                 // internal
-                ObjectsMonitored = ObjectsMonitored,
                 IdentityKeysType = identityKeysType,
                 ForcedPrefix = forcedPrefix,
                 OverrideDestination = overrideDestination,
@@ -259,7 +244,6 @@ namespace SolidOps.Burgr.Core
                 GeneratedFilePrefix = generatedFilePrefix,
                 GeneratedFileSuffix = generatedFileSuffix,
                 ToRemoveAtGenerationIdentifier = toRemoveAtGenerationIdentifier,
-                ToRemoveIfNotMonitoredIdentifier = toRemoveIfNotMonitoredIdentifier,
                 ToRemoveIfNoAPIIdentifier = toRemoveIfNoAPIIdentifier
             };
             BurgrPlayer Burgr = new();

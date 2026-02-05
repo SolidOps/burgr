@@ -57,6 +57,8 @@ public class base_object
     public string plural { get; set; }
 
     public Dictionary<string, method_description> factories { get; set; }
+
+    public bool enable_change_tracking { get; set; }
 }
 
 public class aggregate_root : base_object

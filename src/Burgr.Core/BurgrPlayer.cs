@@ -13,7 +13,6 @@ namespace SolidOps.Burgr.Core
         public string NamespaceName { get; set; }
         public string BuildingDirectory { get; set; }
         public string TemplateSpecDirectory { get; set; }
-        public bool ObjectsMonitored { get; set; }
         public string IdentityKeysType { get; set; } = "Guid";
         public string ForcedPrefix { get; set; }
         public string OverrideDestination { get; set; }
@@ -29,7 +28,6 @@ namespace SolidOps.Burgr.Core
         public string GeneratedFileSuffix { get; set; }
 
         public string ToRemoveAtGenerationIdentifier { get; set; } = "to remove at generation";
-        public string ToRemoveIfNotMonitoredIdentifier { get; set; } = "to remove if NOT_MONITORED";
         public string ToRemoveIfNoAPIIdentifier { get; set; } = "to remove if NO_API";
 
     }
@@ -59,7 +57,6 @@ namespace SolidOps.Burgr.Core
             generatorSettings = settings;
 
             additionalLoopIdentifiers.Add(settings.ToRemoveAtGenerationIdentifier);
-            additionalLoopIdentifiers.Add(settings.ToRemoveIfNotMonitoredIdentifier);
             additionalLoopIdentifiers.Add(settings.ToRemoveIfNoAPIIdentifier);
 
             if (generatorSettings.GeneratedFilePrefix == null)
@@ -73,7 +70,6 @@ namespace SolidOps.Burgr.Core
             GeneratorOptions.ModuleName = settings.ModuleName;
             GeneratorOptions.NamespaceName = settings.NamespaceName;
 
-            GeneratorOptions.ModelMonitored = settings.ObjectsMonitored;
             GeneratorOptions.IdentityKeysType = settings.IdentityKeysType;
             GeneratorOptions.ForcedPrefix = settings.ForcedPrefix;
 
@@ -294,14 +290,6 @@ namespace SolidOps.Burgr.Core
                         fileContent = fileContent.Replace(removeTemplate, Utilities.SingleNewLine);
                     }
 
-                    if (!GeneratorOptions.ModelMonitored)
-                    {
-                        foreach (string removeTemplate in Utilities.GetInnerTemplates(fileContent, Utilities.GetLoopIdentifiers(generatorSettings.ToRemoveIfNotMonitoredIdentifier)))
-                        {
-                            fileContent = fileContent.Replace(removeTemplate, Utilities.SingleNewLine);
-                        }
-                    }
-
                     if (moduleResult.Value.NoneExposed)
                     {
                         foreach (string removeTemplate in Utilities.GetInnerTemplates(fileContent, Utilities.GetLoopIdentifiers(generatorSettings.ToRemoveIfNoAPIIdentifier)))
@@ -313,14 +301,6 @@ namespace SolidOps.Burgr.Core
                     fileContent = RemoveLoopIdentifiers(fileContent);
 
                     fileContent = fileContent.Replace(CommonTags.IdentityKeyType, GeneratorOptions.IdentityKeysType);
-
-                    if (!GeneratorOptions.ModelMonitored)
-                    {
-                        foreach (string removeTemplate in Utilities.GetInnerTemplates(fileContent, Utilities.GetLoopIdentifiers(generatorSettings.ToRemoveIfNotMonitoredIdentifier)))
-                        {
-                            fileContent = fileContent.Replace(removeTemplate, Utilities.SingleNewLine);
-                        }
-                    }
 
                     fileContent = RemoveLoopIdentifiers(fileContent);
 

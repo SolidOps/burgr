@@ -177,9 +177,9 @@ public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
             else
             {
                 fromBodyCount++;
-                if (fromBodyCount > 1)
+                if (fromBodyCount > 1 && method.Is("External"))
                 {
-                    throw new Exception(string.Format("object parameter limited to only one: {0} {1}", service.Name, method.Name));
+                    throw new Exception(string.Format("For external services, object parameters are limited to only one: {0} {1}", service.Name, method.Name));
                 }
 
                 if (parameterDefinition.Length > 0)
