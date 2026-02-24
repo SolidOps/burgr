@@ -135,6 +135,7 @@ public class service_method_description : method_description
 {
     public bool no_transaction { get; set; }
     public bool api { get; set; }
+    public bool allow_write { get; set; }
     public method_api_description api_description { get; set; }
 }
 

@@ -18,7 +18,9 @@ public class IdentityServiceMethodGenerator : BaseServiceMethodGenerator, IGener
     {
         var result = base.CheckIfApply(model, template);
         if (result != null)
+        {
             return result;
+        }
 
         return model.Get("ReturnType") != ReturnType.Identity.ToString() ? "service method is not identity" : null;
     }
@@ -28,7 +30,10 @@ public class IdentityServiceMethodGenerator : BaseServiceMethodGenerator, IGener
         var conversionService = ConversionServices[template.DestinationLanguage];
         string result = base.Generate(content, model, template, modelPrefix, modelSuffix);
         if (result == string.Empty)
+        {
             return result;
+        }
+
         ModelDescriptor method = model;
         ModelDescriptor service = model.Parent;
 
@@ -41,7 +46,7 @@ public class IdentityServiceMethodGenerator : BaseServiceMethodGenerator, IGener
 
         result = method.Is("NoTransaction") ? result.Replace("_NOTRAN_", "WithoutTransaction") : result.Replace("_NOTRAN_", "");
 
-        result = result.Replace("UNITOFWORKTYPE", "Write"); // Unitofwork type are always Command
+        result = result.Replace("UNITOFWORKTYPE", "Write"); // Unitofwork type are always Write
 
         return result;
     }

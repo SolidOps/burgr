@@ -18,14 +18,20 @@ public class VoidServiceMethodGenerator : BaseServiceMethodGenerator, IGenerator
     {
         var result = base.CheckIfApply(model, template);
         if (result != null)
+        {
             return result;
+        }
 
         if (model.Get("ReturnType") != ReturnType.Void.ToString())
+        {
             return "service method is not void";
+        }
 
         if (template.Is("Component") && !model.Is("Component"))
+        {
             return "model is not component";
-        
+        }
+
         return null;
     }
 
@@ -34,7 +40,10 @@ public class VoidServiceMethodGenerator : BaseServiceMethodGenerator, IGenerator
         var conversionService = ConversionServices[template.DestinationLanguage];
         string result = base.Generate(content, model, template, modelPrefix, modelSuffix);
         if (result == string.Empty)
+        {
             return result;
+        }
+
         ModelDescriptor method = model;
         ModelDescriptor service = model.Parent;
 
@@ -47,7 +56,7 @@ public class VoidServiceMethodGenerator : BaseServiceMethodGenerator, IGenerator
 
         result = method.Is("NoTransaction") ? result.Replace("_NOTRAN_", "WithoutTransaction") : result.Replace("_NOTRAN_", "");
 
-        result = result.Replace("UNITOFWORKTYPE", "Write"); // Unitofwork type are always Command
+        result = result.Replace("UNITOFWORKTYPE", "Write");
 
         return result;
     }
@@ -63,7 +72,7 @@ public class VoidMethodTemplateParser : ITemplateParser
     public VoidMethodTemplateParser()
     {
         Options.Add(new TemplateOption() { Name = "Component", Tag = "[C]" });
-        Options.Add(new TemplateOption() { Name = "External", Tag = "[EXT]" }); 
+        Options.Add(new TemplateOption() { Name = "External", Tag = "[EXT]" });
         Options.Add(new TemplateOption() { Name = "Anonymous", Tag = "[A]" });
         Options.Add(new TemplateOption() { Name = "NonAnonymous", Tag = "[-A]" });
     }

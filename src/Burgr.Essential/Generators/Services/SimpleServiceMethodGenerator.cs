@@ -1,6 +1,5 @@
 ﻿using SolidOps.Burgr.Core.Descriptors;
 using SolidOps.Burgr.Core.Generators;
-using SolidOps.Burgr.Essential.Generators.Objects;
 using SolidOps.SubZero;
 
 namespace SolidOps.Burgr.Essential.Generators.Services;
@@ -19,7 +18,9 @@ public class SimpleServiceMethodGenerator : BaseServiceMethodGenerator, IGenerat
     {
         var result = base.CheckIfApply(model, template);
         if (result != null)
+        {
             return result;
+        }
 
         return model.Get("ReturnType") != ReturnType.Simple.ToString() ? "service method is not simple" : null;
     }
@@ -29,7 +30,10 @@ public class SimpleServiceMethodGenerator : BaseServiceMethodGenerator, IGenerat
         var conversionService = ConversionServices[template.DestinationLanguage];
         string result = base.Generate(content, model, template, modelPrefix, modelSuffix);
         if (result == string.Empty)
+        {
             return result;
+        }
+
         ModelDescriptor method = model;
         ModelDescriptor service = model.Parent;
 
@@ -57,7 +61,14 @@ public class SimpleServiceMethodGenerator : BaseServiceMethodGenerator, IGenerat
 
         result = method.Is("NoTransaction") ? result.Replace("_NOTRAN_", "WithoutTransaction") : result.Replace("_NOTRAN_", "");
 
-        result = result.Replace("UNITOFWORKTYPE", "Read"); // Unitofwork type are always Command
+        if (method.Is("AllowWrite"))
+        {
+            result = result.Replace("UNITOFWORKTYPE", "Write");
+        }
+        else
+        {
+            result = result.Replace("UNITOFWORKTYPE", "Read");
+        }
 
         return result;
     }

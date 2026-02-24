@@ -30,7 +30,10 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
         {
             string moduleName = this.parserEngine.ModuleName;
             if (kvpModule.Key != string.Empty)
+            {
                 moduleName += "." + kvpModule.Key;
+            }
+
             foreach (var kvp in kvpModule.Value.services)
             {
                 GetOrCreateService(kvp.Key, kvp.Value, this.parserEngine.NamespaceName, moduleName);
@@ -120,7 +123,9 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
                         modelServiceMethod.Set("List", "true");
                     }
                     else
+                    {
                         AddRelatedDescriptor(modelServiceMethod, typeInfo, Generators.Objects.ObjectGenerator.Name);
+                    }
                 }
                 else
                 {
@@ -159,6 +164,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
 
             modelServiceMethod.Set("External", isMethodExternal.ToString());
             modelServiceMethod.Set("Anonymous", isMethodAnonymous.ToString());
+            modelServiceMethod.Set("AllowWrite", method.allow_write.ToString());
 
             modelServiceMethod.Set("ForcePost", method.api_description?.force_post.ToString());
 
@@ -208,7 +214,9 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
                             modelServiceMethodParameter.Set("List", "true");
                         }
                         else
+                        {
                             AddRelatedDescriptor(modelServiceMethodParameter, typeInfo, Generators.Objects.ObjectGenerator.Name);
+                        }
                     }
                     else
                     {
@@ -278,16 +286,23 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
     public static ReturnType GetReturnType(string returnType, string moduleName)
     {
         if (returnType == null)
+        {
             return ReturnType.Void;
+        }
 
         if (returnType == "identity")
+        {
             return ReturnType.Identity;
+        }
 
         var typeInfo = new TypeInfo(returnType, moduleName);
         if (typeInfo.TypeType == TypeType.Model)
         {
             if (typeInfo.IsArray)
+            {
                 return ReturnType.ModelList;
+            }
+
             return ReturnType.Model;
         }
 
