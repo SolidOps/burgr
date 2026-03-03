@@ -637,6 +637,10 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
             bProp.AddRelated("Object", related);
 
             bProp.Set("PropertyType", "ReferencedModel");
+            if(modelsRepository.modelDescriptions.ContainsKey(typeInfo.ModuleName))
+            {
+                bProp.Set("InternalReference", "true");
+            }
             SetBasePropertyParameter(bProp, propName, property, objectName, baseObject, objectDescriptor);
             if (typeInfo.IsNavigation)
             {

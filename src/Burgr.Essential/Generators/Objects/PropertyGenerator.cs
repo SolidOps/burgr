@@ -172,6 +172,18 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             }
         }
 
+        if (template.Is("ReferencedModel"))
+        {
+            if (template.Is("InternalReference") && !model.Is("InternalReference"))
+            {
+                return "property is external reference";
+            }
+            if (template.Is("ExternalReference") && model.Is("InternalReference"))
+            {
+                return "property is internal reference";
+            }
+        }
+
         var related = model.GetRelated("Object");
         if (model.Get("PropertyType") == "Model" && template.Is("Model"))
         {
@@ -242,6 +254,7 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             result = result.Replace("_ISLIST_", model.Is("List") ? "List" : string.Empty);
             result = result.Replace("_ISQUERY_", model.Is("List") ? "Query" : "Get");
             result = result.Replace("DEPENDENCYNAMESPACE", model.FullModuleName);
+            result = result.Replace("INTERNALMODULE", model.InternalModuleName);
         }
         if (model.Get("PropertyType") == "Model" && template.Is("Model"))
         {
@@ -263,6 +276,7 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             result = result.Replace("_ISLIST_", model.Is("List") ? "List" : string.Empty);
             result = result.Replace("_ISQUERY_", model.Is("List") ? "Query" : "Get");
             result = result.Replace("DEPENDENCYNAMESPACE", model.FullModuleName);
+            result = result.Replace("INTERNALMODULE", model.InternalModuleName);
         }
         if (model.Get("PropertyType") == "ReferencedModel" && template.Is("ReferencedModel"))
         {
@@ -286,6 +300,7 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             result = result.Replace("_ISLIST_", model.Is("List") ? "List" : string.Empty);
             result = result.Replace("_ISQUERY_", model.Is("List") ? "Query" : "Get");
             result = result.Replace("DEPENDENCYNAMESPACE", model.GetRelated("Object").FullModuleName);
+            result = result.Replace("INTERNALMODULE", model.GetRelated("Object").InternalModuleName);
 
             result = result.Replace("_REF_", "");
         }
@@ -470,6 +485,8 @@ public class PropertyTemplateParser : ITemplateParser
         Options.Add(new TemplateOption() { Name = "Enum", Tag = "[E]", });
         Options.Add(new TemplateOption() { Name = "Model", Tag = "[M]", });
         Options.Add(new TemplateOption() { Name = "ReferencedModel", Tag = "[R]", });
+        Options.Add(new TemplateOption() { Name = "InternalReference", Tag = "[IR]", });
+        Options.Add(new TemplateOption() { Name = "ExternalReference", Tag = "[ER]", });
 
         // model types
         Options.Add(new TemplateOption() { Name = "Aggregate", Tag = "[AG]", });

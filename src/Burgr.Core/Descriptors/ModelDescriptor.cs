@@ -22,6 +22,14 @@
             }
         }
 
+        public string InternalModuleName
+        {
+            get
+            {
+                return ModuleName?.Split(".").Last();
+            }
+        }
+
         public override string ToString()
         {
             return DescriptorType + ":" + Name;
