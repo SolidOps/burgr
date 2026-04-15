@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <AssemblyName>SolidOps.Burgr.Core</AssemblyName>
         <RootNamespace>SolidOps.Burgr.Core</RootNamespace>
         <ImplicitUsings>enable</ImplicitUsings>
@@ -17,7 +17,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.0" />
     </ItemGroup>
 
     <ItemGroup>

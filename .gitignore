@@ -247,3 +247,6 @@ source/**/*.jfm
 
 src/Burgr/Properties/launchSettings.json
 src/.config/dotnet-tools.json
+
+CLAUDE.md
+.claude
