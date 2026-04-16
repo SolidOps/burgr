@@ -32,7 +32,7 @@ public class TemplateParserEngine : ITemplateParserEngine
 
     }
 
-    public List<SourceTemplate> Parse(string templatesDirectory, List<string> templates, Dictionary<string, IGenerator> generators, string filter = null)
+    public List<Core.Template.SourceTemplate> Parse(string templatesDirectory, List<string> templates, Dictionary<string, IGenerator> generators, string filter = null)
     {
         List<string> templateDirectoryPaths = new List<string>();
         List<string> templateZipPaths = new List<string>();

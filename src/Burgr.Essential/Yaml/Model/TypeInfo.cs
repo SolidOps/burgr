@@ -9,10 +9,8 @@ public class TypeInfo
     private static string ArrayIdentifier = "[]";
     private static string NullIdentifier = "?";
     private static string RefSeparator = ".";
-    private static string SplitSeparator = "|";
     private static string Identity = "identity";
     private static string Void = "void";
-    private static string Text = "text";
     private static string NavigationIdentifier = "->";
     private static string CalculatedIdentifier = "=";
     private static string NonPersistedIdentifier = "-";

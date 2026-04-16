@@ -9,7 +9,7 @@ services:
           item: item
     dependencies:
       item:
-    api:
+    api_description:
       is_anonymous: true
 
   update_item:
@@ -22,7 +22,7 @@ services:
           due_date: datetime
     dependencies:
       item:
-    api:
+    api_description:
       is_anonymous: true
 
   get_items:
@@ -31,5 +31,5 @@ services:
         result: item[]
     dependencies:
       item:
-    api:
+    api_description:
       is_anonymous: true

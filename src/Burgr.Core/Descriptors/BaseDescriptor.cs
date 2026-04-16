@@ -24,13 +24,13 @@ namespace SolidOps.Burgr.Core.Descriptors
             return Attributes.ContainsKey(option) ? Attributes[option] : null;
         }
 
-        public T Get<T>(string option)
+        public TResult Get<TResult>(string option)
         {
             string value = Get(option);
             if (value != null)
             {
-                var converter = TypeDescriptor.GetConverter(typeof(T));
-                return (T)(converter.ConvertFromInvariantString(value));
+                var converter = TypeDescriptor.GetConverter(typeof(TResult));
+                return (TResult)(converter.ConvertFromInvariantString(value));
             }
             return default;
         }

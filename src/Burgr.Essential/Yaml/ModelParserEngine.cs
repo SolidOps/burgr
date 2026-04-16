@@ -36,8 +36,6 @@ public class ModelParserEngine : IModelParserEngine
     {
         if (!IsInitialized)
         {
-            string assemblyFileName = null;
-
             List<string> patterns = new()
             {
                 "*.yaml"

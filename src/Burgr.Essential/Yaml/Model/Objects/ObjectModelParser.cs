@@ -66,7 +66,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
     }
 
     #region Object
-    public ModelDescriptor GetOrCreateObjectDescriptor(string name, base_object value, DomainType domainType, string namespaceName, string moduleName, Dictionary<string, string> addedAttributes)
+    public ModelDescriptor GetOrCreateObjectDescriptor(string name, BaseObject value, DomainType domainType, string namespaceName, string moduleName, Dictionary<string, string> addedAttributes)
     {
         ModelDescriptor descriptor = FindModelDescriptor(namespaceName, moduleName, ObjectGenerator.Name, name);
         if (descriptor == null)
@@ -177,12 +177,12 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                     if (kvp.Value is Dictionary<object, object> dic)
                     {
                         var text = new YamlDotNet.Serialization.Serializer().Serialize(dic);
-                        var property = new YamlDotNet.Serialization.Deserializer().Deserialize<property>(text);
+                        var property = new YamlDotNet.Serialization.Deserializer().Deserialize<Property>(text);
                         propertyDescriptor = GetOrCreateProperty(descriptor, kvp.Key, property, name, value);
                     }
                     else
                     {
-                        propertyDescriptor = GetOrCreateProperty(descriptor, kvp.Key, new property() { type = kvp.Value as string ?? "string" }, name, value);
+                        propertyDescriptor = GetOrCreateProperty(descriptor, kvp.Key, new Property() { type = kvp.Value as string ?? "string" }, name, value);
                     }
 
                     if (propertyDescriptor.Is("Label"))
@@ -251,7 +251,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
             {
                 foreach (var kvpMethods in value.factories)
                 {
-                    method_description method = kvpMethods.Value ?? new method_description();
+                    MethodDescription method = kvpMethods.Value ?? new MethodDescription();
 
                     ModelDescriptor modelFactoryMethod = new(kvpMethods.Key, FactoryMethodGenerator.Name)
                     {
@@ -566,7 +566,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
     #endregion
 
     #region Property
-    private ModelDescriptor GetOrCreateProperty(ModelDescriptor objectDescriptor, string propName, property property, string objectName, base_object baseObject)
+    private ModelDescriptor GetOrCreateProperty(ModelDescriptor objectDescriptor, string propName, Property property, string objectName, BaseObject baseObject)
     {
         ModelDescriptor descriptor = FindModelDescriptor(objectDescriptor.GetChildren(), "Property", propName);
         if (descriptor == null)
@@ -577,7 +577,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
         return descriptor;
     }
 
-    public ModelDescriptor CreatePropertyDescriptor(string propName, property property, ModelDescriptor objectDescriptor, string objectName, base_object baseObject)
+    public ModelDescriptor CreatePropertyDescriptor(string propName, Property property, ModelDescriptor objectDescriptor, string objectName, BaseObject baseObject)
     {
         ModelDescriptor bProp = null;
         string propertyType = property.type ?? "string";
@@ -730,7 +730,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
         return bProp;
     }
 
-    private void SetBasePropertyParameter(ModelDescriptor baseProp, string name, property property, string parentName, base_object parent, ModelDescriptor modelObject)
+    private void SetBasePropertyParameter(ModelDescriptor baseProp, string name, Property property, string parentName, BaseObject parent, ModelDescriptor modelObject)
     {
         var initialName = baseProp.Name;
         var specialType = property.special_type;
@@ -773,7 +773,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
         baseProp.Set("IdColumnName", property.id_column_name);
     }
 
-    private void SetMultipleUniqueConstraint(string name, property prop, ModelDescriptor property, string parentName, base_object parent, ModelDescriptor modelObject)
+    private void SetMultipleUniqueConstraint(string name, Property prop, ModelDescriptor property, string parentName, BaseObject parent, ModelDescriptor modelObject)
     {
         List<ModelDescriptor> uniqueConstraintCoMembers = new();
         string[] attributes = prop.multiple_unique_constraint_with?.Split("|");
@@ -800,7 +800,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
         }
     }
 
-    private ModelDescriptor FindPropertyInModelObjectAndCreateIfNotExist(string parentName, base_object parent, string propertyName, ModelDescriptor objectDescriptor)
+    private ModelDescriptor FindPropertyInModelObjectAndCreateIfNotExist(string parentName, BaseObject parent, string propertyName, ModelDescriptor objectDescriptor)
     {
         ModelDescriptor descriptor = FindModelDescriptor(objectDescriptor.GetChildren(), "Property", propertyName);
         if (descriptor == null)
@@ -812,12 +812,12 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                     if (kvp.Value is Dictionary<object, object> dic)
                     {
                         var text = new YamlDotNet.Serialization.Serializer().Serialize(dic);
-                        var property = new YamlDotNet.Serialization.Deserializer().Deserialize<property>(text);
+                        var property = new YamlDotNet.Serialization.Deserializer().Deserialize<Property>(text);
                         descriptor = CreatePropertyDescriptor(kvp.Key, property, objectDescriptor, parentName, parent);
                     }
                     else
                     {
-                        descriptor = CreatePropertyDescriptor(kvp.Key, new property() { type = kvp.Value as string }, objectDescriptor, parentName, parent);
+                        descriptor = CreatePropertyDescriptor(kvp.Key, new Property() { type = kvp.Value as string }, objectDescriptor, parentName, parent);
                     }
                     objectDescriptor.AddChild(descriptor);
                 }

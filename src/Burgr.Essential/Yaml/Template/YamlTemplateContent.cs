@@ -2,10 +2,10 @@
 
 public class YamlTemplateContentV1
 {
-    public Dictionary<string, source_template> source_templates { get; set; } = new Dictionary<string, source_template>();
+    public Dictionary<string, SourceTemplate> source_templates { get; set; } = new Dictionary<string, SourceTemplate>();
 }
 
-public class source_template
+public class SourceTemplate
 {
     public string source { get; set; }
 
@@ -27,10 +27,10 @@ public class source_template
 
     public int? children_level { get; set; }
 
-    public options options { get; set; }
+    public Options options { get; set; }
 }
 
-public class options
+public class Options
 {
     public string model_prefix { get; set; }
     public string model_suffix { get; set; }

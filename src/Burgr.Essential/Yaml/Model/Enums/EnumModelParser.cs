@@ -31,7 +31,7 @@ public class EnumModelParser : BaseYamlModelParser, IModelParser
         }
     }
 
-    public ModelDescriptor GetOrCreateDescriptor(string name, @enum value, string namespaceName, string moduleName)
+    public ModelDescriptor GetOrCreateDescriptor(string name, Enum value, string namespaceName, string moduleName)
     {
         ModelDescriptor descriptor = FindModelDescriptor(namespaceName, moduleName, EnumGenerator.Name, name);
         if (descriptor == null)
@@ -41,7 +41,7 @@ public class EnumModelParser : BaseYamlModelParser, IModelParser
         return descriptor;
     }
 
-    public ModelDescriptor CreateDescriptor(string name, @enum value, string namespaceName, string moduleName)
+    public ModelDescriptor CreateDescriptor(string name, Enum value, string namespaceName, string moduleName)
     {
         if (name.ToLower() != name)
         {

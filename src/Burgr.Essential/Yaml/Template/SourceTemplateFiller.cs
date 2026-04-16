@@ -14,9 +14,9 @@ public class SourceTemplateFiller
         this.generators = generators;
     }
 
-    public void FillSourceTemplates(List<SourceTemplate> sourceTemplates, string filter = null)
+    public void FillSourceTemplates(List<Core.Template.SourceTemplate> sourceTemplates, string filter = null)
     {
-        foreach (SourceTemplate sourceTemplate in sourceTemplates)
+        foreach (Core.Template.SourceTemplate sourceTemplate in sourceTemplates)
         {
             if (filter != null && !sourceTemplate.FileSuffix.Contains(filter))
             {

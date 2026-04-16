@@ -2,23 +2,23 @@
 
 public class YamlModelContentV1
 {
-    public Dictionary<string, aggregate_root> aggregate_roots { get; set; } = new Dictionary<string, aggregate_root>();
+    public Dictionary<string, AggregateRoot> aggregate_roots { get; set; } = new Dictionary<string, AggregateRoot>();
 
-    public Dictionary<string, entity> entities { get; set; } = new Dictionary<string, entity>();
+    public Dictionary<string, Entity> entities { get; set; } = new Dictionary<string, Entity>();
 
-    public Dictionary<string, service> services { get; set; } = new Dictionary<string, service>();
+    public Dictionary<string, Service> services { get; set; } = new Dictionary<string, Service>();
 
-    public Dictionary<string, transient> transients { get; set; } = new Dictionary<string, transient>();
+    public Dictionary<string, Transient> transients { get; set; } = new Dictionary<string, Transient>();
 
-    public Dictionary<string, value_object> value_objects { get; set; } = new Dictionary<string, value_object>();
+    public Dictionary<string, ValueObject> value_objects { get; set; } = new Dictionary<string, ValueObject>();
 
-    public Dictionary<string, @enum> enums { get; set; } = new Dictionary<string, @enum>();
+    public Dictionary<string, Enum> enums { get; set; } = new Dictionary<string, Enum>();
 
-    public Dictionary<string, @event> events { get; set; } = new Dictionary<string, @event>();
+    public Dictionary<string, Event> events { get; set; } = new Dictionary<string, Event>();
 }
 
 // aggregates
-public class base_object
+public class BaseObject
 {
     public string @namespace { get; set; }
 
@@ -42,36 +42,36 @@ public class base_object
 
     public Dictionary<string, object> properties { get; set; } // value is string (type) or property
 
-    public Dictionary<string, api_description> api { get; set; }
+    public Dictionary<string, ApiDescription> api { get; set; }
 
     public List<string> event_consumers { get; set; }
 
     public Dictionary<string, string> dependencies { get; set; }
 
-    public Dictionary<string, component_description> components { get; set; }
+    public Dictionary<string, ComponentDescription> components { get; set; }
 
-    public Dictionary<string, view_description> views { get; set; }
+    public Dictionary<string, ViewDescription> views { get; set; }
 
     public Dictionary<string, List<string>> rules { get; set; }
 
     public string plural { get; set; }
 
-    public Dictionary<string, method_description> factories { get; set; }
+    public Dictionary<string, MethodDescription> factories { get; set; }
 
     public bool enable_change_tracking { get; set; }
 }
 
-public class aggregate_root : base_object
+public class AggregateRoot : BaseObject
 {
 
 }
 
-public class entity : base_object
+public class Entity : BaseObject
 {
 
 }
 
-public class property
+public class Property
 {
     public string type { get; set; }
     public bool? is_max_size { get; set; }
@@ -90,13 +90,13 @@ public class property
     public string multiple_unique_constraint_with { get; set; }
 }
 
-public class method_api_description : api_description
+public class MethodApiDescription : ApiDescription
 {
     public bool force_post { get; set; }
     public bool create_component { get; set; }
 }
 
-public class api_description
+public class ApiDescription
 {
     public bool? is_anonymous { get; set; }
 
@@ -105,61 +105,61 @@ public class api_description
     public string ownership_override_right { get; set; }
 }
 
-public class component_description
+public class ComponentDescription
 {
     public string includes { get; set; }
 }
 
-public class view_description
+public class ViewDescription
 {
 }
 
 // service
-public class service
+public class Service
 {
     public string @namespace { get; set; }
     public string implements_interfaces { get; set; }
-    public Dictionary<string, service_method_description> methods { get; set; }
+    public Dictionary<string, ServiceMethodDescription> methods { get; set; }
     public Dictionary<string, string> dependencies { get; set; }
     public bool api { get; set; }
-    public api_description api_description { get; set; }
+    public ApiDescription api_description { get; set; }
 }
 
-public class method_description
+public class MethodDescription
 {
     public Dictionary<string, string> inputs { get; set; } // value is type as string
     public string result { get; set; } // value is type as string
 }
 
-public class service_method_description : method_description
+public class ServiceMethodDescription : MethodDescription
 {
     public bool no_transaction { get; set; }
     public bool api { get; set; }
     public bool allow_write { get; set; }
-    public method_api_description api_description { get; set; }
+    public MethodApiDescription api_description { get; set; }
 }
 
 // transient
-public class transient : base_object
+public class Transient : BaseObject
 {
 
 }
 
 // value object
-public class value_object : base_object
+public class ValueObject : BaseObject
 {
 
 }
 
 // event
-public class @event : base_object
+public class Event : BaseObject
 {
     public string data_type { get; set; }
 }
 
 
 // enum
-public class @enum
+public class Enum
 {
     public string @namespace { get; set; }
     public Dictionary<string, int> values { get; set; }

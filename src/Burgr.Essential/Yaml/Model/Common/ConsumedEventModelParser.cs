@@ -6,8 +6,6 @@ namespace SolidOps.Burgr.Essential.Yaml.Model.Common;
 
 public class ConsumedEventModelParser : BaseYamlModelParser, IModelParser
 {
-    private ModelParserEngine assemblyParserEngine;
-
     public ConsumedEventModelParser()
     {
         DefaultDescriptorType = ConsumedEventGenerator.Name;

@@ -41,7 +41,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
         }
     }
 
-    private void GetOrCreateService(string name, service service, string namespaceName, string moduleName)
+    private void GetOrCreateService(string name, Service service, string namespaceName, string moduleName)
     {
         if (GetServiceObjectInList(name) == null)
         {
@@ -49,7 +49,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
         }
     }
 
-    private void CreateService(string name, service service, string namespaceName, string moduleName)
+    private void CreateService(string name, Service service, string namespaceName, string moduleName)
     {
         if (name.ToLower() != name)
         {
@@ -87,7 +87,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
 
         foreach (var kvpMethods in service.methods)
         {
-            service_method_description method = kvpMethods.Value ?? new service_method_description();
+            ServiceMethodDescription method = kvpMethods.Value ?? new ServiceMethodDescription();
 
             ReturnType returnType = GetReturnType(method.result, moduleName);
 

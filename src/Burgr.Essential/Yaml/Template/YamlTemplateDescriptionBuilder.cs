@@ -17,9 +17,9 @@ public class YamlTemplateDescriptionBuilder
         this.templateZipPaths = templateZipPaths;
     }
 
-    public List<SourceTemplate> BuildTemplateDescription(Dictionary<string, IGenerator> generators, string filter)
+    public List<Core.Template.SourceTemplate> BuildTemplateDescription(Dictionary<string, IGenerator> generators, string filter)
     {
-        List<SourceTemplate> sourceTemplates = new();
+        List<Core.Template.SourceTemplate> sourceTemplates = new();
 
         foreach (var templateDirectory in templateDirectoryPaths)
         {
@@ -40,7 +40,7 @@ public class YamlTemplateDescriptionBuilder
             foreach (var source_template in yamlContent.source_templates)
             {
                 string fileContent = File.ReadAllText(templateDirectory + "\\" + source_template.Value.source);
-                var sourceTemplate = new SourceTemplate(fileContent)
+                var sourceTemplate = new Core.Template.SourceTemplate(fileContent)
                 {
                     FileSuffix = source_template.Value.file_suffix,
                     DestinationPath = source_template.Value.destination_path ?? GeneratorOptions.BuildingDirectory,
