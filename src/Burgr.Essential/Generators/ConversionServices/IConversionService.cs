@@ -34,6 +34,7 @@ public interface IConversionService
     Type GetSimpleType(string typeName);
 
     string SimplePropertyType(ModelDescriptor model, bool preventList);
+    string SimpleDefaultValue(ModelDescriptor model, bool preventList);
 
     string EnumPropertyType(ModelDescriptor model, string suffix, bool preventList);
     string ModelPropertyType(ModelDescriptor model,string prefix, string suffix, bool preventList);

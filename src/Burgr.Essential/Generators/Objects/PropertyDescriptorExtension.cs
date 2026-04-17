@@ -1,6 +1,7 @@
 ﻿using SolidOps.Burgr.Core;
 using SolidOps.Burgr.Core.Descriptors;
 using SolidOps.Burgr.Essential.Generators.ConversionServices;
+using System.Reflection;
 
 namespace SolidOps.Burgr.Essential.Generators.Objects;
 
@@ -23,6 +24,22 @@ public static class PropertyDescriptorExtension
         else if (descriptor.Get("PropertyType") == "ReferencedModel")
         {
             return conversionService.ReferencedModelPropertyType(descriptor, prefix, suffix, preventList);
+        }
+        return "";
+    }
+
+    public static string GetDefaultValue(this ModelDescriptor descriptor, IConversionService conversionService, string prefix, string suffix, bool preventList)
+    {
+        if (descriptor.Get("PropertyType") == "Simple")
+        {
+            return conversionService.SimpleDefaultValue(descriptor, preventList);
+        }
+        else if (descriptor.Get("PropertyType") == "Model")
+        {
+            if(descriptor.Is("Null"))
+            {
+                return "null";
+            }
         }
         return "";
     }

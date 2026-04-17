@@ -225,6 +225,7 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         {
             result = result.Replace("_SIMPLE_", "");
             result = result.Replace("_TYPE_", model.GetPropertyType(conversionService, null, null, false));
+            result = result.Replace("_DEFAULT_VALUE_", model.GetDefaultValue(conversionService, null, null, false));
 
             string type = model.Get("SimpleType");
             Type simpleType = conversionService.GetSimpleType(type);
@@ -277,6 +278,8 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             result = result.Replace("_ISQUERY_", model.Is("List") ? "Query" : "Get");
             result = result.Replace("DEPENDENCYNAMESPACE", model.FullModuleName);
             result = result.Replace("INTERNALMODULE", model.InternalModuleName);
+
+            result = result.Replace("_DEFAULT_VALUE_", model.GetDefaultValue(conversionService, null, null, false));
         }
         if (model.Get("PropertyType") == "ReferencedModel" && template.Is("ReferencedModel"))
         {
@@ -303,6 +306,8 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             result = result.Replace("INTERNALMODULE", model.GetRelated("Object").InternalModuleName);
 
             result = result.Replace("_REF_", "");
+
+            result = result.Replace("_DEFAULT_VALUE_", model.GetDefaultValue(conversionService, null, null, false));
         }
 
         if (result.Contains("_BACKLINK_"))

@@ -4,16 +4,24 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-      <AssemblyName>SolidOps.TODO.Shared</AssemblyName>
-      <RootNamespace>SolidOps.TODO.Shared</RootNamespace>
+    <AssemblyName>SolidOps.TODO.Shared</AssemblyName>
+    <RootNamespace>SolidOps.TODO.Shared</RootNamespace>
   </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.0" />
-        <PackageReference Include="SolidOps.SubZero" Version="1.1.0.3" />
-        <PackageReference Include="Extensions.Hosting.AsyncInitialization" Version="3.0.1" />
-    </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.0" />
+    <PackageReference Include="SolidOps.SubZero" Version="1.1.0.3" />
+    <PackageReference Include="Extensions.Hosting.AsyncInitialization" Version="3.0.1" />
+  </ItemGroup>
 </Project>

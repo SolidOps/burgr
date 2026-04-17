@@ -408,6 +408,16 @@ public abstract class BaseConversionService : IConversionService
         }
     }
 
+    public virtual string SimpleDefaultValue(ModelDescriptor model, bool preventList)
+    {
+        Type simpleType = GetSimpleType(model.Get("SimpleType"));
+        if (simpleType == typeof(string))
+        {
+            return "string.Empty";
+        }
+        return $"default({simpleType.FullName})";
+    }
+
     public virtual string EnumPropertyType(ModelDescriptor model, string suffix, bool preventList)
     {
         string csClassName = ConversionHelper.ConvertToPascalCase(model.Get("EnumType"));

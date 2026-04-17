@@ -117,6 +117,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TODO.ConsoleApp", "Samples\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7FA6F724-6389-4CB5-A9D3-C17D46DF919A}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		makefile = makefile
 	EndProjectSection
 EndProject
