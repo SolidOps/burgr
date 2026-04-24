@@ -69,7 +69,7 @@ namespace SolidOps.TODO.Contracts.DTO
     {
         // Property [S][NO][NP][PUO]
         // patch
-        public System.String Name { get; set; }
+        public System.String? Name { get; set; }
 
         // patch
         public System.DateTime? DueDate { get; set; }

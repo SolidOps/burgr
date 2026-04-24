@@ -91,10 +91,10 @@ namespace SolidOps.UM.Contracts.DTO
     {
         // Property [S][NO][NP][PUO]
         // patch
-        public System.String Email { get; set; }
+        public System.String? Email { get; set; }
 
         // patch
-        public System.String Provider { get; set; }
+        public System.String? Provider { get; set; }
 
         // patch
         public System.Boolean? TechnicalUser { get; set; }
@@ -220,7 +220,7 @@ namespace SolidOps.UM.Contracts.DTO
     {
         // Property [S][NO][NP][PUO]
         // patch
-        public System.String Name { get; set; }
+        public System.String? Name { get; set; }
 
         // relations
 
@@ -307,13 +307,13 @@ namespace SolidOps.UM.Contracts.DTO
     {
         // Property [S][NO][NP][PUO]
         // patch
-        public System.String Email { get; set; }
+        public System.String? Email { get; set; }
 
         // patch
-        public System.String CreatorName { get; set; }
+        public System.String? CreatorName { get; set; }
 
         // patch
-        public System.String CreatorMessage { get; set; }
+        public System.String? CreatorMessage { get; set; }
 
         // Property [E][NO][NP][PUO][NAR]
         // patch

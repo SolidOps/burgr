@@ -395,7 +395,7 @@ public partial class RightDTOMapper : IDTOMapper<Contracts.DTO.RightDTO, Domain.
         if (ValueTypeHelper.AreSetAnfDifferent(dataTransferObject.Name, entity.Name))
         {
             patched = true;
-            entity.Name = dataTransferObject.Name;
+            entity.Name = dataTransferObject.Name!;
         }
 
         return patched;
@@ -631,19 +631,19 @@ public partial class UserDTOMapper : IDTOMapper<Contracts.DTO.UserDTO, Domain.Ag
         if (ValueTypeHelper.AreSetAnfDifferent(dataTransferObject.Email, entity.Email))
         {
             patched = true;
-            entity.Email = dataTransferObject.Email;
+            entity.Email = dataTransferObject.Email!;
         }
 
         if (ValueTypeHelper.AreSetAnfDifferent(dataTransferObject.Provider, entity.Provider))
         {
             patched = true;
-            entity.Provider = dataTransferObject.Provider;
+            entity.Provider = dataTransferObject.Provider!;
         }
 
         if (ValueTypeHelper.AreSetAnfDifferent(dataTransferObject.TechnicalUser, entity.TechnicalUser))
         {
             patched = true;
-            entity.TechnicalUser = dataTransferObject.TechnicalUser.Value;
+            entity.TechnicalUser = dataTransferObject.TechnicalUser!.Value;
         }
 
         // Property [M][NO][PUO][EN][AG][NA]
@@ -912,19 +912,19 @@ public partial class InviteDTOMapper : IDTOMapper<Contracts.DTO.InviteDTO, Domai
         if (ValueTypeHelper.AreSetAnfDifferent(dataTransferObject.Email, entity.Email))
         {
             patched = true;
-            entity.Email = dataTransferObject.Email;
+            entity.Email = dataTransferObject.Email!;
         }
 
         if (ValueTypeHelper.AreSetAnfDifferent(dataTransferObject.CreatorName, entity.CreatorName))
         {
             patched = true;
-            entity.CreatorName = dataTransferObject.CreatorName;
+            entity.CreatorName = dataTransferObject.CreatorName!;
         }
 
         if (ValueTypeHelper.AreSetAnfDifferent(dataTransferObject.CreatorMessage, entity.CreatorMessage))
         {
             patched = true;
-            entity.CreatorMessage = dataTransferObject.CreatorMessage;
+            entity.CreatorMessage = dataTransferObject.CreatorMessage!;
         }
 
         // Property [E][NO][PUO]

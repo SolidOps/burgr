@@ -30,7 +30,7 @@ public static class PropertyDescriptorExtension
 
     public static string GetDefaultValue(this ModelDescriptor descriptor, IConversionService conversionService, string prefix, string suffix, bool preventList)
     {
-        if (descriptor.Get("PropertyType") == "Simple")
+        if (descriptor.Get("PropertyType") == "Simple" || descriptor.Get("SimpleType") != null)
         {
             return conversionService.SimpleDefaultValue(descriptor, preventList);
         }
@@ -42,5 +42,10 @@ public static class PropertyDescriptorExtension
             }
         }
         return "";
+    }
+
+    public static string GetDefaultPatchValue(this ModelDescriptor descriptor, IConversionService conversionService, string prefix, string suffix, bool preventList)
+    {
+        return "null";
     }
 }

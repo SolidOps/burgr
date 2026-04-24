@@ -274,7 +274,7 @@ namespace MetaCorp.Template.Domain._DOMAINTYPE_
             #endregion foreach PROPERTY
 
             #region foreach PROPERTY[S][NO]
-            // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+            // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
             if (!ValueTypeHelper.IsNull(this._SIMPLE__PROPERTYNAME_) && this._SIMPLE__PROPERTYNAME_.ToString().Length > FIELDSIZE)
                 return IOpsResult.Invalid("_SIMPLE__PROPERTYNAME_ length is over FIELDSIZE");
 

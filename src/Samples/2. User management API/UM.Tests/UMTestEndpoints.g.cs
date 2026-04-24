@@ -32,25 +32,25 @@ public static class UMAppServiceClientExtension
 
     public static async Task UMFacade_Authentication_SetInitialPassword(this AppServiceClient client, System.String email, System.String password, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters<string>(assertParameters, "Post", "um/authentication/set-initial-password" + "?email=" + UriHelper.Convert<System.String>(email) + "&password=" + UriHelper.Convert<System.String>(password), default);
+        var requestParameters = new RequestParameters<string>(assertParameters, "Post", "um/authentication/set-initial-password" + "?email=" + UriHelper.Convert<System.String>(email) + "&password=" + UriHelper.Convert<System.String>(password));
         await client.Send<string>(requestParameters);
     }
 
     public static async Task<System.Boolean> UMFacade_Authentication_NeedInitialPassword(this AppServiceClient client, System.String email, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters<System.Boolean>(assertParameters, "Get", "um/authentication/need-initial-password" + "?email=" + UriHelper.Convert<System.String>(email), default);
+        var requestParameters = new RequestParameters<System.Boolean>(assertParameters, "Get", "um/authentication/need-initial-password" + "?email=" + UriHelper.Convert<System.String>(email));
         return await client.Send<System.Boolean>(requestParameters);
     }
 
     public static async Task UMFacade_Invites_UseInvite(this AppServiceClient client, System.Guid inviteId, System.String password, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters<string>(assertParameters, "Post", "um/invites/use-invite" + "?inviteId=" + UriHelper.Convert<System.Guid>(inviteId) + "&password=" + UriHelper.Convert<System.String>(password), default);
+        var requestParameters = new RequestParameters<string>(assertParameters, "Post", "um/invites/use-invite" + "?inviteId=" + UriHelper.Convert<System.Guid>(inviteId) + "&password=" + UriHelper.Convert<System.String>(password));
         await client.Send<string>(requestParameters);
     }
 
     public static async Task<SolidOps.UM.Contracts.DTO.InviteResultDTO> UMFacade_Invites_CheckInvite(this AppServiceClient client, System.Guid inviteId, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters<SolidOps.UM.Contracts.DTO.InviteResultDTO>(assertParameters, "Get", "um/invites/check-invite" + "?inviteId=" + UriHelper.Convert<System.Guid>(inviteId), default);
+        var requestParameters = new RequestParameters<SolidOps.UM.Contracts.DTO.InviteResultDTO>(assertParameters, "Get", "um/invites/check-invite" + "?inviteId=" + UriHelper.Convert<System.Guid>(inviteId));
         return await client.Send<SolidOps.UM.Contracts.DTO.InviteResultDTO>(requestParameters);
     }
 
@@ -68,13 +68,13 @@ public static class UMAppServiceClientExtension
 
     public static async Task<System.Boolean> UMFacade_ServerStatus_NeedTechUserPasswordUpdate(this AppServiceClient client, System.String techUser, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters<System.Boolean>(assertParameters, "Get", "um/server-status/need-tech-user-password-update" + "?techUser=" + UriHelper.Convert<System.String>(techUser), default);
+        var requestParameters = new RequestParameters<System.Boolean>(assertParameters, "Get", "um/server-status/need-tech-user-password-update" + "?techUser=" + UriHelper.Convert<System.String>(techUser));
         return await client.Send<System.Boolean>(requestParameters);
     }
 
     public static async Task<System.String> UMFacade_TokenValidation_Validate(this AppServiceClient client, AssertParameters assertParameters = null)
     {
-        var requestParameters = new RequestParameters<System.String>(assertParameters, "Get", "um/token-validation/validate", default);
+        var requestParameters = new RequestParameters<System.String>(assertParameters, "Get", "um/token-validation/validate");
         return await client.Send<System.String>(requestParameters);
     }
 

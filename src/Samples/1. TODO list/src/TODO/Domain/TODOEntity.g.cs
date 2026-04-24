@@ -81,7 +81,7 @@ namespace SolidOps.TODO.Domain.AggregateRoots
                 return IOpsResult.Invalid("Status must not be null");
 
             // Property [S][NO]
-            // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+            // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
             if (!ValueTypeHelper.IsNull(this.Name) && this.Name.ToString().Length > 50)
                 return IOpsResult.Invalid("Name length is over 50");
 

@@ -90,11 +90,11 @@ namespace SolidOps.UM.Domain.AggregateRoots
                 return IOpsResult.Invalid("HashedPassword must not be null");
 
             // Property [S][NO]
-            // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+            // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
             if (!ValueTypeHelper.IsNull(this.Name) && this.Name.ToString().Length > 50)
                 return IOpsResult.Invalid("Name length is over 50");
 
-            // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+            // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
             if (!ValueTypeHelper.IsNull(this.HashedPassword) && this.HashedPassword.ToString().Length > 255)
                 return IOpsResult.Invalid("HashedPassword length is over 255");
 
@@ -250,11 +250,11 @@ namespace SolidOps.UM.Domain.AggregateRoots
                 return IOpsResult.Invalid("Provider must not be null");
 
             // Property [S][NO]
-            // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+            // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
             if (!ValueTypeHelper.IsNull(this.Email) && this.Email.ToString().Length > 50)
                 return IOpsResult.Invalid("Email length is over 50");
 
-            // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+            // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
             if (!ValueTypeHelper.IsNull(this.Provider) && this.Provider.ToString().Length > 50)
                 return IOpsResult.Invalid("Provider length is over 50");
 
@@ -512,7 +512,7 @@ namespace SolidOps.UM.Domain.Entities
                 return IOpsResult.Invalid("Name must not be null");
 
             // Property [S][NO]
-            // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+            // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
             if (!ValueTypeHelper.IsNull(this.Name) && this.Name.ToString().Length > 50)
                 return IOpsResult.Invalid("Name length is over 50");
 
@@ -679,15 +679,15 @@ namespace SolidOps.UM.Domain.AggregateRoots
                 return IOpsResult.Invalid("CreatorMessage must not be null");
 
             // Property [S][NO]
-            // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+            // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
             if (!ValueTypeHelper.IsNull(this.Email) && this.Email.ToString().Length > 255)
                 return IOpsResult.Invalid("Email length is over 255");
 
-            // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+            // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
             if (!ValueTypeHelper.IsNull(this.CreatorName) && this.CreatorName.ToString().Length > 255)
                 return IOpsResult.Invalid("CreatorName length is over 255");
 
-            // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+            // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
             if (!ValueTypeHelper.IsNull(this.CreatorMessage) && this.CreatorMessage.ToString().Length > 255)
                 return IOpsResult.Invalid("CreatorMessage length is over 255");
 

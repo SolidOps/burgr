@@ -165,11 +165,15 @@ public abstract class BaseFactoryMethodGenerator : BaseBurgrGenerator
         {
             initialText = initialText.Replace("COMMA_TYPE", ", ");
             initialText = initialText.Replace("PARAMETER_DATA_TYPE", parameterDataType);
+            initialText = initialText.Replace("COMMA_DATA", ", ");
+            initialText = initialText.Replace("PARAMETER_DATA", parameterdata);
         }
         else
         {
             initialText = initialText.Replace("COMMA_TYPE", "");
             initialText = initialText.Replace("PARAMETER_DATA_TYPE", "");
+            initialText = initialText.Replace("COMMA_DATA", "");
+            initialText = initialText.Replace("PARAMETER_DATA", "");
         }
 
         initialText = initialText.Replace("COMMA_DATA", ", ");

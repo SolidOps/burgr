@@ -166,7 +166,7 @@ public partial class _VO_CLASSNAME : Base_VO_CLASSNAME
         if (result.HasError) return result;
 
         #region foreach PROPERTY[S][NO]
-        // VALIDATION RULE - PROPERTY_HAS_MAXSIZE
+        // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
         if (!ValueTypeHelper.IsNull(this._SIMPLE__PROPERTYNAME_) && this._SIMPLE__PROPERTYNAME_.ToString().Length > FIELDSIZE)
             return IOpsResult.Invalid("_SIMPLE__PROPERTYNAME_ length is over FIELDSIZE");
 

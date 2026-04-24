@@ -226,6 +226,7 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             result = result.Replace("_SIMPLE_", "");
             result = result.Replace("_TYPE_", model.GetPropertyType(conversionService, null, null, false));
             result = result.Replace("_DEFAULT_VALUE_", model.GetDefaultValue(conversionService, null, null, false));
+            result = result.Replace("_DEFAULT_PATCH_VALUE_", model.GetDefaultPatchValue(conversionService, null, null, false));
 
             string type = model.Get("SimpleType");
             Type simpleType = conversionService.GetSimpleType(type);
@@ -347,17 +348,19 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         result = result.Replace("_ISNULL_", model.Is("Null") ? "?" : string.Empty);
 
         bool patchNull = false;
-        if (model.Get("PropertyType") == "Simple")
+        bool patchNullValue = false;
+        if (model.Get("PropertyType") == "Simple" && !model.Is("Null"))
         {
+            patchNull = true;
             Type type = conversionService.GetSimpleType(model.Get("SimpleType"));
-            if (!type.IsClass && !model.Is("Null"))
+            if (!type.IsClass)
             {
-                patchNull = true;
+                patchNullValue = true;
             }
         }
 
         result = result.Replace("_ISPATCHNULL_", patchNull ? "?" : string.Empty);
-        result = result.Replace("_ISPATCHNULLVALUE_", patchNull ? ".Value" : string.Empty);
+        result = result.Replace("_ISPATCHNULLVALUE_", patchNullValue ? "!.Value" : patchNull ? "!" : string.Empty); 
 
         result = result.Replace("_VALUEOBJECT_", "");
 
@@ -404,13 +407,17 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             {
                 result = !model.Is("MultipleUniqueConstraint") ? string.Empty : HandleMultipleUniqueConstraint(model, result);
             }
-            if (result.Contains("// VALIDATION RULE - PROPERTY_HAS_MAXSIZE"))
+            if (result.Contains("// VALIDATION RULE - PROPERTY_HAS_MAX_SIZE"))
             {
                 result = model.Get("SimpleType") == "string"
                     ? model.Get<int?>("FieldSize").HasValue && model.Get<int?>("FieldSize").Value > 0
                         ? result.Replace("FIELDSIZE", model.Get<int?>("FieldSize").ToString())
                         : !model.Is("MaxSize") ? result.Replace("FIELDSIZE", Constants.StandardMaxSize.ToString()) : string.Empty
                     : string.Empty;
+            }
+            if (result.Contains("// VALIDATION RULE - PROPERTY_HAS_MIN_SIZE"))
+            {
+                result = model.Get("SimpleType") == "string" && model.Get<int?>("MinSize").HasValue ? result.Replace("MINSIZE", model.Get<int?>("MinSize").ToString()) : string.Empty;
             }
             if (result.Contains("// VALIDATION RULE - NULLABLE_PROPERTY"))
             {

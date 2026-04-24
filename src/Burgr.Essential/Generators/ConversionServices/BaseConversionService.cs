@@ -391,7 +391,7 @@ public abstract class BaseConversionService : IConversionService
             else
             {
                 var tmp = ConvertToPropertyType(typeName);
-                if (simpleType.IsValueType)
+                if (simpleType.IsValueType || simpleType == typeof(string))
                 {
                     if (model.Is("Null"))
                     {
@@ -410,6 +410,14 @@ public abstract class BaseConversionService : IConversionService
 
     public virtual string SimpleDefaultValue(ModelDescriptor model, bool preventList)
     {
+        if(model.Is("List"))
+        {
+            return "[]";
+        }
+        if(model.Is("Null"))
+        {
+            return "null";
+        }
         Type simpleType = GetSimpleType(model.Get("SimpleType"));
         if (simpleType == typeof(string))
         {

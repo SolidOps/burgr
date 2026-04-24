@@ -76,6 +76,7 @@ public class Property
     public string type { get; set; }
     public bool? is_max_size { get; set; }
     public int? field_size { get; set; }
+    public int? min_size { get; set; }
     public bool is_unique { get; set; }
     public bool is_unique_case_sensitive { get; set; }
     public bool is_label { get; set; }

@@ -697,6 +697,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
             }
             bProp.Set("FieldSize", property.field_size?.ToString());
             bProp.Set("MaxSize", property.is_max_size?.ToString());
+            bProp.Set("MinSize", property.min_size?.ToString());
             SetBasePropertyParameter(bProp, propName, property, objectName, baseObject, objectDescriptor);
             if (typeInfo.IsCalculated)
             {

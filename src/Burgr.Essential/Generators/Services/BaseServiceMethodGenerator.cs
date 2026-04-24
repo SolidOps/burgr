@@ -260,11 +260,15 @@ public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
         {
             initialText = initialText.Replace("COMMA_TYPE", ", ");
             initialText = initialText.Replace("PARAMETER_DATA_TYPE", parameterDataType);
+            initialText = initialText.Replace("COMMA_DATA", ", "); 
+            initialText = initialText.Replace("PARAMETER_DATA", parameterdata);
         }
         else
         {
             initialText = initialText.Replace("COMMA_TYPE", "");
             initialText = initialText.Replace("PARAMETER_DATA_TYPE", "");
+            initialText = initialText.Replace("COMMA_DATA", "");
+            initialText = initialText.Replace("PARAMETER_DATA", "");
         }
 
         initialText = initialText.Replace("COMMA_DATA", ", ");
@@ -272,7 +276,6 @@ public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
         initialText = initialText.Replace("PARAMETER_URL", parameterUrl.ToString());
         initialText = initialText.Replace("PARAMETER_REF", parameterRef.ToString());
         initialText = initialText.Replace("PARAMETER_DEF_REF", parameterDefRef.ToString());
-        initialText = initialText.Replace("PARAMETER_DATA", parameterdata);
         initialText = initialText.Replace("PARAMETER_DEF_API", parameterDefApi.ToString());
         initialText = initialText.Replace("PARAMETER_IMPORTS", parameterImports);
         return initialText;

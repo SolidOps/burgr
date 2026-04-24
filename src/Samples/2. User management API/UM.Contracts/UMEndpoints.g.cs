@@ -31,7 +31,7 @@ public static class UMAppServiceClientExtension
 
     public static async Task<IOpsResult> UMFacade_Authentication_SetInitialPassword(this AppServiceClient client, System.String email, System.String password, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters<string>(ensureSuccess, "Post", "um/authentication/set-initial-password" + "?email=" + UriHelper.Convert<System.String>(email) + "&password=" + UriHelper.Convert<System.String>(password), default);
+        var requestParameters = new RequestParameters<string>(ensureSuccess, "Post", "um/authentication/set-initial-password" + "?email=" + UriHelper.Convert<System.String>(email) + "&password=" + UriHelper.Convert<System.String>(password));
         await client.Send<string>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure);
@@ -40,7 +40,7 @@ public static class UMAppServiceClientExtension
 
     public static async Task<IOpsResult<System.Boolean>> UMFacade_Authentication_NeedInitialPassword(this AppServiceClient client, System.String email, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters<System.Boolean>(ensureSuccess, "Get", "um/authentication/need-initial-password" + "?email=" + UriHelper.Convert<System.String>(email), default);
+        var requestParameters = new RequestParameters<System.Boolean>(ensureSuccess, "Get", "um/authentication/need-initial-password" + "?email=" + UriHelper.Convert<System.String>(email));
         var result = await client.Send<System.Boolean>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure).ToResult<System.Boolean>();
@@ -49,7 +49,7 @@ public static class UMAppServiceClientExtension
 
     public static async Task<IOpsResult> UMFacade_Invites_UseInvite(this AppServiceClient client, System.Guid inviteId, System.String password, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters<string>(ensureSuccess, "Post", "um/invites/use-invite" + "?inviteId=" + UriHelper.Convert<System.Guid>(inviteId) + "&password=" + UriHelper.Convert<System.String>(password), default);
+        var requestParameters = new RequestParameters<string>(ensureSuccess, "Post", "um/invites/use-invite" + "?inviteId=" + UriHelper.Convert<System.Guid>(inviteId) + "&password=" + UriHelper.Convert<System.String>(password));
         await client.Send<string>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure);
@@ -58,7 +58,7 @@ public static class UMAppServiceClientExtension
 
     public static async Task<IOpsResult<SolidOps.UM.Contracts.DTO.InviteResultDTO>> UMFacade_Invites_CheckInvite(this AppServiceClient client, System.Guid inviteId, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters<SolidOps.UM.Contracts.DTO.InviteResultDTO>(ensureSuccess, "Get", "um/invites/check-invite" + "?inviteId=" + UriHelper.Convert<System.Guid>(inviteId), default);
+        var requestParameters = new RequestParameters<SolidOps.UM.Contracts.DTO.InviteResultDTO>(ensureSuccess, "Get", "um/invites/check-invite" + "?inviteId=" + UriHelper.Convert<System.Guid>(inviteId));
         var result = await client.Send<SolidOps.UM.Contracts.DTO.InviteResultDTO>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure).ToResult<SolidOps.UM.Contracts.DTO.InviteResultDTO>();
@@ -77,7 +77,7 @@ public static class UMAppServiceClientExtension
 
     public static async Task<IOpsResult<System.Boolean>> UMFacade_ServerStatus_NeedTechUserPasswordUpdate(this AppServiceClient client, System.String techUser, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters<System.Boolean>(ensureSuccess, "Get", "um/server-status/need-tech-user-password-update" + "?techUser=" + UriHelper.Convert<System.String>(techUser), default);
+        var requestParameters = new RequestParameters<System.Boolean>(ensureSuccess, "Get", "um/server-status/need-tech-user-password-update" + "?techUser=" + UriHelper.Convert<System.String>(techUser));
         var result = await client.Send<System.Boolean>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure).ToResult<System.Boolean>();
@@ -86,7 +86,7 @@ public static class UMAppServiceClientExtension
 
     public static async Task<IOpsResult<System.String>> UMFacade_TokenValidation_Validate(this AppServiceClient client, bool ensureSuccess = true)
     {
-        var requestParameters = new RequestParameters<System.String>(ensureSuccess, "Get", "um/token-validation/validate", default);
+        var requestParameters = new RequestParameters<System.String>(ensureSuccess, "Get", "um/token-validation/validate");
         var result = await client.Send<System.String>(requestParameters);
         if (!string.IsNullOrEmpty(requestParameters.Failure))
             return IOpsResult.Invalid(requestParameters.Failure).ToResult<System.String>();
