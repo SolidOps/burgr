@@ -223,7 +223,7 @@ public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
                 {
                     string mapperType = conversionService.ConvertParameterType(parameterInfo, ".Presentation.Mappers.", null, false, false, true) + "DTOMapper";
                     string propertyName = ConversionHelper.ConvertToCamelCase(parameterInfo.Name);
-                    _ = convertedParameters.Append($"new {mapperType}(serviceProvider).Convert({propertyName}, serviceProvider)");
+                    _ = convertedParameters.Append($"new {mapperType}(serviceProvider).Convert({propertyName}, serviceProvider)!");
                 }
                 _ = parameterRef.Append("ref " + ConversionHelper.ConvertToCamelCase(parameterInfo.Name));
 

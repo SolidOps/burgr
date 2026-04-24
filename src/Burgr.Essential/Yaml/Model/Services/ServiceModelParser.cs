@@ -125,6 +125,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
                     else
                     {
                         AddRelatedDescriptor(modelServiceMethod, typeInfo, Generators.Objects.ObjectGenerator.Name);
+                        modelServiceMethod.Set("Null", typeInfo.IsNull.ToString());
                     }
                 }
                 else

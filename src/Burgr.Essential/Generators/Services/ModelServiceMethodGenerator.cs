@@ -7,7 +7,7 @@ namespace SolidOps.Burgr.Essential.Generators.Services;
 
 public class ModelServiceMethodGenerator : BaseServiceMethodGenerator, IGenerator
 {
-    public static string Name = "ModelMethod";
+    public static readonly string Name = "ModelMethod";
     public override string DescriptorType => Name;
 
     public ModelServiceMethodGenerator()
@@ -56,6 +56,18 @@ public class ModelServiceMethodGenerator : BaseServiceMethodGenerator, IGenerato
         }
         result = result.Replace("_DOMODELACTION_", ConversionHelper.ConvertToPascalCase(method.Name));
         result = result.Replace("_DOMODELACTIONURL_", TextHelper.GenerateSlug(method.Name));
+        if (model.Is("Null"))
+        {
+            result = result.Replace("_ISNULL_", "?");
+            result = result.Replace("_ISNOTNULL_", "");
+            result = result.Replace("_NULLABLE_", "Nullable");
+        }
+        else
+        {
+            result = result.Replace("_ISNULL_", "");
+            result = result.Replace("_ISNOTNULL_", "!");
+            result = result.Replace("_NULLABLE_", "");
+        }
 
         result = ReplaceParameters(service, conversionService, method, result, modelPrefix, modelSuffix, out _);
 

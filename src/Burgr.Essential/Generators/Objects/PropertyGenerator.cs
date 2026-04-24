@@ -346,6 +346,7 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         result = result.Replace("_PROPERTYNAME_", conversionService.ConvertPropertyName(model.Get("PropertyName")));
         result = result.Replace("_FIELDNAME_", model.Get("FieldName"));
         result = result.Replace("_ISNULL_", model.Is("Null") ? "?" : string.Empty);
+        result = result.Replace("_NULLABLE_", model.Is("Null") ? "Nullable" : string.Empty);
 
         bool patchNull = false;
         bool patchNullValue = false;
