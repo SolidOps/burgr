@@ -173,7 +173,14 @@ public abstract class BaseFactoryMethodGenerator : BaseBurgrGenerator
             initialText = initialText.Replace("COMMA_TYPE", "");
             initialText = initialText.Replace("PARAMETER_DATA_TYPE", "");
             initialText = initialText.Replace("COMMA_DATA", "");
-            initialText = initialText.Replace("PARAMETER_DATA", "");
+            if (language == "JS" || language == "HTML")
+            {
+                initialText = initialText.Replace("PARAMETER_DATA", "undefined");
+            }
+            else
+            {
+                initialText = initialText.Replace("PARAMETER_DATA", "");
+            }
         }
 
         initialText = initialText.Replace("COMMA_DATA", ", ");
