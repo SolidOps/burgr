@@ -432,6 +432,182 @@ specs/
 
 ---
 
+## Writing templates
+
+A template set lives in a directory (e.g. `Template.Domain/`) and contains two kinds of files:
+
+- **`burgr.yaml`** — declares what source files exist and where their output goes.
+- **Source files** (`.cs`, `.ts`, `.tpl`, …) — the actual code templates, annotated with generation markers.
+
+### burgr.yaml
+
+Each entry under `source_templates` maps a logical name to a source file and controls the output destination.
+
+```yaml
+source_templates:
+  entity:
+    source: Entity.cs              # source template file in this directory
+    file_suffix: Entity.cs         # suffix appended to the generated file name
+    destination_suffix: Domain     # sub-folder inside BuildingDirectory
+    force_separate_dll: true       # place output in a separate assembly folder
+    options:
+      model_prefix: .Domain._DOMAINTYPE_.
+      model_suffix: ''
+    destination_language: CS
+```
+
+### Loop markers
+
+The core mechanism is a pair of `#region` / `#endregion` directives that tell burgr which block to repeat for each matching element from the YAML spec.
+
+```
+#region foreach IDENTIFIER[filter1][filter2]...
+    ... code repeated for each matching item ...
+#endregion foreach IDENTIFIER
+```
+
+`IDENTIFIER` is one of:
+
+| Identifier | Iterates over |
+|---|---|
+| `MODEL` | all model types (aggregate roots, entities, value objects, transients) |
+| `PROPERTY` | properties of the current model |
+| `DOMAIN_SERVICE` | domain services |
+| `ENUMTYPE` | enum types |
+| `SERVICE_METHOD_PARAMETER` | parameters of the current service method |
+
+Loops can be nested — a `PROPERTY` loop inside a `MODEL` loop repeats for every property of every matching model.
+
+### Filters
+
+Filters in square brackets narrow which items a loop applies to. Multiple filters on the same `#region` line are **AND**-ed together. Prefix a filter with `!` to negate it.
+
+**Model filters**
+
+| Filter | Meaning |
+|---|---|
+| `[AG]` | Aggregate root |
+| `[EN]` | Entity |
+| `[TR]` | Transient |
+| `[VO]` | Value object |
+| `[CT]` | Change-tracked |
+| `[C]` | Component |
+| `[R]` | Has resources |
+| `[!R]` | Has no resources |
+
+**Property filters**
+
+| Filter | Meaning |
+|---|---|
+| `[S]` | Simple type (string, int, bool, …) |
+| `[E]` | Enum |
+| `[M]` | Model reference (same module) |
+| `[R]` | Referenced model (external module) |
+| `[NO]` | Normal (not calculated, not non-persisted) |
+| `[CA]` | Calculated (`=type`) |
+| `[NP]` | Non-persisted (`-type`) |
+| `[N]` | Nullable |
+| `[NN]` | Non-nullable |
+| `[AR]` | Array / collection |
+| `[NAR]` | Not an array |
+| `[SNA]` | Single navigation property |
+| `[LNA]` | List navigation property |
+| `[PUO]` | Public only |
+| `[PRO]` | Private only |
+
+**Example — repeat for every non-calculated simple property:**
+
+```csharp
+#region foreach PROPERTY[S][NO]
+public _SIMPLE__TYPE_ _SIMPLE__PROPERTYNAME_ { get; set; } = _DEFAULT_VALUE_;
+#endregion foreach PROPERTY
+```
+
+**Example — nested loops, model then property with negated filter:**
+
+```csharp
+#region foreach MODEL[AG][EN]
+public partial class _CLASSNAME_
+{
+    #region foreach PROPERTY[M][R][NO][!VO]
+    public _IDENTITY_KEY_TYPE_ _PROPERTYNAME_Id { get; set; }
+    #endregion foreach PROPERTY
+}
+#endregion foreach MODEL
+```
+
+### Conditional removal markers
+
+A `to remove if` block is emitted into the output file and then stripped at generation time when the named condition matches. Use this for boilerplate that only applies to certain model configurations.
+
+```
+#region to remove if CONDITION
+    ... code removed when condition is true ...
+#endregion to remove if CONDITION
+```
+
+| Condition | Removed when… |
+|---|---|
+| `PRIVATE_ID` | entity has a private identity |
+| `ANONYMOUS` | endpoint is anonymous |
+| `NOT_ANONYMOUS` | endpoint requires authentication |
+| `NOT_GETBYQUERY` | no query (list) endpoint |
+| `NOT_GETBYID` | no get-by-id endpoint |
+| `NOT_ADD` | no add endpoint |
+| `NOT_UPDATE` | no update endpoint |
+| `NOT_REMOVE` | no remove endpoint |
+| `NO_LABEL` | model has no label field |
+| `NO_CHANGE_TRACKING` | model has no change-tracking |
+| `COMPOSED_ID` | model has a composite key |
+| `NOT_COMPOSED_ID` | model does not have a composite key |
+| `NOT_LISTCOMPONENT` | model has no list component |
+| `NOT_DETAILSCOMPONENT` | model has no details component |
+
+**Example:**
+
+```csharp
+public override string? ToString()
+{
+    var value = base.ToString();
+    #region to remove if NO_LABEL
+    value = $"{_LABEL_}";
+    #endregion to remove if NO_LABEL
+    return value;
+}
+```
+
+There is also a `#region to remove at generation` / `#endregion to remove at generation` marker for placeholder code that must always be stripped from the generated output (e.g. compile-time constants used only inside the template for IDE support).
+
+### Placeholder tokens
+
+Inside a loop body, underscore-wrapped tokens are replaced with values derived from the YAML spec:
+
+| Token | Replaced with |
+|---|---|
+| `_CLASSNAME_` | PascalCase class name of the current model |
+| `_DOMAINTYPE_` | Domain folder name (`Aggregates`, `Entities`, `ValueObjects`, `Transients`) |
+| `_IDENTITY_KEY_TYPE_` | Key type (`Guid`, `int`, …) |
+| `_PROPERTYNAME_` | camelCase property name |
+| `_PROPERTYTYPE_` | Property type name |
+| `_SIMPLE__PROPERTYNAME_` | Property name for a simple-typed property |
+| `_SIMPLE__TYPE_` | Simple property type |
+| `_ENUM__PROPERTYNAME_` | Property name for an enum property |
+| `_ENUMNULLABLETYPE_` | Nullable enum type name |
+| `_FIELDNAME_` | Backing field name (prefixed with `_`) |
+| `_DEFAULT_VALUE_` | Default value for the property type |
+| `_ISNULL_` | `?` when the property is nullable, empty otherwise |
+| `_LABEL_` | Value of the `is_label` property |
+| `_CALCULATED__*_` | Variants of the above for calculated properties |
+| `_NONPERSISTED__*_` | Variants of the above for non-persisted properties |
+| `_NAVIGATION__*_` | Variants of the above for navigation properties |
+| `_FORLIST__*_` | Variants of the above for list/collection properties |
+| `_REF__*_` | Variants of the above for cross-module referenced properties |
+| `DEPENDENCYNAMESPACE` | Root namespace of the referenced module |
+| `MODELNAME` | Snake_case model name |
+| `MINSIZE` / `FIELDSIZE` | Min/max field size from `field_size` / `min_size` spec attributes |
+
+---
+
 ## Samples
 
 | Sample | Description |
