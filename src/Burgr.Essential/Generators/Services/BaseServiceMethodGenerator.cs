@@ -29,6 +29,11 @@ public abstract class BaseServiceMethodGenerator : BaseBurgrGenerator
             return "model is anonymous";
         }
 
+        if (template.Is("Component") && !model.Is("Component"))
+        {
+            return "model is not component";
+        }
+
         if (!model.Is("External") && template.Is("External"))
         {
             return "model is not external";
