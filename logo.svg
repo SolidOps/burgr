@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 200" width="520" height="200">
+  <!-- ─── Burger icon ─── -->
+
+  <!-- Top bun dome -->
+  <path d="M40,108 C40,60 80,38 120,38 C160,38 200,60 200,108 Z" fill="#D4801A"/>
+  <!-- Top bun base band -->
+  <rect x="36" y="104" width="168" height="20" rx="6" fill="#E8952A"/>
+  <!-- Sesame seeds -->
+  <ellipse cx="90"  cy="72" rx="9" ry="5" fill="#B8690E" transform="rotate(-20 90 72)"/>
+  <ellipse cx="120" cy="58" rx="9" ry="5" fill="#B8690E"/>
+  <ellipse cx="150" cy="70" rx="9" ry="5" fill="#B8690E" transform="rotate(20 150 70)"/>
+
+  <!-- Lettuce (wavy green) -->
+  <path d="M30,126 Q50,118 70,126 Q90,134 110,126 Q130,118 150,126 Q170,134 190,126 Q205,120 210,126 L210,138 Q190,144 170,136 Q150,128 130,136 Q110,144 90,136 Q70,128 50,136 Q34,142 30,138 Z" fill="#5BAD40"/>
+
+  <!-- Tomato -->
+  <rect x="32" y="138" width="176" height="13" rx="4" fill="#D63A25"/>
+
+  <!-- Cheese (with droopy corners) -->
+  <path d="M28,151 L212,151 L212,166 L220,174 L212,170 L28,170 L20,174 L28,166 Z" fill="#F5C218"/>
+
+  <!-- Patty -->
+  <rect x="33" y="170" width="174" height="28" rx="7" fill="#6B3520"/>
+  <!-- Grill marks -->
+  <line x1="65"  y1="172" x2="55"  y2="196" stroke="#4A2410" stroke-width="3" stroke-linecap="round"/>
+  <line x1="100" y1="172" x2="90"  y2="196" stroke="#4A2410" stroke-width="3" stroke-linecap="round"/>
+  <line x1="135" y1="172" x2="125" y2="196" stroke="#4A2410" stroke-width="3" stroke-linecap="round"/>
+  <line x1="170" y1="172" x2="160" y2="196" stroke="#4A2410" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Bottom bun top band -->
+  <rect x="34" y="196" width="172" height="16" rx="5" fill="#E8952A"/>
+  <!-- Bottom bun dome -->
+  <path d="M34,210 C34,226 68,234 120,234 C172,234 206,226 206,210 Z" fill="#D4801A"/>
+
+  <!-- ─── Wordmark ─── -->
+  <text x="248" y="148"
+        font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+        font-size="88"
+        font-weight="900"
+        letter-spacing="-2"
+        fill="#1C1210">burgr</text>
+
+  <!-- ─── Tagline ─── -->
+  <text x="251" y="174"
+        font-family="'Courier New', Courier, monospace"
+        font-size="16"
+        fill="#7A6050"
+        letter-spacing="2">&lt; yaml → code /&gt;</text>
+</svg>
