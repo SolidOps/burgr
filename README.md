@@ -40,15 +40,6 @@ Each stage is pluggable — bring your own model parser, template engine, or cod
 ```sh
 dotnet tool install --global Burgr
 ```
-
-Or build and install locally from the `/src` directory:
-
-```sh
-make install
-```
-
-**Requirements:** .NET 6 or later.
-
 ---
 
 ## Quick start
