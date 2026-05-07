@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="logo.svg" alt="burgr" width="480" />
+  <img src="logo.png" alt="burgr" width="480" />
   <br/><br/>
 
   [![Build](https://github.com/SolidOps/burgr/actions/workflows/build_publish.yml/badge.svg)](https://github.com/SolidOps/burgr/actions/workflows/build_publish.yml)
