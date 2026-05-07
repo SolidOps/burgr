@@ -1,6 +1,6 @@
-﻿using SolidOps.Burgr.Core.Descriptors;
+﻿using SolidOps.Burgr.Core;
+using SolidOps.Burgr.Core.Descriptors;
 using SolidOps.Burgr.Core.Generators;
-using SolidOps.Burgr.Essential.Generators.ConversionServices;
 
 namespace SolidOps.Burgr.Essential.Generators.Objects;
 
@@ -309,6 +309,10 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             result = result.Replace("_REF_", "");
 
             result = result.Replace("_DEFAULT_VALUE_", model.GetDefaultValue(conversionService, null, null, false));
+
+            var related = model.GetRelated("Object"); 
+            result = result.Replace("_DEPENDENCYTABLENAME_", conversionService.ConvertToTableName(related.ModuleName, related.Name, GeneratorOptions.ForcedPrefix, related.Get("TableName")));
+            result = result.Replace("_DEPENDENCYSCHEMANAME_", conversionService.ConvertToSchemaName(related.ModuleName, related.Name, GeneratorOptions.ForcedPrefix, related.Get("TableName")));
         }
 
         if (result.Contains("_BACKLINK_"))

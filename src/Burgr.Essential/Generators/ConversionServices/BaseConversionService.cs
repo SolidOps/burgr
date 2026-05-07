@@ -72,7 +72,7 @@ public abstract class BaseConversionService : IConversionService
         var related = parameter.GetRelated("Object");
         return ConvertRelatedParameterType(parameter, related, modelPrefix, modelSuffix, convertList, isInterface, fullName);
     }
-    
+
     public string ConvertRelatedParameterType(ModelDescriptor parameter, ModelDescriptor related, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false)
     {
         string relatedName = related.Name;
@@ -133,7 +133,7 @@ public abstract class BaseConversionService : IConversionService
             if (!convertList)
             {
                 return prefix + ConversionHelper.ConvertToPascalCase(typeName.Replace("[]", "")) + suffix;
-            }            
+            }
             return "IEnumerable<" + prefix + ConversionHelper.ConvertToPascalCase(typeName.Replace("[]", "")) + suffix + ">";
         }
         if (typeName.EndsWith("DTO"))
@@ -294,44 +294,14 @@ public abstract class BaseConversionService : IConversionService
         }
     }
 
-    public string ConvertToTableName(string tablePrefix, string typeName, string tableName)
+    public string ConvertToTableName(string moduleName, string typeName, string forcedPrefix, string tableName)
     {
         tableName ??= typeName + "s";
         return tableName;
     }
 
-    public string ConvertToFullTableName(string moduleName, string typeName, string forcedPrefix, string tableName)
+    public string ConvertToSchemaName(string moduleName, string typeName, string forcedPrefix, string tableName)
     {
-        tableName ??= typeName + "s";
-
-        string shortenModuleName;
-
-        if (forcedPrefix != null)
-        {
-            shortenModuleName = forcedPrefix;
-        }
-        else
-        {
-            if (moduleName == null)
-            {
-                throw new ArgumentNullException("moduleName");
-            }
-
-            shortenModuleName = moduleName.Length >= 3
-                ? moduleName.ToLower(CultureInfo.InvariantCulture)[..3]
-                : moduleName.ToLower(CultureInfo.InvariantCulture);
-        }
-
-        string res = string.Format(CultureInfo.InvariantCulture, "[{0}].", shortenModuleName);
-        res += "[" + tableName + "]";
-
-        return res;
-    }
-
-    public string ConvertToFullMySQLTableName(string moduleName, string typeName, string forcedPrefix, string tableName)
-    {
-        tableName ??= typeName + "s";
-
         string shortenModuleName;
 
         if (forcedPrefix != null)
@@ -352,10 +322,14 @@ public abstract class BaseConversionService : IConversionService
                 : lastModuleName.ToLower(CultureInfo.InvariantCulture);
         }
 
-        string res = string.Format(CultureInfo.InvariantCulture, "{0}_", shortenModuleName);
-        res += tableName;
+        return shortenModuleName;
+    }
 
-        return res;
+    public virtual string ConvertToFullTableName(string moduleName, string typeName, string forcedPrefix, string tableName)
+    {
+        var table = ConvertToTableName(moduleName, typeName, forcedPrefix, tableName);
+        var schema = ConvertToSchemaName(moduleName, typeName, forcedPrefix, tableName);
+        return $"{schema}_{table}";
     }
 
     public ReturnType GetReturnType(MethodInfo methodInfo)
@@ -410,11 +384,11 @@ public abstract class BaseConversionService : IConversionService
 
     public virtual string SimpleDefaultValue(ModelDescriptor model, bool preventList)
     {
-        if(model.Is("List"))
+        if (model.Is("List"))
         {
             return "[]";
         }
-        if(model.Is("Null"))
+        if (model.Is("Null"))
         {
             return "null";
         }

@@ -172,5 +172,35 @@ public class MySQLConversionService : BaseConversionService
 
         return sqlType;
     }
+
+    public override string ConvertToFullTableName(string moduleName, string typeName, string forcedPrefix, string tableName)
+    {
+        tableName ??= typeName + "s";
+
+        string shortenModuleName;
+
+        if (forcedPrefix != null)
+        {
+            shortenModuleName = forcedPrefix;
+        }
+        else
+        {
+            if (moduleName == null)
+            {
+                throw new ArgumentNullException("moduleName");
+            }
+
+            string lastModuleName = moduleName.Split('.').Last();
+
+            shortenModuleName = lastModuleName.Length >= 3
+                ? lastModuleName.ToLower(CultureInfo.InvariantCulture)[..3]
+                : lastModuleName.ToLower(CultureInfo.InvariantCulture);
+        }
+
+        string res = string.Format(CultureInfo.InvariantCulture, "{0}_", shortenModuleName);
+        res += tableName;
+
+        return res;
+    }
 }
 

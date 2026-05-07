@@ -155,7 +155,7 @@ public class TemplateConfiguration : IDbContextConfiguration
 
         modelBuilder.Entity<Domain._DOMAINTYPE_.CLASSNAME>((entity) =>
         {
-            entity.ToTable("FULLMYSQLTABLE");
+            entity.ToTable("_FULLTABLE_");
             #region foreach PROPERTY[S][NO][N]
             entity.Property(p => p._SIMPLE__PROPERTYNAME_).IsRequired(false).HasColumnName("_COLUMNNAME_");
             #endregion foreach PROPERTY

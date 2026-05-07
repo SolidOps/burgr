@@ -174,8 +174,9 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
         result = result.Replace("SlugCLASSNAME", TextHelper.GenerateSlug(ConversionHelper.ConvertToPascalCase(model.Name)));
         result = result.Replace("CLASSNAME", ConversionHelper.ConvertToPascalCase(model.Name));
         
-        result = result.Replace("FULLTABLE", conversionService.ConvertToFullTableName(model.FullModuleName, model.Name, GeneratorOptions.ForcedPrefix, model.Get("TableName")));
-        result = result.Replace("FULLMYSQLTABLE", conversionService.ConvertToFullMySQLTableName(model.ModuleName, model.Name, GeneratorOptions.ForcedPrefix, model.Get("TableName")));
+        result = result.Replace("_FULLTABLE_", conversionService.ConvertToFullTableName(model.FullModuleName, model.Name, GeneratorOptions.ForcedPrefix, model.Get("TableName")));
+        result = result.Replace("_TABLENAME_", conversionService.ConvertToTableName(model.ModuleName, model.Name, GeneratorOptions.ForcedPrefix, model.Get("TableName")));
+        result = result.Replace("_SCHEMANAME_", conversionService.ConvertToSchemaName(model.ModuleName, model.Name, GeneratorOptions.ForcedPrefix, model.Get("TableName")));
 
         result = result.Replace("IDCOLUMNNAME", model.Get("IdColumnName"));
         result = result.Replace("IDPROPERTYNAME", ConversionHelper.ConvertToPascalCase(model.Get("IdColumnName")));

@@ -24,10 +24,9 @@ public interface IConversionService
 
     string ConvertToGetMethod(string text);
 
-    string ConvertToTableName(string tablePrefix, string typeName, string tableName);
-
+    string ConvertToTableName(string moduleName, string typeName, string forcedPrefix, string tableName);
+    string ConvertToSchemaName(string moduleName, string typeName, string forcedPrefix, string tableName);
     string ConvertToFullTableName(string moduleName, string typeName, string forcedPrefix, string tableName);
-    string ConvertToFullMySQLTableName(string moduleName, string typeName, string forcedPrefix, string tableName);
 
     ReturnType GetReturnType(MethodInfo methodInfo);
 
