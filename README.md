@@ -407,8 +407,8 @@ specs/
 
 | Sample | Description |
 |---|---|
-| [`Samples/1. TODO list`](Samples/1.%20TODO%20list) | Simple console app — one aggregate root, three services |
-| [`Samples/2. User Management API`](Samples/2.%20User%20Management%20API) | REST API with authentication, invite flow, and rights management |
+| [`Samples/1. TODO list`](src/Samples/1.%20TODO%20list) | Simple console app — one aggregate root, three services |
+| [`Samples/2. User Management API`](src/Samples/2.%20User%20Management%20API) | REST API with authentication, invite flow, and rights management |
 
 ---
 
