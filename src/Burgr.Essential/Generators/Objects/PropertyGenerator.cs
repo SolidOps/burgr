@@ -130,6 +130,16 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             return "template is only array";
         }
 
+        if (model.Is("MaxSize") && template.Is("NonLongText"))
+        {
+            return "template is only non array";
+        }
+
+        if (!model.Is("MaxSize") && template.Is("LongText"))
+        {
+            return "template is only array";
+        }
+
         if (template.Is("NullableOnly") && !model.Is("Null"))
         {
             return "property is not null";
@@ -377,6 +387,10 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         {
             inputType = "password";
         }
+        else if (model.Name == "email")
+        {
+            inputType = "email";
+        }
         result = result.Replace("INPUTTYPE", inputType);
 
         // entity type
@@ -529,5 +543,8 @@ public class PropertyTemplateParser : ITemplateParser
         // - array
         Options.Add(new TemplateOption() { Name = "Array", Tag = "[AR]", });
         Options.Add(new TemplateOption() { Name = "NonArray", Tag = "[NAR]", });
+        // - array
+        Options.Add(new TemplateOption() { Name = "LongText", Tag = "[LT]", });
+        Options.Add(new TemplateOption() { Name = "NonLongText", Tag = "[NLT]", });
     }
 }
