@@ -406,5 +406,3 @@ specs/
 ## License
 
 [MIT](LICENSE)
-
-try
