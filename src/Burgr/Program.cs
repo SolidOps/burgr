@@ -21,6 +21,7 @@ namespace SolidOps.Burgr
             }
         }
 
+
         private static void GetError(Exception e, StringBuilder stb)
         {
             _ = stb.AppendFormat(@"[{0}] {1} ({2})
