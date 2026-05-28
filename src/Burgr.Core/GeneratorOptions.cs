@@ -9,8 +9,6 @@
         }
         public static string BuildingDirectory { get; set; }
 
-        public static string ModuleName { get; set; }
-
         public static string NamespaceName { get; set; }
 
         public static string IdentityKeysType { get; set; }

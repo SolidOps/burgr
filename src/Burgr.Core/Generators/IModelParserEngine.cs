@@ -9,7 +9,7 @@ namespace SolidOps.Burgr.Core.Generators
     public interface IModelParserEngine : IDisposable
     {
         string ModelsDirectory { get; set; }
-        string ModuleName { get; set; }
+        string ProjectName { get; set; }
         string NamespaceName { get; set; }
 
         string ModelParserType { get; }

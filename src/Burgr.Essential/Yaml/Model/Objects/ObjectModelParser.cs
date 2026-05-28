@@ -30,7 +30,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
 
         foreach (var kvpModule in modelParserEngine.YamlModelContentByModule)
         {
-            string moduleName = modelParserEngine.ModuleName;
+            string moduleName = modelParserEngine.ProjectName;
             if (kvpModule.Key != string.Empty)
                 moduleName += "." + kvpModule.Key;
             foreach (var kvp in kvpModule.Value.aggregate_roots)
@@ -478,7 +478,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
 
         foreach (var kvpModule in modelParserEngine.YamlModelContentByModule)
         {
-            string subModuleName = this.modelParserEngine.ModuleName;
+            string subModuleName = this.modelParserEngine.ProjectName;
             if (kvpModule.Key != string.Empty)
                 subModuleName += "." + kvpModule.Key;
 

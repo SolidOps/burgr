@@ -8,7 +8,7 @@ namespace SolidOps.Burgr.Core
 {
     public class BurgrConfig
     {
-        public string ModuleName { get; set; }
+        public string ProjectName { get; set; }
         public string NamespaceName { get; set; }
         public string ModelParserEngineType { get; set; }
         public string TemplateParserEngineType { get; set; }

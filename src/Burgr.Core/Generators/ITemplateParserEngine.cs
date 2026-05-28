@@ -10,7 +10,7 @@ namespace SolidOps.Burgr.Core.Generators
     public interface ITemplateParserEngine : IDisposable
     {
         string TemplatesDirectory { get; set; }
-        string ModuleName { get; set; }
+        string ProjectName { get; set; }
         string NamespaceName { get; set; }
 
         string TemplateParserType { get; }

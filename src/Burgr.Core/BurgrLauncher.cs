@@ -14,7 +14,7 @@ namespace SolidOps.Burgr.Core
         private static List<Assembly> referencedAssemblies = new List<Assembly>();
         public static int Launch(params string[] args)
         {
-            string moduleName = string.Empty;
+            string projectName = string.Empty;
             string namespaceName = string.Empty;
             string buildingDir = string.Empty;
             string modelSpecDirectory = Directory.GetCurrentDirectory();
@@ -58,7 +58,7 @@ namespace SolidOps.Burgr.Core
             {
                 JsonElement json = JsonDocument.Parse(jsonFileContent).RootElement.Clone();
                 BurgrConfig config = json.Deserialize<BurgrConfig>();
-                moduleName = config.ModuleName;
+                projectName = config.ProjectName;
                 namespaceName = config.NamespaceName;
                 buildingDir = Path.Combine(Directory.GetCurrentDirectory(), config.BuildingDirectory);
                 templates = config.Templates;
@@ -129,7 +129,7 @@ namespace SolidOps.Burgr.Core
                     if (arg.StartsWith("/projectDir:", StringComparison.Ordinal))
                     {
                         string projectDir = arg.Replace("/projectDir:", string.Empty);
-                        moduleName = new DirectoryInfo(projectDir).Name;
+                        projectName = new DirectoryInfo(projectDir).Name;
                     }
                     if (arg.StartsWith("/buildingDir:", StringComparison.Ordinal))
                     {
@@ -213,12 +213,12 @@ namespace SolidOps.Burgr.Core
 
             IModelParserEngine modelParserEngine = Activator.CreateInstance(modelParserEngineType) as IModelParserEngine;
             modelParserEngine.ModelsDirectory = modelSpecDirectory;
-            modelParserEngine.ModuleName = moduleName;
+            modelParserEngine.ProjectName = projectName;
             modelParserEngine.NamespaceName = namespaceName;
 
             ITemplateParserEngine templateParserEngine = Activator.CreateInstance(templateParserEngineType) as ITemplateParserEngine;
             templateParserEngine.TemplatesDirectory = templateSpecDirectory;
-            templateParserEngine.ModuleName = moduleName;
+            templateParserEngine.ProjectName = projectName;
             templateParserEngine.NamespaceName = namespaceName;
 
             AppDomain.CurrentDomain.AssemblyResolve -= ResolveAssembliesForLauncher;
@@ -226,7 +226,7 @@ namespace SolidOps.Burgr.Core
             GeneratorSettings settings = new()
             {
                 // input
-                ModuleName = moduleName,
+                ProjectName = projectName,
                 NamespaceName = namespaceName,
                 TemplateSpecDirectory = templateSpecDirectory ?? modelSpecDirectory,
                 // internal

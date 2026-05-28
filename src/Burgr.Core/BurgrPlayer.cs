@@ -9,7 +9,7 @@ namespace SolidOps.Burgr.Core
 {
     public class GeneratorSettings
     {
-        public string ModuleName { get; set; }
+        public string ProjectName { get; set; }
         public string NamespaceName { get; set; }
         public string BuildingDirectory { get; set; }
         public string TemplateSpecDirectory { get; set; }
@@ -67,7 +67,6 @@ namespace SolidOps.Burgr.Core
 
             GeneratorOptions.BuildingDirectory = settings.BuildingDirectory;
 
-            GeneratorOptions.ModuleName = settings.ModuleName;
             GeneratorOptions.NamespaceName = settings.NamespaceName;
 
             GeneratorOptions.IdentityKeysType = settings.IdentityKeysType;

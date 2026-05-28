@@ -15,7 +15,7 @@ public class ModelParserEngine : IModelParserEngine
     public string ModelParserType => "Yaml";
 
     public string ModelsDirectory { get; set; }
-    public string ModuleName { get; set; }
+    public string ProjectName { get; set; }
     public string NamespaceName { get; set; }
 
     public Dictionary<string, YamlModelContentV1> YamlModelContentByModule { get; set; }
@@ -28,7 +28,7 @@ public class ModelParserEngine : IModelParserEngine
     public ModelParserEngine(string modelsDirectory, string moduleName, string namespaceName)
     {
         ModelsDirectory = modelsDirectory;
-        ModuleName = moduleName;
+        ProjectName = moduleName;
         NamespaceName = namespaceName;
     }
 

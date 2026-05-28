@@ -7,7 +7,7 @@ namespace SolidOps.Burgr.Essential.Yaml;
 public class TemplateParserEngine : ITemplateParserEngine
 {
     public string TemplatesDirectory { get; set; }
-    public string ModuleName { get; set; }
+    public string ProjectName { get; set; }
     public string NamespaceName { get; set; }
 
     public string TemplateParserType { get => "Yaml"; }

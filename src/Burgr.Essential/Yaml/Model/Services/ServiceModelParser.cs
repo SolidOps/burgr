@@ -28,7 +28,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
 
         foreach (var kvpModule in this.parserEngine.YamlModelContentByModule)
         {
-            string moduleName = this.parserEngine.ModuleName;
+            string moduleName = this.parserEngine.ProjectName;
             if (kvpModule.Key != string.Empty)
             {
                 moduleName += "." + kvpModule.Key;

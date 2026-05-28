@@ -48,7 +48,7 @@ dotnet tool install --global Burgr
 
 ```json
 {
-  "ModuleName": "Todo",
+  "ProjectName": "Todo",
   "NamespaceName": "MyApp",
   "ModelParserEngineType": "SolidOps.Burgr.Essential.Yaml.ModelParserEngine, SolidOps.Burgr.Essential",
   "TemplateParserEngineType": "SolidOps.Burgr.Essential.Yaml.TemplateParserEngine, SolidOps.Burgr.Essential",
@@ -273,7 +273,7 @@ enums:
 
 | Field | Description |
 |---|---|
-| `ModuleName` | Short identifier used in namespaces and file names |
+| `ProjectName` | Short identifier used in namespaces and file names |
 | `NamespaceName` | Root C# namespace |
 | `ModelParserEngineType` | Assembly-qualified model parser type |
 | `TemplateParserEngineType` | Assembly-qualified template parser type |

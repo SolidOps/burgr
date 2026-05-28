@@ -21,7 +21,7 @@ public class EnumModelParser : BaseYamlModelParser, IModelParser
 
         foreach (var kvpModule in yamlParserEngine.YamlModelContentByModule)
         {
-            string moduleName = yamlParserEngine.ModuleName;
+            string moduleName = yamlParserEngine.ProjectName;
             if(kvpModule.Key != string.Empty)
                 moduleName += "." + kvpModule.Key;
             foreach (var kvp in kvpModule.Value.enums)
