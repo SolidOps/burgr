@@ -1,5 +1,5 @@
 ﻿{
-  "Project": "UM",
+  "ProjectName": "UM",
   "NamespaceName": "SolidOps",
   "ModelParserEngineType": "SolidOps.Burgr.Essential.Yaml.ModelParserEngine, SolidOps.Burgr.Essential",
   "TemplateParserEngineType": "SolidOps.Burgr.Essential.Yaml.TemplateParserEngine, SolidOps.Burgr.Essential",

@@ -35,7 +35,7 @@ public partial class AuthenticationController : BaseController
         IOpsResult result;
         using (var unitOfWork = executionContext.StartUnitOfWork("UM", "AuthenticationController Login", UnitOfWorkType.Write))
         {
-            result = await this.service.Login(new SolidOps.UM.Presentation.Mappers.LoginRequestDTOMapper(serviceProvider).Convert(request, serviceProvider));
+            result = await this.service.Login(new SolidOps.UM.Presentation.Mappers.LoginRequestDTOMapper(serviceProvider).Convert(request, serviceProvider)!);
             if (result.HasError) return Failure(result.Error);
             unitOfWork.Complete();
         }
@@ -170,7 +170,7 @@ public partial class SelfUserCreationController : BaseController
         IOpsResult<Guid> result;
         using (var unitOfWork = executionContext.StartUnitOfWork("UM", "SelfUserCreationController CreateUser", UnitOfWorkType.Write))
         {
-            result = await this.service.CreateUser(new SolidOps.UM.Presentation.Mappers.SelfUserCreationRequestDTOMapper(serviceProvider).Convert(request, serviceProvider));
+            result = await this.service.CreateUser(new SolidOps.UM.Presentation.Mappers.SelfUserCreationRequestDTOMapper(serviceProvider).Convert(request, serviceProvider)!);
             if (result.HasError) return Failure(result.Error);
             unitOfWork.Complete();
         }
@@ -285,7 +285,7 @@ public partial class UserCreationController : BaseController
         IOpsResult<Guid> result;
         using (var unitOfWork = executionContext.StartUnitOfWork("UM", "UserCreationController CreateUser", UnitOfWorkType.Write))
         {
-            result = await this.service.CreateUser(new SolidOps.UM.Presentation.Mappers.UserCreationInfoDTOMapper(serviceProvider).Convert(userCreationInfo, serviceProvider));
+            result = await this.service.CreateUser(new SolidOps.UM.Presentation.Mappers.UserCreationInfoDTOMapper(serviceProvider).Convert(userCreationInfo, serviceProvider)!);
             if (result.HasError) return Failure(result.Error);
             unitOfWork.Complete();
         }
