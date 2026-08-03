@@ -75,33 +75,54 @@ public class ModelParserEngine : IModelParserEngine
                 if (version == "1.0.0")
                 {
                     var fileContent = new YamlDotNet.Serialization.Deserializer().Deserialize<YamlModelContentV1>(String.Join("\r\n", lines));
-                    foreach (var @enum in fileContent.enums)
+                    if (fileContent.enums != null)
                     {
-                        yamlModelContent.enums.Add(@enum.Key, @enum.Value);
+                        foreach (var @enum in fileContent.enums)
+                        {
+                            yamlModelContent.enums.Add(@enum.Key, @enum.Value);
+                        }
                     }
-                    foreach (var entity in fileContent.entities)
+                    if (fileContent.entities != null)
                     {
-                        yamlModelContent.entities.Add(entity.Key, entity.Value);
+                        foreach (var entity in fileContent.entities)
+                        {
+                            yamlModelContent.entities.Add(entity.Key, entity.Value);
+                        }
                     }
-                    foreach (var aggregate_root in fileContent.aggregate_roots)
+                    if (fileContent.aggregate_roots != null)
                     {
-                        yamlModelContent.aggregate_roots.Add(aggregate_root.Key, aggregate_root.Value);
+                        foreach (var aggregate_root in fileContent.aggregate_roots)
+                        {
+                            yamlModelContent.aggregate_roots.Add(aggregate_root.Key, aggregate_root.Value);
+                        }
                     }
-                    foreach (var transient in fileContent.transients)
+                    if (fileContent.transients != null)
                     {
-                        yamlModelContent.transients.Add(transient.Key, transient.Value);
+                        foreach (var transient in fileContent.transients)
+                        {
+                            yamlModelContent.transients.Add(transient.Key, transient.Value);
+                        }
                     }
-                    foreach (var service in fileContent.services)
+                    if (fileContent.services != null)
                     {
-                        yamlModelContent.services.Add(service.Key, service.Value);
+                        foreach (var service in fileContent.services)
+                        {
+                            yamlModelContent.services.Add(service.Key, service.Value);
+                        }
                     }
-                    foreach (var value_object in fileContent.value_objects)
+                    if (fileContent.value_objects != null)
                     {
-                        yamlModelContent.value_objects.Add(value_object.Key, value_object.Value);
+                        foreach (var value_object in fileContent.value_objects)
+                        {
+                            yamlModelContent.value_objects.Add(value_object.Key, value_object.Value);
+                        }
                     }
-                    foreach (var @event in fileContent.events)
+                    if (fileContent.events != null)
                     {
-                        yamlModelContent.events.Add(@event.Key, @event.Value);
+                        foreach (var @event in fileContent.events)
+                        {
+                            yamlModelContent.events.Add(@event.Key, @event.Value);
+                        }
                     }
                 }
             }
@@ -121,7 +142,7 @@ public class ModelParserEngine : IModelParserEngine
             // for each model that has at least one resource
             foreach (ModelDescriptor model in description.ModelDescriptors.Where(m => m.DescriptorType == ObjectGenerator.Name))
             {
-                if (model.GetChildren(DescriptorTypes.RESOURCE_DEFINITION_DESCRIPTOR).Count() > 0 
+                if (model.GetChildren(DescriptorTypes.RESOURCE_DEFINITION_DESCRIPTOR).Count() > 0
                     || model.Get("DomainType") == DomainType.Transient.ToString())
                 {
                     AddType(exposedTypes, model, modelsRepository);
