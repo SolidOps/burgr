@@ -87,6 +87,10 @@ public class Property
     public string join_navigation { get; set; }
     public string db_column_name { get; set; }
     public bool is_private { get; set; }
+    // Persisted and exposed like any other property, but owned by the server: the
+    // generated edit forms skip it. Distinct from is_private, which removes the
+    // property from the DTO/API/entity entirely.
+    public bool is_readonly { get; set; }
     public string id_column_name { get; set; }
     public string multiple_unique_constraint_with { get; set; }
 }

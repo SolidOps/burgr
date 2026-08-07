@@ -771,6 +771,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
         baseProp.Set("JoinNavigation", property.join_navigation);
         baseProp.Set("DBColumnName", property.db_column_name);
         baseProp.Set("Private", property.is_private.ToString());
+        baseProp.Set("ReadOnly", property.is_readonly.ToString());
         baseProp.Set("IdColumnName", property.id_column_name);
     }
 

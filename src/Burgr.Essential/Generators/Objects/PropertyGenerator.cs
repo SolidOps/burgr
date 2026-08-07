@@ -120,6 +120,16 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             return "template is private only";
         }
 
+        if (model.Is("ReadOnly") && template.Is("Editable"))
+        {
+            return "template is editable only";
+        }
+
+        if (!model.Is("ReadOnly") && template.Is("ReadOnlyOnly"))
+        {
+            return "template is read only";
+        }
+
         if (model.Is("List") && template.Is("NonArray"))
         {
             return "template is only non array";
@@ -540,6 +550,9 @@ public class PropertyTemplateParser : ITemplateParser
         // - public
         Options.Add(new TemplateOption() { Name = "PublicOnly", Tag = "[PUO]", });
         Options.Add(new TemplateOption() { Name = "PrivateOnly", Tag = "[PRO]", });
+        // - server-owned
+        Options.Add(new TemplateOption() { Name = "ReadOnlyOnly", Tag = "[RO]", });
+        Options.Add(new TemplateOption() { Name = "Editable", Tag = "[NRO]", });
         // - array
         Options.Add(new TemplateOption() { Name = "Array", Tag = "[AR]", });
         Options.Add(new TemplateOption() { Name = "NonArray", Tag = "[NAR]", });
