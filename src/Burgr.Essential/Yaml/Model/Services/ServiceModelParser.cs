@@ -145,9 +145,16 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
 
 
             modelServiceMethod.Set("MethodMandatoryRight", method.api_description?.mandatory_right);
-            AddRight(modelDescription, modelServiceMethod.Get("MethodMandatoryRight"), modelServiceMethod.FullModuleName, modelServiceMethod.NamespaceName, modelServiceMethod.ModuleName);
+            if (!string.IsNullOrEmpty(modelServiceMethod.Get("MethodMandatoryRight")))
+            {
+                AddRight(modelDescription, modelServiceMethod.Get("MethodMandatoryRight"), modelServiceMethod.FullModuleName, modelServiceMethod.NamespaceName, modelServiceMethod.ModuleName);
+            }
+
             modelServiceMethod.Set("OwnershipOverrideRight", method.api_description?.ownership_override_right);
-            AddRight(modelDescription, modelServiceMethod.Get("OwnershipOverrideRight"), modelServiceMethod.FullModuleName, modelServiceMethod.NamespaceName, modelServiceMethod.ModuleName);
+            if (!string.IsNullOrEmpty(modelServiceMethod.Get("OwnershipOverrideRight")))
+            {
+                AddRight(modelDescription, modelServiceMethod.Get("OwnershipOverrideRight"), modelServiceMethod.FullModuleName, modelServiceMethod.NamespaceName, modelServiceMethod.ModuleName);
+            }
 
             if (returnType == ReturnType.Identity)
             {
