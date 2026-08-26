@@ -150,6 +150,18 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             return "template is only array";
         }
 
+        bool modelIsBoolean = model.Get("SimpleType") == "bool";
+
+        if (!modelIsBoolean && template.Is("Boolean"))
+        {
+            return "template is only boolean";
+        }
+
+        if (modelIsBoolean && template.Is("NonBoolean"))
+        {
+            return "template is only non boolean";
+        }
+
         if (template.Is("NullableOnly") && !model.Is("Null"))
         {
             return "property is not null";
@@ -391,7 +403,9 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
 
         result = HandlePropertyValidationRules(model, result);
 
-        // password fields
+        // password fields, then the input type the property type actually needs:
+        // a text input binds through Angular's default accessor and posts a string,
+        // which a non-string DTO property rejects on the server side.
         string inputType = "text";
         if (model.Name == "password")
         {
@@ -400,6 +414,10 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         else if (model.Name == "email")
         {
             inputType = "email";
+        }
+        else
+        {
+            inputType = GetInputType(model.Get("SimpleType"), inputType);
         }
         result = result.Replace("INPUTTYPE", inputType);
 
@@ -419,6 +437,33 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         result = result.Replace("[option]", conversionService.ConvertOption(model));
 
         return result;
+    }
+
+    // The HTML input type drives which Angular value accessor binds the control, and so
+    // the type of the value posted back. "datetime" is deliberately left as the default:
+    // datetime-local only accepts - and only emits - its own value format, so it needs a
+    // conversion on both sides rather than just another input type.
+    private static string GetInputType(string simpleType, string defaultInputType)
+    {
+        switch (simpleType)
+        {
+            case "bool":
+                return "checkbox";
+            case "byte":
+            case "sbyte":
+            case "short":
+            case "ushort":
+            case "int":
+            case "uint":
+            case "long":
+            case "ulong":
+            case "float":
+            case "double":
+            case "decimal":
+                return "number";
+            default:
+                return defaultInputType;
+        }
     }
 
     private static string HandlePropertyValidationRules(ModelDescriptor model, string result)
@@ -559,5 +604,8 @@ public class PropertyTemplateParser : ITemplateParser
         // - array
         Options.Add(new TemplateOption() { Name = "LongText", Tag = "[LT]", });
         Options.Add(new TemplateOption() { Name = "NonLongText", Tag = "[NLT]", });
+        // - boolean
+        Options.Add(new TemplateOption() { Name = "Boolean", Tag = "[BO]", });
+        Options.Add(new TemplateOption() { Name = "NonBoolean", Tag = "[NBO]", });
     }
 }
