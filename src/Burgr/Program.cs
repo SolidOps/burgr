@@ -7,7 +7,7 @@ namespace SolidOps.Burgr
     {
         private static int Main(string[] args)
         {
-            Console.WriteLine("Start Generator");
+            Console.WriteLine("Starting Generator");
             try
             {
                 return BurgrLauncher.Launch(args);
