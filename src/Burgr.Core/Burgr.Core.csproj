@@ -5,6 +5,7 @@
     <AssemblyName>SolidOps.Burgr.Core</AssemblyName>
     <RootNamespace>SolidOps.Burgr.Core</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
+    <Version>0.0.0-dev</Version>
   </PropertyGroup>
 
   <PropertyGroup>

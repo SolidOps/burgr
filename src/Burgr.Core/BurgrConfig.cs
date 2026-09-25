@@ -16,6 +16,7 @@ namespace SolidOps.Burgr.Core
         public string ModelSpecDirectory { get; set; }
         public string[] BinaryDirectories { get; set; }
         public string TemplateSpecDirectory { get; set; }
+        public TemplatePackageConfig TemplatePackage { get; set; }
         public string BuildingDirectory { get; set; }
         public string IdentityKeysType { get; set; }
         public Dictionary<string, ExternalModuleConfig> ExternalModules { get; set; }
@@ -31,6 +32,13 @@ namespace SolidOps.Burgr.Core
 
         public string ToRemoveAtGenerationIdentifier { get; set; }
         public string ToRemoveIfNoAPIIdentifier { get; set; }
+    }
+
+    public class TemplatePackageConfig
+    {
+        public string Id { get; set; }
+        public string Version { get; set; }
+        public string Source { get; set; }
     }
 
     public class ExternalModuleConfig

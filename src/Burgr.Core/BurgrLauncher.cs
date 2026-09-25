@@ -20,6 +20,7 @@ namespace SolidOps.Burgr.Core
             string modelSpecDirectory = Directory.GetCurrentDirectory();
             var binaryDirectories = new List<string>();
             string templateSpecDirectory = null;
+            TemplatePackageConfig templatePackage = null;
 
             string identityKeysType = "Guid";
             string forcedPrefix = null;
@@ -37,13 +38,14 @@ namespace SolidOps.Burgr.Core
             string[] templates;
             string[] generatorTypeNames;
 
-            if (args.Length == 1 && !args[0].StartsWith("{"))
+            string callerDirectory = Directory.GetCurrentDirectory();
+            if (args.Length >= 1 && !args[0].StartsWith("{") && !args[0].StartsWith("/"))
             {
                 Environment.CurrentDirectory = args[0];
             }
 
             string jsonFileContent = null;
-            if (args.Length == 1 && !args[0].StartsWith("/") && args[0].StartsWith("{"))
+            if (args.Length >= 1 && args[0].StartsWith("{"))
             {
                 jsonFileContent = args[0];
             }
@@ -98,6 +100,7 @@ namespace SolidOps.Burgr.Core
                         templateSpecDirectory = Path.Combine(Directory.GetCurrentDirectory(), templateSpecDirectory);
                     }
                 }
+                templatePackage = config.TemplatePackage;
                 if (config.IdentityKeysType != null)
                 {
                     identityKeysType = config.IdentityKeysType;
@@ -168,6 +171,20 @@ namespace SolidOps.Burgr.Core
                 templates = new string[] {};
 
                 generatorTypeNames = new string[] {};
+            }
+
+            var templateSpecDirectoryArg = args.FirstOrDefault(a => a.StartsWith("/templateSpecDirectory:", StringComparison.Ordinal));
+            if (templateSpecDirectoryArg != null)
+            {
+                templateSpecDirectory = Path.GetFullPath(templateSpecDirectoryArg.Replace("/templateSpecDirectory:", string.Empty), callerDirectory);
+            }
+            if (templateSpecDirectory == null && templatePackage != null)
+            {
+                templateSpecDirectory = TemplatePackageResolver.Resolve(templatePackage);
+            }
+            if (templateSpecDirectory != null)
+            {
+                TemplateCompatibility.Check(templateSpecDirectory);
             }
 
             foreach (string arg in args)
