@@ -131,11 +131,6 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                 descriptor.Set("PrivateId", "true");
             }
 
-            if (value.identity_keys_type != null)
-            {
-                descriptor.Set("IdentityKeysType", value.identity_keys_type);
-            }
-
             if (value.cacheable)
             {
                 descriptor.Set("Cacheable", "true");
@@ -640,6 +635,10 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
             if(modelsRepository.modelDescriptions.ContainsKey(typeInfo.ModuleName))
             {
                 bProp.Set("InternalReference", "true");
+            }
+            else
+            {
+                bProp.Set("IdentityKeysType", GeneratorOptions.GetExternalIdentityKeysType(typeInfo.ModuleName));
             }
             SetBasePropertyParameter(bProp, propName, property, objectName, baseObject, objectDescriptor);
             if (typeInfo.IsNavigation)

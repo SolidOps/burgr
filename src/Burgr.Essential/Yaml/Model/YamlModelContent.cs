@@ -38,7 +38,6 @@ public class BaseObject
 
     public bool cacheable { get; set; }
 
-    public string identity_keys_type { get; set; }
 
     public Dictionary<string, object> properties { get; set; } // value is string (type) or property
 

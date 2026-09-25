@@ -107,7 +107,7 @@ public class MySQLConversionService : BaseConversionService
     {
         if (type == null) throw new ArgumentNullException("type");
 
-        string sqlType = type is "Guid" or "string" ? "varchar(50)" : "INT";
+        string sqlType = type is "Guid" or "string" ? "varchar(50)" : "BIGINT";
         if (isPrimary)
         {
             sqlType += " NOT NULL";

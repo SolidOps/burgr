@@ -436,6 +436,11 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
 
         result = result.Replace("[option]", conversionService.ConvertOption(model));
 
+        if (model.Get("IdentityKeysType") != null)
+        {
+            result = conversionService.ReplaceIdentityType(result, model.Get("IdentityKeysType"));
+        }
+
         return result;
     }
 

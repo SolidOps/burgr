@@ -14,6 +14,7 @@ namespace SolidOps.Burgr.Core
         public string BuildingDirectory { get; set; }
         public string TemplateSpecDirectory { get; set; }
         public string IdentityKeysType { get; set; } = "Guid";
+        public Dictionary<string, string> ExternalModuleKeysTypes { get; set; } = new();
         public string ForcedPrefix { get; set; }
         public string OverrideDestination { get; set; }
         public bool OnlyOneDll { get; set; } = true;
@@ -69,7 +70,15 @@ namespace SolidOps.Burgr.Core
 
             GeneratorOptions.NamespaceName = settings.NamespaceName;
 
+            foreach (var identityKeysType in settings.ExternalModuleKeysTypes.Values.Prepend(settings.IdentityKeysType))
+            {
+                if (!GeneratorOptions.SupportedIdentityKeysTypes.Contains(identityKeysType))
+                {
+                    throw new ArgumentException($"IdentityKeysType '{identityKeysType}' is not supported, use one of: {string.Join(", ", GeneratorOptions.SupportedIdentityKeysTypes)}");
+                }
+            }
             GeneratorOptions.IdentityKeysType = settings.IdentityKeysType;
+            GeneratorOptions.ExternalModuleKeysTypes = settings.ExternalModuleKeysTypes;
             GeneratorOptions.ForcedPrefix = settings.ForcedPrefix;
 
             GeneratorOptions.OverrideDestinations = new Dictionary<string, string>();

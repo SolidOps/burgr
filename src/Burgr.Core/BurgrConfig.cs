@@ -18,6 +18,7 @@ namespace SolidOps.Burgr.Core
         public string TemplateSpecDirectory { get; set; }
         public string BuildingDirectory { get; set; }
         public string IdentityKeysType { get; set; }
+        public Dictionary<string, ExternalModuleConfig> ExternalModules { get; set; }
         public bool? OnlyOneDll { get; set; }
         public string ForcedPrefix { get; set; }
         public string OverrideDestination { get; set; }
@@ -30,5 +31,10 @@ namespace SolidOps.Burgr.Core
 
         public string ToRemoveAtGenerationIdentifier { get; set; }
         public string ToRemoveIfNoAPIIdentifier { get; set; }
+    }
+
+    public class ExternalModuleConfig
+    {
+        public string IdentityKeysType { get; set; }
     }
 }
