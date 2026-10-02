@@ -12,6 +12,7 @@ public class TypeInfo
     private static string Identity = "identity";
     private static string Void = "void";
     private static string NavigationIdentifier = "->";
+    private static string SynchronizedIdentifier = "~>";
     private static string CalculatedIdentifier = "=";
     private static string NonPersistedIdentifier = "-";
 
@@ -24,6 +25,7 @@ public class TypeInfo
     public bool IsArray { get; private set; }
     public bool IsNull { get; private set; }
     public bool IsNavigation { get; private set; }
+    public bool IsSynchronized { get; private set; }
     public bool IsCalculated { get; private set; }
     public bool IsNonPersisted { get; private set; }
 
@@ -48,7 +50,15 @@ public class TypeInfo
             Name = Name.Replace(NullIdentifier, string.Empty);
         }
 
-        if (Name.StartsWith(NavigationIdentifier))
+        if (Name.StartsWith(SynchronizedIdentifier))
+        {
+            IsNavigation = true;
+            IsSynchronized = true;
+            Name = Name.Substring(SynchronizedIdentifier.Length);
+            if (!IsArray)
+                throw new Exception("Only collections can be synchronized : " + TypeName);
+        }
+        else if (Name.StartsWith(NavigationIdentifier))
         {
             IsNavigation = true;
             Name = Name.Replace(NavigationIdentifier, string.Empty);

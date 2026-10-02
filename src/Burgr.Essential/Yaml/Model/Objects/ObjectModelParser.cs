@@ -710,6 +710,10 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
 
         bProp.Set("Null", typeInfo.IsNull.ToString());
         bProp.Set("List", typeInfo.IsArray.ToString());
+        if (typeInfo.IsSynchronized)
+        {
+            bProp.Set("Synchronized", "true");
+        }
         if (bProp.Get("SpecialType") == null && (objectDescriptor.Get("DomainType") == "Transient" || bProp.Get("DomainType") == DomainType.Transient.ToString()))
         {
             bProp.Set("SpecialType", "NonPersisted");

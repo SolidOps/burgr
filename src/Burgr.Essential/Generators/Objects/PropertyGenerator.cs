@@ -140,6 +140,16 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             return "template is only array";
         }
 
+        if (!model.Is("Synchronized") && template.Is("Synchronized"))
+        {
+            return "property is not synchronized";
+        }
+
+        if (model.Is("Synchronized") && template.Is("NonSynchronized"))
+        {
+            return "property is synchronized";
+        }
+
         if (model.Is("MaxSize") && template.Is("NonLongText"))
         {
             return "template is only non array";
@@ -354,6 +364,12 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
                 : result.Replace("_BACKLINK_", "_CLASSNAME_");
         }
 
+        if (model.Is("Synchronized") && (result.Contains("_SYNCPARENTID_") || result.Contains("_SYNCKEYID_")))
+        {
+            var (parentId, keyId) = GetSynchronizedKeys(model);
+            result = result.Replace("_SYNCPARENTID_", parentId).Replace("_SYNCKEYID_", keyId);
+        }
+
         if (result.Contains("_FROMLISTID_"))
         {
             result = model.Get("SpecialType") == SpecialType.Navigation.ToString() && model.Get("JoinNavigation") != null
@@ -442,6 +458,36 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         }
 
         return result;
+    }
+
+    // Child key used to match payload and database rows: the other member of the child's
+    // multiple_unique_constraint_with, or its Id when it has none.
+    private static (string ParentId, string KeyId) GetSynchronizedKeys(ModelDescriptor model)
+    {
+        var child = model.GetRelated("Object");
+        var owner = model.Parent;
+        var childProperties = child.GetChildren(Name);
+
+        var parentProperty = childProperties.FirstOrDefault(x =>
+            x.Get("PropertyType") == "Model" && x.Get("SpecialType") == null && x.GetRelated("Object")?.Name == owner.Name)
+            ?? throw new Exception($"synchronized navigation {owner.Name}.{model.Name}: {child.Name} has no property referencing {owner.Name}");
+
+        var constrained = childProperties.FirstOrDefault(x => x.Is("MultipleUniqueConstraint"));
+        if (constrained == null)
+        {
+            throw new Exception($"synchronized navigation {owner.Name}.{model.Name}: {child.Name} needs a multiple_unique_constraint_with to identify its rows");
+        }
+
+        var members = new List<string> { constrained.Name };
+        members.AddRange(constrained.GetList("UniqueConstraintAdditionalMembers"));
+        var keys = members.Where(x => x != parentProperty.Name).ToList();
+        if (keys.Count != 1)
+        {
+            throw new Exception($"synchronized navigation {owner.Name}.{model.Name}: {child.Name} must have exactly one identity property besides {parentProperty.Name}");
+        }
+
+        var key = childProperties.Single(x => x.Name == keys[0]);
+        return (parentProperty.Get("IdPropertyName"), key.Get("IdPropertyName") ?? key.Get("PropertyName"));
     }
 
     // The HTML input type drives which Angular value accessor binds the control, and so
@@ -606,6 +652,9 @@ public class PropertyTemplateParser : ITemplateParser
         // - array
         Options.Add(new TemplateOption() { Name = "Array", Tag = "[AR]", });
         Options.Add(new TemplateOption() { Name = "NonArray", Tag = "[NAR]", });
+        // - synchronized navigation (~>)
+        Options.Add(new TemplateOption() { Name = "Synchronized", Tag = "[SY]", });
+        Options.Add(new TemplateOption() { Name = "NonSynchronized", Tag = "[NSY]", });
         // - array
         Options.Add(new TemplateOption() { Name = "LongText", Tag = "[LT]", });
         Options.Add(new TemplateOption() { Name = "NonLongText", Tag = "[NLT]", });
