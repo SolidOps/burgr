@@ -271,27 +271,7 @@ namespace SolidOps.Burgr.Core
                     fileContent = fileContent.Replace("*/", string.Empty);
                     fileContent = fileContent.Replace("using SolidOps.Burgr.Core;", string.Empty);
                     
-                    // Clean import
-                    if (fileResult.Value.DestinationLanguage == "JS")
-                    {
-                        List<string> lines = new();
-                        foreach (string line in fileContent.Split(new char[] { '\n' }))
-                        {
-                            if (line.StartsWith("import {"))
-                            {
-                                if (!lines.Contains(line))
-                                {
-                                    lines.Add(line);
-                                }
-                            }
-                            else
-                            {
-                                lines.Add(line);
-                            }
-                        }
-
-                        fileContent = string.Join("\n", lines);
-                    }
+                    fileContent = DuplicateLineCleaner.Clean(fileContent, fileResult.Value.DestinationLanguage);
 
                     foreach (string removeTemplate in Utilities.GetInnerTemplates(fileContent, Utilities.GetLoopIdentifiers(generatorSettings.ToRemoveAtGenerationIdentifier)))
                     {
