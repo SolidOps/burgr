@@ -26,6 +26,8 @@ public class BaseObject
 
     public string id_column_name { get; set; }
 
+    public List<string> key { get; set; } // composite key: property names, in declaration order
+
     public string table_name { get; set; }
 
     public string forced_prefix { get; set; }
