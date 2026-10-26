@@ -161,6 +161,27 @@ public class CompositeKeyTests
             """, "cannot be referenced");
     }
 
+    [TestMethod]
+    public void ObjectWithAKeyCanBeNavigatedTo()
+    {
+        var objects = Parse("""
+              category_product:
+                key: [category, product]
+                properties:
+                  category:
+                    type: category
+                  product:
+                    type: product
+              shelf:
+                properties:
+                  category:
+                    type: category
+                  products: ->category_product[]
+            """);
+
+        Assert.IsTrue(objects["category_product"].Is("ComposedId"));
+    }
+
     private static void AssertRejected(string objects, string expectedMessage)
     {
         var exception = Assert.ThrowsExactly<Exception>(() => Parse(objects));
