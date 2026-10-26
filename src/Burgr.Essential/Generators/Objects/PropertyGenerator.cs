@@ -150,6 +150,26 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             return "property is synchronized";
         }
 
+        if (!HasBackLink(model) && template.Is("BackLink"))
+        {
+            return "navigation has no back link";
+        }
+
+        if (HasBackLink(model) && template.Is("NonBackLink"))
+        {
+            return "navigation has a back link";
+        }
+
+        if (!HasJoin(model) && template.Is("Join"))
+        {
+            return "navigation has no join";
+        }
+
+        if (HasJoin(model) && template.Is("NonJoin"))
+        {
+            return "navigation has a join";
+        }
+
         if (!model.Is("Key") && template.Is("Key"))
         {
             return "property is not part of the key";
@@ -471,6 +491,24 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         return result;
     }
 
+    // A back link names the child's reference to the parent, for a navigation whose child
+    // references the parent more than once. A join navigation is matched on another column
+    // and has no such reference.
+    private static bool HasBackLink(ModelDescriptor model)
+    {
+        return model.Get("SpecialType") == SpecialType.Navigation.ToString()
+            && model.Get("BackLinkNavigation") != null
+            && model.Get("JoinNavigation") == null;
+    }
+
+    // A join navigation is matched on another column than the parent's id, which is no
+    // foreign key the templates can map.
+    private static bool HasJoin(ModelDescriptor model)
+    {
+        return model.Get("SpecialType") == SpecialType.Navigation.ToString()
+            && model.Get("JoinNavigation") != null;
+    }
+
     // Child key used to match payload and database rows: the other member of the child's
     // multiple_unique_constraint_with, or its Id when it has none.
     private static (string ParentId, string KeyId) GetSynchronizedKeys(ModelDescriptor model)
@@ -669,6 +707,12 @@ public class PropertyTemplateParser : ITemplateParser
         // - part of a composite key
         Options.Add(new TemplateOption() { Name = "Key", Tag = "[K]", });
         Options.Add(new TemplateOption() { Name = "NonKey", Tag = "[NK]", });
+        // - navigation with a back link (and no join)
+        Options.Add(new TemplateOption() { Name = "BackLink", Tag = "[BL]", });
+        Options.Add(new TemplateOption() { Name = "NonBackLink", Tag = "[NBL]", });
+        // - navigation with a join
+        Options.Add(new TemplateOption() { Name = "Join", Tag = "[JN]", });
+        Options.Add(new TemplateOption() { Name = "NonJoin", Tag = "[NJN]", });
         // - array
         Options.Add(new TemplateOption() { Name = "LongText", Tag = "[LT]", });
         Options.Add(new TemplateOption() { Name = "NonLongText", Tag = "[NLT]", });
