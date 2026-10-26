@@ -63,6 +63,8 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
 
             }
         }
+
+        CheckCompositeKeyReferences(modelsRepository);
     }
 
     #region Object
@@ -95,6 +97,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
             if (value.id_column_name != null)
             {
                 descriptor.Set("IdColumnName", value.id_column_name);
+                descriptor.Set("ExplicitIdColumnName", "true");
             }
             if (value.table_name != null)
             {
@@ -190,6 +193,11 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                         descriptor.Set("Label", propertyDescriptor.Name);
                     }
                 }
+            }
+
+            if (value.key != null)
+            {
+                SetCompositeKey(descriptor, value);
             }
 
             if (value.api != null)
@@ -776,6 +784,69 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
         baseProp.Set("Private", property.is_private.ToString());
         baseProp.Set("ReadOnly", property.is_readonly.ToString());
         baseProp.Set("IdColumnName", property.id_column_name);
+    }
+
+    // Composite key: the object has no persisted Id; its identity is the key properties joined
+    // by '|' (ComposedId). Key members are numbered in declaration order for the templates.
+    private static void SetCompositeKey(ModelDescriptor descriptor, BaseObject value)
+    {
+        var name = descriptor.Name;
+        if (descriptor.Get("DomainType") != DomainType.Aggregate.ToString())
+            throw new Exception($"key can only be set on an aggregate root: {name}");
+        if (value.id_column_name != null)
+            throw new Exception($"key and id_column_name cannot be used together: {name}");
+        if (value.key.Count < 2)
+            throw new Exception($"key needs at least two properties: {name}");
+        if (value.key.Distinct().Count() != value.key.Count)
+            throw new Exception($"key lists a property twice: {name}");
+
+        var properties = descriptor.GetChildren(PropertyGenerator.Name);
+        foreach (var keyName in value.key)
+        {
+            var property = properties.SingleOrDefault(p => p.Name == keyName)
+                ?? throw new Exception($"key property {keyName} is not a property of {name}");
+            var specialType = property.Get("SpecialType");
+            if (specialType != null && specialType != SpecialType.DBAlias.ToString())
+                throw new Exception($"key property {keyName} of {name} must be persisted and not calculated");
+            if (property.Is("Null") || property.Is("List"))
+                throw new Exception($"key property {keyName} of {name} cannot be nullable or a list");
+            if (property.Get("PropertyType") == "Model" && property.GetRelated("Object")?.Get("DomainType") != DomainType.Aggregate.ToString())
+                throw new Exception($"key property {keyName} of {name} must be a simple type, an enum or a reference to an aggregate root");
+        }
+
+        var keyProperties = properties.Where(p => value.key.Contains(p.Name)).ToList();
+        if (!keyProperties.Select(p => p.Name).SequenceEqual(value.key))
+            throw new Exception($"key properties must be listed in declaration order: {name}");
+
+        if (properties.Any(p => p.Is("Unique") || p.Is("MultipleUniqueConstraint")))
+            throw new Exception($"is_unique and multiple_unique_constraint_with are not supported on an object with a key: {name}");
+
+        for (int i = 0; i < keyProperties.Count; i++)
+        {
+            keyProperties[i].Set("Key", "true");
+            keyProperties[i].Set("KeyIndex", i.ToString(CultureInfo.InvariantCulture));
+        }
+
+        descriptor.Set("ComposedId", "true");
+        // read by the MySQL scripts, which already split it on '|'
+        descriptor.Set("IdColumnName", string.Join("|", keyProperties.Select(p => p.Get("ColumnName"))));
+    }
+
+    // Referencing or navigating to an object with a composite key would need a multi-column
+    // foreign key, which the templates do not generate.
+    private static void CheckCompositeKeyReferences(ModelDescriptionsRepository modelsRepository)
+    {
+        foreach (var model in modelsRepository.modelDescriptions.Values
+            .SelectMany(d => d.ModelDescriptors)
+            .Where(m => m.DescriptorType == ObjectGenerator.Name))
+        {
+            foreach (var property in model.GetChildren(PropertyGenerator.Name))
+            {
+                var related = property.GetRelated("Object");
+                if (related != null && related.Is("ComposedId"))
+                    throw new Exception($"{model.Name}.{property.Name}: {related.Name} has a composite key and cannot be referenced");
+            }
+        }
     }
 
     private void SetMultipleUniqueConstraint(string name, Property prop, ModelDescriptor property, string parentName, BaseObject parent, ModelDescriptor modelObject)

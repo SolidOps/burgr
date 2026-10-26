@@ -173,6 +173,38 @@ aggregate_roots:
 | `multiple_unique_constraint_with` | Composite unique key with the named field |
 | `enable_change_tracking` | Audits changes to this entity |
 
+**Object attributes**
+
+| Attribute | Description |
+|---|---|
+| `id_column_name` | Column name of the generated `Id` key |
+| `key: [a, b]` | Composite key (see below) |
+
+**Composite key**
+
+`key` lists two or more properties, in declaration order, that together identify the
+row. The object then has no generated `Id`: its identity is `ComposedId`, the key values
+joined by `|` (`"12|34"`), which is also what the API uses as id.
+
+```yaml
+aggregate_roots:
+  category_product:
+    key: [category, product]
+    properties:
+      category:
+        type: category
+        special_type: DBAlias
+        db_column_name: id_category
+      product:
+        type: product
+      position: int
+```
+
+Key properties must be persisted, non-nullable, and of a simple type, an enum or a
+reference to an aggregate root. An object with a `key` must be an aggregate root, cannot
+declare `id_column_name`, `is_unique` or `multiple_unique_constraint_with`, and cannot be
+referenced or navigated to by another object.
+
 **API access control**
 
 | Attribute | Description |
@@ -347,7 +379,7 @@ Filters narrow what a loop matches. Multiple filters are **AND**-ed; prefix with
 
 **Model filters:** `[AG]` aggregate root · `[EN]` entity · `[TR]` transient · `[VO]` value object · `[CT]` change-tracked · `[C]` has component · `[R]` has resources
 
-**Property filters:** `[S]` simple type · `[E]` enum · `[M]` model ref · `[R]` external ref · `[NO]` normal · `[CA]` calculated · `[NP]` non-persisted · `[N]` nullable · `[NN]` non-nullable · `[AR]` array · `[NAR]` not array · `[SNA]` single nav · `[LNA]` list nav
+**Property filters:** `[S]` simple type · `[E]` enum · `[M]` model ref · `[R]` external ref · `[NO]` normal · `[CA]` calculated · `[NP]` non-persisted · `[N]` nullable · `[NN]` non-nullable · `[AR]` array · `[NAR]` not array · `[SNA]` single nav · `[LNA]` list nav · `[SY]` / `[NSY]` synchronized nav or not · `[K]` / `[NK]` part of the composite key or not
 
 ```csharp
 #region foreach MODEL[AG][EN]
@@ -376,7 +408,8 @@ public partial class _CLASSNAME_
 | `NO_LABEL` | Model has no label field |
 | `NO_CHANGE_TRACKING` | Model has no change tracking |
 | `PRIVATE_ID` | Entity has a private identity |
-| `COMPOSED_ID` / `NOT_COMPOSED_ID` | Composite key presence |
+| `COMPOSED_ID` / `NOT_COMPOSED_ID` | Model has / has no composite `key` |
+| `NO_ID_COLUMN_NAME` | Model does not declare `id_column_name` |
 | `NOT_LISTCOMPONENT` / `NOT_DETAILSCOMPONENT` | Component presence |
 
 Use `#region to remove at generation` for placeholder code that should always be stripped (e.g. IDE-only constants).
@@ -396,6 +429,8 @@ Use `#region to remove at generation` for placeholder code that should always be
 | `_DEFAULT_VALUE_` | Default value for the property type |
 | `_ISNULL_` | `?` when nullable, empty otherwise |
 | `_LABEL_` | Value of the `is_label` property |
+| `_KEYINDEX_` | Position (from 0) of a `[K]` property in the composite key |
+| `IDCOLUMNNAME` | `id_column_name` of the model |
 | `_CALCULATED__*_` / `_NONPERSISTED__*_` / `_NAVIGATION__*_` | Variants for calculated / non-persisted / navigation properties |
 | `_FORLIST__*_` / `_REF__*_` | Variants for list and cross-module properties |
 | `DEPENDENCYNAMESPACE` | Root namespace of the referenced module |

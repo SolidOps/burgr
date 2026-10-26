@@ -150,6 +150,16 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
             return "property is synchronized";
         }
 
+        if (!model.Is("Key") && template.Is("Key"))
+        {
+            return "property is not part of the key";
+        }
+
+        if (model.Is("Key") && template.Is("NonKey"))
+        {
+            return "property is part of the key";
+        }
+
         if (model.Is("MaxSize") && template.Is("NonLongText"))
         {
             return "template is only non array";
@@ -390,6 +400,7 @@ public class PropertyGenerator : BaseBurgrGenerator, IGenerator
         result = result.Replace("_REF_", "");
         result = result.Replace("_FORLIST_", "");
         result = result.Replace("_COLUMNNAME_", model.Get("ColumnName"));
+        result = result.Replace("_KEYINDEX_", model.Get("KeyIndex") ?? string.Empty);
 
         result = model.Get("PropertyType") == "Model" || model.Get("PropertyType") == "ReferencedModel"
             ? result.Replace("_SIMPLE__PROPERTYNAME_", conversionService.ConvertPropertyName(model.Get("IdPropertyName")))
@@ -655,6 +666,9 @@ public class PropertyTemplateParser : ITemplateParser
         // - synchronized navigation (~>)
         Options.Add(new TemplateOption() { Name = "Synchronized", Tag = "[SY]", });
         Options.Add(new TemplateOption() { Name = "NonSynchronized", Tag = "[NSY]", });
+        // - part of a composite key
+        Options.Add(new TemplateOption() { Name = "Key", Tag = "[K]", });
+        Options.Add(new TemplateOption() { Name = "NonKey", Tag = "[NK]", });
         // - array
         Options.Add(new TemplateOption() { Name = "LongText", Tag = "[LT]", });
         Options.Add(new TemplateOption() { Name = "NonLongText", Tag = "[NLT]", });
