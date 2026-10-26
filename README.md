@@ -381,7 +381,7 @@ Filters narrow what a loop matches. Multiple filters are **AND**-ed; prefix with
 
 **Model filters:** `[AG]` aggregate root · `[EN]` entity · `[TR]` transient · `[VO]` value object · `[CT]` change-tracked · `[C]` has component · `[R]` has resources
 
-**Property filters:** `[S]` simple type · `[E]` enum · `[M]` model ref · `[R]` external ref · `[NO]` normal · `[CA]` calculated · `[NP]` non-persisted · `[N]` nullable · `[NN]` non-nullable · `[AR]` array · `[NAR]` not array · `[SNA]` single nav · `[LNA]` list nav · `[SY]` / `[NSY]` synchronized nav or not · `[K]` / `[NK]` part of the composite key or not
+**Property filters:** `[S]` simple type · `[E]` enum · `[M]` model ref · `[R]` external ref · `[NO]` normal · `[CA]` calculated · `[NP]` non-persisted · `[N]` nullable · `[NN]` non-nullable · `[AR]` array · `[NAR]` not array · `[SNA]` single nav · `[LNA]` list nav · `[SY]` / `[NSY]` synchronized nav or not · `[K]` / `[NK]` part of the composite key or not · `[BL]` / `[NBL]` list navigation with a `back_link_navigation` (and no `join_navigation`) or not · `[JN]` / `[NJN]` list navigation with a `join_navigation` or not
 
 ```csharp
 #region foreach MODEL[AG][EN]
