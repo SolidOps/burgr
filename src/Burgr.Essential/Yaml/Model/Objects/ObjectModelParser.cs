@@ -832,8 +832,10 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
         descriptor.Set("IdColumnName", string.Join("|", keyProperties.Select(p => p.Get("ColumnName"))));
     }
 
-    // Referencing or navigating to an object with a composite key would need a multi-column
-    // foreign key, which the templates do not generate.
+    // A persisted reference to an object with a composite key would need a multi-column
+    // foreign key, which the templates do not generate. Navigating to it is fine (the
+    // children are found by their own reference to the parent), and so is a calculated or
+    // non-persisted property.
     private static void CheckCompositeKeyReferences(ModelDescriptionsRepository modelsRepository)
     {
         foreach (var model in modelsRepository.modelDescriptions.Values
@@ -843,7 +845,9 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
             foreach (var property in model.GetChildren(PropertyGenerator.Name))
             {
                 var related = property.GetRelated("Object");
-                if (related != null && related.Is("ComposedId"))
+                var specialType = property.Get("SpecialType");
+                bool persisted = specialType == null || specialType == SpecialType.DBAlias.ToString();
+                if (related != null && related.Is("ComposedId") && persisted)
                     throw new Exception($"{model.Name}.{property.Name}: {related.Name} has a composite key and cannot be referenced");
             }
         }

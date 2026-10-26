@@ -203,7 +203,9 @@ aggregate_roots:
 Key properties must be persisted, non-nullable, and of a simple type, an enum or a
 reference to an aggregate root. An object with a `key` must be an aggregate root, cannot
 declare `id_column_name`, `is_unique` or `multiple_unique_constraint_with`, and cannot be
-referenced or navigated to by another object.
+referenced by another object (that would need a multi-column foreign key). A parent can
+still navigate to it (`->category_product[]`): the children are found by their own
+reference to the parent.
 
 **API access control**
 
