@@ -179,6 +179,7 @@ aggregate_roots:
 |---|---|
 | `id_column_name` | Column name of the generated `Id` key |
 | `key: [a, b]` | Composite key (see below) |
+| `is_exposed: true` | Generates the object's DTOs (and those of what it references) without an API, e.g. for another module whose API references it |
 
 **Composite key**
 
