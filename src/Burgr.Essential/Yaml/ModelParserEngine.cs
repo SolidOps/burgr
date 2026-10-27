@@ -143,7 +143,8 @@ public class ModelParserEngine : IModelParserEngine
             foreach (ModelDescriptor model in description.ModelDescriptors.Where(m => m.DescriptorType == ObjectGenerator.Name))
             {
                 if (model.GetChildren(DescriptorTypes.RESOURCE_DEFINITION_DESCRIPTOR).Count() > 0
-                    || model.Get("DomainType") == DomainType.Transient.ToString())
+                    || model.Get("DomainType") == DomainType.Transient.ToString()
+                    || model.Is("ForceExposed"))
                 {
                     AddType(exposedTypes, model, modelsRepository);
                 }

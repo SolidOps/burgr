@@ -134,6 +134,11 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                 descriptor.Set("PrivateId", "true");
             }
 
+            if (value.is_exposed)
+            {
+                descriptor.Set("ForceExposed", "true");
+            }
+
             if (value.cacheable)
             {
                 descriptor.Set("Cacheable", "true");

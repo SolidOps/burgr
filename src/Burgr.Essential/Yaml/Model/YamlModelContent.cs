@@ -38,6 +38,8 @@ public class BaseObject
 
     public bool is_id_private { get; set; }
 
+    public bool is_exposed { get; set; } // DTOs without an API, e.g. for another module's API
+
     public bool cacheable { get; set; }
 
 
