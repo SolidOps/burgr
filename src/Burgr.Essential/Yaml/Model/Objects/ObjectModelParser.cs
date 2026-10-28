@@ -313,14 +313,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                                 }
                                 else
                                 {
-                                    var parts = inputTypeInfo.ModuleName.Split(".");
-                                    var related = new ModelDescriptor(inputTypeInfo.Name, "Object")
-                                    {
-                                        ModuleName = string.Join(".", parts.Skip(1)),
-                                        NamespaceName = parts[0]
-                                    };
-                                    related.Set("DomainType", DomainType.Aggregate.ToString()); // only aggregates should be referenced in other library?
-                                    modelFactoryMethodParameter.AddRelated("Object", related);
+                                    modelFactoryMethodParameter.AddRelated("Object", CreateReferencedDescriptor(inputTypeInfo));
                                     modelFactoryMethodParameter.Set("PropertyType", "ReferencedModel");
                                 }
                             }
@@ -635,14 +628,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                 NamespaceName = namespaceName,
                 ModuleName = moduleName
             };
-            var parts = typeInfo.ModuleName.Split(".");
-            var related = new ModelDescriptor(typeInfo.Name, "Object")
-            {
-                ModuleName = string.Join(".", parts.Skip(1)),
-                NamespaceName = parts[0]
-            };
-            related.Set("DomainType", DomainType.Aggregate.ToString()); // only aggregates should be referenced in other library?
-            bProp.AddRelated("Object", related);
+            bProp.AddRelated("Object", CreateReferencedDescriptor(typeInfo));
 
             bProp.Set("PropertyType", "ReferencedModel");
             if(modelsRepository.modelDescriptions.ContainsKey(typeInfo.ModuleName))

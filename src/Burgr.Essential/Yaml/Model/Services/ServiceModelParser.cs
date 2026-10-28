@@ -119,12 +119,12 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
                 {
                     if (typeInfo.IsArray)
                     {
-                        AddRelatedDescriptor(modelServiceMethod, typeInfo, Generators.Objects.ObjectGenerator.Name);
+                        AddObjectDescriptor(modelServiceMethod, typeInfo);
                         modelServiceMethod.Set("List", "true");
                     }
                     else
                     {
-                        AddRelatedDescriptor(modelServiceMethod, typeInfo, Generators.Objects.ObjectGenerator.Name);
+                        AddObjectDescriptor(modelServiceMethod, typeInfo);
                         modelServiceMethod.Set("Null", typeInfo.IsNull.ToString());
                     }
                 }
@@ -218,12 +218,12 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
                         modelServiceMethodParameter.Set("Model", "true");
                         if (typeInfo.IsArray)
                         {
-                            AddRelatedDescriptor(modelServiceMethodParameter, typeInfo, Generators.Objects.ObjectGenerator.Name);
+                            AddObjectDescriptor(modelServiceMethodParameter, typeInfo);
                             modelServiceMethodParameter.Set("List", "true");
                         }
                         else
                         {
-                            AddRelatedDescriptor(modelServiceMethodParameter, typeInfo, Generators.Objects.ObjectGenerator.Name);
+                            AddObjectDescriptor(modelServiceMethodParameter, typeInfo);
                         }
                     }
                     else

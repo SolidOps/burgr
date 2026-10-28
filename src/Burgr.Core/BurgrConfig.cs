@@ -22,6 +22,7 @@ namespace SolidOps.Burgr.Core
         public Dictionary<string, ExternalModuleConfig> ExternalModules { get; set; }
         public bool? OnlyOneDll { get; set; }
         public string ForcedPrefix { get; set; }
+        public bool? ZeroIsNoReference { get; set; }
         public string OverrideDestination { get; set; }
         public string[] Templates { get; set; }
         public string[] Generators { get; set; }
@@ -44,5 +45,8 @@ namespace SolidOps.Burgr.Core
     public class ExternalModuleConfig
     {
         public string IdentityKeysType { get; set; }
+        // Transients of the external module referenced by this one (anything else is an
+        // aggregate root).
+        public string[] Transients { get; set; }
     }
 }
