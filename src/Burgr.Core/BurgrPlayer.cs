@@ -15,7 +15,9 @@ namespace SolidOps.Burgr.Core
         public string TemplateSpecDirectory { get; set; }
         public string IdentityKeysType { get; set; } = "Guid";
         public Dictionary<string, string> ExternalModuleKeysTypes { get; set; } = new();
+        public Dictionary<string, string[]> ExternalModuleTransients { get; set; } = new();
         public string ForcedPrefix { get; set; }
+        public bool ZeroIsNoReference { get; set; }
         public string OverrideDestination { get; set; }
         public bool OnlyOneDll { get; set; } = true;
         public string Templates { get; set; } = null;
@@ -79,7 +81,9 @@ namespace SolidOps.Burgr.Core
             }
             GeneratorOptions.IdentityKeysType = settings.IdentityKeysType;
             GeneratorOptions.ExternalModuleKeysTypes = settings.ExternalModuleKeysTypes;
+            GeneratorOptions.ExternalModuleTransients = settings.ExternalModuleTransients;
             GeneratorOptions.ForcedPrefix = settings.ForcedPrefix;
+            GeneratorOptions.ZeroIsNoReference = settings.ZeroIsNoReference;
 
             GeneratorOptions.OverrideDestinations = new Dictionary<string, string>();
             if (!string.IsNullOrEmpty(settings.OverrideDestination))

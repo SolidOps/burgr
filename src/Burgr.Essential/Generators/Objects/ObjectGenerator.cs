@@ -126,6 +126,13 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
             }
         }
 
+        foreach (string removeTemplate in Utilities.GetInnerTemplates(result, Utilities.GetLoopIdentifiers(GeneratorOptions.ZeroIsNoReference
+            ? ObjectTemplateParser.TOREMOVEIFZEROISNOREFERENCE
+            : ObjectTemplateParser.TOREMOVEIFNOTZEROISNOREFERENCE)))
+        {
+            result = result.Replace(removeTemplate, Utilities.SingleNewLine);
+        }
+
         if (model.Get("Label") != null)
         {
             result = result.Replace("_LABEL_", ConversionHelper.ConvertToPascalCase(model.Get("Label")));
@@ -377,6 +384,8 @@ public class ObjectTemplateParser : ITemplateParser
     public const string TOREMOVEIFNOTCOMPOSEDID = "to remove if NOT_COMPOSED_ID";
     public const string TOREMOVEIFCOMPOSEDID = "to remove if COMPOSED_ID";
     public const string TOREMOVEIFNOIDCOLUMNNAME = "to remove if NO_ID_COLUMN_NAME";
+    public const string TOREMOVEIFZEROISNOREFERENCE = "to remove if ZERO_IS_NO_REFERENCE";
+    public const string TOREMOVEIFNOTZEROISNOREFERENCE = "to remove if NOT_ZERO_IS_NO_REFERENCE";
 
     public const string TOREMOVEIFNOADDEVENT = "to remove if NO_ADD_EVENT";
     public const string TOREMOVEIFNOUPDATEEVENT = "to remove if NO_UPDATE_EVENT";
@@ -399,6 +408,8 @@ public class ObjectTemplateParser : ITemplateParser
         TOREMOVEIFNOTCOMPOSEDID,
         TOREMOVEIFCOMPOSEDID,
         TOREMOVEIFNOIDCOLUMNNAME,
+        TOREMOVEIFZEROISNOREFERENCE,
+        TOREMOVEIFNOTZEROISNOREFERENCE,
         TOREMOVEIFNOADDEVENT,
         TOREMOVEIFNOUPDATEEVENT,
         TOREMOVEIFNOREMOVEEVENT,

@@ -24,8 +24,10 @@ namespace SolidOps.Burgr.Core
 
             string identityKeysType = "Guid";
             string forcedPrefix = null;
+            bool zeroIsNoReference = false;
             string overrideDestination = null;
             Dictionary<string, string> externalModuleKeysTypes = new();
+            Dictionary<string, string[]> externalModuleTransients = new();
             string modelTypeParserEngineType = "";
             string templateTypeParserEngineType = "";
             bool onlyOneDll = true;
@@ -108,10 +110,15 @@ namespace SolidOps.Burgr.Core
                 if (config.ExternalModules != null)
                 {
                     externalModuleKeysTypes = config.ExternalModules.ToDictionary(m => m.Key, m => m.Value.IdentityKeysType ?? "Guid");
+                    externalModuleTransients = config.ExternalModules.ToDictionary(m => m.Key, m => m.Value.Transients ?? []);
                 }
                 if (config.ForcedPrefix != null)
                 {
                     forcedPrefix = config.ForcedPrefix;
+                }
+                if (config.ZeroIsNoReference.HasValue)
+                {
+                    zeroIsNoReference = config.ZeroIsNoReference.Value;
                 }
                 if (config.OnlyOneDll.HasValue)
                 {
@@ -254,7 +261,9 @@ namespace SolidOps.Burgr.Core
                 // internal
                 IdentityKeysType = identityKeysType,
                 ExternalModuleKeysTypes = externalModuleKeysTypes,
+                ExternalModuleTransients = externalModuleTransients,
                 ForcedPrefix = forcedPrefix,
+                ZeroIsNoReference = zeroIsNoReference,
                 OverrideDestination = overrideDestination,
                 BuildingDirectory = buildingDir,
                 Templates = string.Join("|", templates),
