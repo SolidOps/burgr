@@ -51,7 +51,7 @@ public class ModelListServiceMethodGenerator : BaseServiceMethodGenerator, IGene
             result = result.Replace("_PROPERTYTYPE_", conversionService.ConvertRelatedParameterType(model, resultType, null, null));
             result = result.Replace("_PROPERTYINTERFACE_", conversionService.ConvertRelatedParameterType(model, resultType, null, null, false, true));
 
-            result = result.Replace("DEPENDENCYNAMESPACE", Utilities.GetNamespace(method.FullModuleName));
+            result = result.Replace("DEPENDENCYNAMESPACE", Utilities.GetNamespace(resultType.FullModuleName));
         }
         result = result.Replace("_DOMODELLISTACTION_", ConversionHelper.ConvertToPascalCase(method.Name));
         result = result.Replace("_DOMODELLISTACTIONURL_", TextHelper.GenerateSlug(method.Name));
