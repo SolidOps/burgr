@@ -304,7 +304,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
         }
 
         var typeInfo = new TypeInfo(returnType, moduleName);
-        if (typeInfo.TypeType == TypeType.Model)
+        if (typeInfo.TypeType == TypeType.Model || typeInfo.TypeType == TypeType.ReferencedModel)
         {
             if (typeInfo.IsArray)
             {
