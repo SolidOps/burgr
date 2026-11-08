@@ -6,7 +6,7 @@ on:
     branches: [ "main" ]
 
 env:
-  PROJECT_PATH: src/Burgr.sln
+  PROJECT_PATH: src/Burgr.slnx
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}/output
 
 jobs:
