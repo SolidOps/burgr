@@ -1,0 +1,117 @@
+<Solution>
+  <Folder Name="/Samples/" />
+  <Folder Name="/Samples/1. TODO list/">
+    <Project Path="Samples/1. TODO list/src/TODO.ConsoleApp/TODO.ConsoleApp.csproj" />
+    <Project Path="Samples/1. TODO list/src/TODO.Shared/TODO.Shared.csproj" />
+    <Project Path="Samples/1. TODO list/src/TODO/TODO.csproj" />
+    <Project Path="Samples/1. TODO list/todo_specs/" Type="Website" DisplayName="todo_specs">
+      <BuildType Project="Debug" />
+      <Build Project="false" />
+      <Properties Name="WebsiteProperties">
+        <Property Name="Debug.AspNetCompiler.Debug" Value="&quot;True&quot;" />
+        <Property Name="Debug.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+        <Property Name="Debug.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+        <Property Name="Debug.AspNetCompiler.PhysicalPath" Value="&quot;Samples\1. TODO list\todo_specs\&quot;" />
+        <Property Name="Debug.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57347\&quot;" />
+        <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+        <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57347&quot;" />
+        <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
+        <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+        <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+        <Property Name="Release.AspNetCompiler.PhysicalPath" Value="&quot;Samples\1. TODO list\todo_specs\&quot;" />
+        <Property Name="Release.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57347\&quot;" />
+        <Property Name="Release.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+        <Property Name="Release.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57347&quot;" />
+        <Property Name="SlnRelativePath" Value="&quot;Samples\1. TODO list\todo_specs\&quot;" />
+        <Property Name="TargetFrameworkMoniker" Value="&quot;.NETFramework,Version%3Dv4.8&quot;" />
+        <Property Name="VWDPort" Value="&quot;57347&quot;" />
+      </Properties>
+    </Project>
+    <Project Path="Samples/1. TODO list/todo_templates/" Type="Website" DisplayName="todo_templates">
+      <BuildType Project="Debug" />
+      <Build Project="false" />
+      <Properties Name="WebsiteProperties">
+        <Property Name="Debug.AspNetCompiler.Debug" Value="&quot;True&quot;" />
+        <Property Name="Debug.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+        <Property Name="Debug.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+        <Property Name="Debug.AspNetCompiler.PhysicalPath" Value="&quot;Samples\1. TODO list\todo_templates\&quot;" />
+        <Property Name="Debug.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57352\&quot;" />
+        <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+        <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57352&quot;" />
+        <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
+        <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+        <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+        <Property Name="Release.AspNetCompiler.PhysicalPath" Value="&quot;Samples\1. TODO list\todo_templates\&quot;" />
+        <Property Name="Release.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57352\&quot;" />
+        <Property Name="Release.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+        <Property Name="Release.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57352&quot;" />
+        <Property Name="SlnRelativePath" Value="&quot;Samples\1. TODO list\todo_templates\&quot;" />
+        <Property Name="TargetFrameworkMoniker" Value="&quot;.NETFramework,Version%3Dv4.8&quot;" />
+        <Property Name="VWDPort" Value="&quot;57352&quot;" />
+      </Properties>
+    </Project>
+  </Folder>
+  <Folder Name="/Samples/2. User management API/">
+    <Project Path="Samples/2. User management API/UM.API/UM.API.csproj" />
+    <Project Path="Samples/2. User management API/UM.Contracts/UM.Contracts.csproj" />
+    <Project Path="Samples/2. User management API/UM.Shared/UM.Shared.csproj" />
+    <Project Path="Samples/2. User management API/UM.Tests/UM.Tests.csproj" />
+    <Project Path="Samples/2. User management API/UM/UM.csproj" />
+    <Project Path="Samples/2. User management API/um_specs/" Type="Website" DisplayName="um_specs">
+      <BuildType Project="Debug" />
+      <Build Project="false" />
+      <Properties Name="WebsiteProperties">
+        <Property Name="Debug.AspNetCompiler.Debug" Value="&quot;True&quot;" />
+        <Property Name="Debug.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+        <Property Name="Debug.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+        <Property Name="Debug.AspNetCompiler.PhysicalPath" Value="&quot;Samples\2. User management API\um_specs\&quot;" />
+        <Property Name="Debug.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57360\&quot;" />
+        <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+        <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57360&quot;" />
+        <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
+        <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+        <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+        <Property Name="Release.AspNetCompiler.PhysicalPath" Value="&quot;Samples\2. User management API\um_specs\&quot;" />
+        <Property Name="Release.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57360\&quot;" />
+        <Property Name="Release.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+        <Property Name="Release.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57360&quot;" />
+        <Property Name="SlnRelativePath" Value="&quot;Samples\2. User management API\um_specs\&quot;" />
+        <Property Name="TargetFrameworkMoniker" Value="&quot;.NETFramework,Version%3Dv4.8&quot;" />
+        <Property Name="VWDPort" Value="&quot;57360&quot;" />
+      </Properties>
+    </Project>
+    <Project Path="Samples/2. User management API/um_templates/" Type="Website" DisplayName="um_templates">
+      <BuildType Project="Debug" />
+      <Build Project="false" />
+      <Properties Name="WebsiteProperties">
+        <Property Name="Debug.AspNetCompiler.Debug" Value="&quot;True&quot;" />
+        <Property Name="Debug.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+        <Property Name="Debug.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+        <Property Name="Debug.AspNetCompiler.PhysicalPath" Value="&quot;Samples\2. User management API\um_templates\&quot;" />
+        <Property Name="Debug.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57363\&quot;" />
+        <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+        <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57363&quot;" />
+        <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
+        <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
+        <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
+        <Property Name="Release.AspNetCompiler.PhysicalPath" Value="&quot;Samples\2. User management API\um_templates\&quot;" />
+        <Property Name="Release.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57363\&quot;" />
+        <Property Name="Release.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
+        <Property Name="Release.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57363&quot;" />
+        <Property Name="SlnRelativePath" Value="&quot;Samples\2. User management API\um_templates\&quot;" />
+        <Property Name="TargetFrameworkMoniker" Value="&quot;.NETFramework,Version%3Dv4.8&quot;" />
+        <Property Name="VWDPort" Value="&quot;57363&quot;" />
+      </Properties>
+    </Project>
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="../.github/workflows/build_publish.yml" />
+    <File Path="../README.md" />
+    <File Path=".editorconfig" />
+    <File Path="makefile" />
+  </Folder>
+  <Project Path="Burgr.Core/Burgr.Core.csproj" />
+  <Project Path="Burgr.Essential.Tests/Burgr.Essential.Tests.csproj" />
+  <Project Path="Burgr.Essential/Burgr.Essential.csproj" />
+  <Project Path="Burgr/Burgr.csproj" />
+</Solution>
