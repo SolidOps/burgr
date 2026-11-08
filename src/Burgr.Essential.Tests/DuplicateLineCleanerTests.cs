@@ -30,6 +30,14 @@ public class DuplicateLineCleanerTests
     }
 
     [TestMethod]
+    public void RepeatedImportWithTrailingCommentIsDeduplicated()
+    {
+        var input = "import { A } from './x'; // test\nimport { B } from './x'; // test\nimport { A } from './x'; // test";
+
+        Assert.AreEqual("import { A } from './x'; // test\nimport { B } from './x'; // test", DuplicateLineCleaner.Clean(input, "JS"));
+    }
+
+    [TestMethod]
     public void ConsecutiveMarkersCollapseButSeparatedOnesStay()
     {
         var input = "// Object [EN]\n// Object [EN]\n// Object [EN]\ncode;\n// Object [EN]\nmore;";
