@@ -7,7 +7,7 @@ namespace SolidOps.Burgr.Core
         [GeneratedRegex(@"^using [\w.]+;$")]
         private static partial Regex CsUsing();
 
-        [GeneratedRegex(@"^import .*;$")]
+        [GeneratedRegex(@"^import .*;(\s*//.*)?$")]
         private static partial Regex JsImport();
 
         public static string Clean(string content, string destinationLanguage)
