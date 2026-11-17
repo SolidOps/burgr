@@ -1,0 +1,21 @@
+source_templates:
+  entity:
+    source: Entity.cs.tpl
+    file_suffix: Entity.cs
+    destination_suffix: Domain
+    destination_language: CS
+  enums:
+    source: Enums.cs.tpl
+    file_suffix: Enums.cs
+    destination_suffix: Domain
+    destination_language: CS
+  rights:
+    source: Rights.cs.tpl
+    file_suffix: Rights.cs
+    destination_suffix: Domain
+    destination_language: CS
+  services:
+    source: Services.cs.tpl
+    file_suffix: Services.cs
+    destination_suffix: Application
+    destination_language: CS

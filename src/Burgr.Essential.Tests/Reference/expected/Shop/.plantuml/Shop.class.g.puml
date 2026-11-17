@@ -1,0 +1,24 @@
+@startuml
+' Object [AG][EN]
+class Product {
+' Property [S][NO]
+  name : string[100]
+  description : string
+  internalCode : string
+  price : number
+  stock : number
+  weight : number
+  isFeatured : boolean
+  availableFrom : string
+  supplierReference : string
+}
+class Category {
+' Property [S][NO]
+  name : string
+}
+class ProductTag {
+' Property [S][NO]
+  tag : string
+  position : number
+}
+@enduml

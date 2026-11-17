@@ -362,8 +362,9 @@ A template set is a directory containing:
 
 Generation is deterministic: the same model and templates give byte-identical files on
 any machine and OS. Templates can use LF or CRLF line endings; generated files are always
-written with CRLF. The CI regenerates the [samples](#samples) from scratch and compares
-them byte for byte with the committed files.
+written with CRLF. The CI regenerates the [samples](#samples) and a reference case
+covering the template options (`src/Burgr.Essential.Tests/Reference`) from scratch, under
+Linux and a Turkish culture, and compares them byte for byte with the expected files.
 
 ### Loop markers
 

@@ -1,0 +1,23 @@
+burgr-model-version: 1.0.0
+
+aggregate_roots:
+  invoice:
+    properties:
+      number:
+        is_unique: true
+        is_label: true
+      issued_on: datetime
+      total: decimal
+      lines: ->invoice_line[]
+    api:
+      query:
+      get:
+      add:
+        mandatory_right: Bill
+
+entities:
+  invoice_line:
+    properties:
+      invoice: invoice
+      label: string
+      amount: decimal

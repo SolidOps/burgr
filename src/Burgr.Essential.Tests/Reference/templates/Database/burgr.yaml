@@ -1,0 +1,6 @@
+source_templates:
+  schema:
+    source: schema.sql.tpl
+    file_suffix: .sql
+    destination_suffix: Database
+    destination_language: MySQL

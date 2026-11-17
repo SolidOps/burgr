@@ -1,0 +1,14 @@
+source_templates:
+  list-view:
+    source: list.html
+    file_suffix: .html
+    destination_suffix: src|generated|list-views
+    destination_language: HTML
+    is_generate_per_model_description: true
+  method-view:
+    source: method.html
+    file_suffix: .html
+    destination_suffix: src|generated|method-views
+    destination_language: HTML
+    is_generate_per_model_description: true
+    children_level: 1

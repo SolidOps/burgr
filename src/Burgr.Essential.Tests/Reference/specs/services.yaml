@@ -1,0 +1,16 @@
+burgr-model-version: 1.0.0
+
+services:
+  inventory:
+    methods:
+      restock:
+        allow_write: true
+        api_description:
+          mandatory_right: ManageStock
+        inputs:
+          product_id: guid
+          quantity: int
+      count_in_stock:
+        result: int
+      find_featured:
+        result: product[]

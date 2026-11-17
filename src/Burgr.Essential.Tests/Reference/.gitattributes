@@ -1,0 +1,6 @@
+# Reference case of DeterminismTests. The templates use both line endings on purpose:
+# burgr must give the same output whatever the line endings of a template.
+templates/** text eol=crlf
+templates/Client/** text eol=lf
+# burgr writes CRLF on every machine: so does the checkout of the expected output.
+expected/** text eol=crlf

@@ -27,6 +27,12 @@
   <ItemGroup>
     <AssemblyMetadata Include="BurgrToolPath" Value="$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)..', 'Burgr', 'bin', '$(Configuration)', '$(TargetFramework)', 'SolidOps.Burgr.dll'))" />
     <AssemblyMetadata Include="SamplesDirectory" Value="$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)..', 'Samples'))" />
+    <AssemblyMetadata Include="ReferenceDirectory" Value="$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'Reference'))" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- DeterminismTests' reference case: model, templates and expected generated code, not compiled. -->
+    <Compile Remove="Reference/**" />
   </ItemGroup>
 
 </Project>

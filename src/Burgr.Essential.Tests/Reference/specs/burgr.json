@@ -1,0 +1,21 @@
+{
+  "ProjectName": "Shop",
+  "NamespaceName": "Acme",
+  "ModelParserEngineType": "SolidOps.Burgr.Essential.Yaml.ModelParserEngine, SolidOps.Burgr.Essential",
+  "TemplateParserEngineType": "SolidOps.Burgr.Essential.Yaml.TemplateParserEngine, SolidOps.Burgr.Essential",
+  "BuildingDirectory": "../output/",
+  "TemplateSpecDirectory": "../templates",
+  "Templates": [
+    "Domain",
+    "Client",
+    "Views",
+    "Database",
+    "Diagrams"
+  ],
+  "Generators": [
+    "SolidOps.Burgr.Essential.Generators.Enums.EnumGenerator, SolidOps.Burgr.Essential",
+    "SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential",
+    "SolidOps.Burgr.Essential.Generators.Services.ServiceGenerator, SolidOps.Burgr.Essential",
+    "SolidOps.Burgr.Essential.Generators.Rights.RightGenerator, SolidOps.Burgr.Essential"
+  ]
+}

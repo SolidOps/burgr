@@ -1,0 +1,51 @@
+burgr-model-version: 1.0.0
+
+aggregate_roots:
+  product:
+    properties:
+      name:
+        is_label: true
+        field_size: 100
+      description: string?
+      internal_code:
+        is_private: true
+      price: decimal
+      stock: int
+      weight: double
+      is_featured: bool
+      available_from: datetime
+      supplier_reference: guid
+      status: $product_status
+      category: category
+      tags: ->product_tag[]
+    api:
+      query:
+      get:
+      add:
+        mandatory_right: ManageProducts
+      update:
+        mandatory_right: ManageProducts
+      remove:
+        mandatory_right: ManageProducts
+    components:
+      list:
+      details:
+
+  category:
+    properties:
+      name:
+        is_unique: true
+        is_label: true
+      products: ->product[]
+    api:
+      query:
+      get:
+
+  product_tag:
+    key: [product, tag]
+    properties:
+      product: product
+      tag: string
+      position: int
+    api:
+      query:

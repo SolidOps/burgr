@@ -1,0 +1,9 @@
+source_templates:
+  dto:
+    source: dto.tpl
+    file_suffix: -dto.ts
+    destination_suffix: src|generated
+    destination_language: JS
+    path_style: Lower
+    options:
+      model_suffix: DTO

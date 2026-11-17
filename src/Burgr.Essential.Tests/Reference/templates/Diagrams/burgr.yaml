@@ -1,0 +1,6 @@
+source_templates:
+  class:
+    source: class.tpl
+    file_suffix: .class.puml
+    destination_suffix: .plantuml
+    destination_language: PUML

@@ -1,0 +1,14 @@
+@startuml
+' Object [AG][EN]
+class Invoice {
+' Property [S][NO]
+  number : string
+  issuedOn : string
+  total : number
+}
+class InvoiceLine {
+' Property [S][NO]
+  label : string
+  amount : number
+}
+@enduml
