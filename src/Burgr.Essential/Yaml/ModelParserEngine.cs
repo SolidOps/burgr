@@ -200,7 +200,7 @@ public class ModelParserEngine : IModelParserEngine
 
     private void AddType(List<string> exposedTypes, string type, ModelDescriptionsRepository modelsRepository)
     {
-        if (type.EndsWith("[]"))
+        if (type.EndsWith("[]", StringComparison.Ordinal))
         {
             AddType(exposedTypes, type.Replace("[]", ""), modelsRepository);
         }

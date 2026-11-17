@@ -34,7 +34,7 @@ public class TypeInfo
         TypeName = typeName;
         Name = typeName;
 
-        if (Name.EndsWith(ArrayIdentifier))
+        if (Name.EndsWith(ArrayIdentifier, StringComparison.Ordinal))
         {
             if (Name.IndexOf(TypeInfo.ArrayIdentifier, StringComparison.Ordinal) != Name.LastIndexOf(TypeInfo.ArrayIdentifier, StringComparison.Ordinal))
             {
@@ -44,13 +44,13 @@ public class TypeInfo
             Name = Name.Replace(ArrayIdentifier, string.Empty);
         }
 
-        if (Name.EndsWith(NullIdentifier))
+        if (Name.EndsWith(NullIdentifier, StringComparison.Ordinal))
         {
             IsNull = true;
             Name = Name.Replace(NullIdentifier, string.Empty);
         }
 
-        if (Name.StartsWith(SynchronizedIdentifier))
+        if (Name.StartsWith(SynchronizedIdentifier, StringComparison.Ordinal))
         {
             IsNavigation = true;
             IsSynchronized = true;
@@ -58,23 +58,23 @@ public class TypeInfo
             if (!IsArray)
                 throw new Exception("Only collections can be synchronized : " + TypeName);
         }
-        else if (Name.StartsWith(NavigationIdentifier))
+        else if (Name.StartsWith(NavigationIdentifier, StringComparison.Ordinal))
         {
             IsNavigation = true;
             Name = Name.Replace(NavigationIdentifier, string.Empty);
         }
-        else if (Name.StartsWith(CalculatedIdentifier))
+        else if (Name.StartsWith(CalculatedIdentifier, StringComparison.Ordinal))
         {
             IsCalculated = true;
             Name = Name.Replace(CalculatedIdentifier, string.Empty);
         }
-        else if (Name.StartsWith(NonPersistedIdentifier))
+        else if (Name.StartsWith(NonPersistedIdentifier, StringComparison.Ordinal))
         {
             IsNonPersisted = true;
             Name = Name.Replace(NonPersistedIdentifier, string.Empty);
         }
 
-        if (Name.StartsWith(EnumIdentifier))
+        if (Name.StartsWith(EnumIdentifier, StringComparison.Ordinal))
         {
             TypeType = TypeType.Enum;
             Name = Name.Substring(1);

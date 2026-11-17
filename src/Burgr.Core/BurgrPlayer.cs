@@ -251,7 +251,7 @@ namespace SolidOps.Burgr.Core
                             fileInfo.Directory.Create();
                         }
 
-                        if (fileResult.Value.ModuleName.EndsWith("Contracts"))
+                        if (fileResult.Value.ModuleName.EndsWith("Contracts", StringComparison.Ordinal))
                         {
                             File.AppendAllText(projectFilePath, $@"<Project Sdk=""Microsoft.NET.Sdk"">
 
@@ -342,7 +342,7 @@ namespace SolidOps.Burgr.Core
 
             foreach (var line in content.Split("\r\n"))
             {
-                if (!line.Trim().StartsWith(BaseGenerator.GetCommentMarkerStart(language)))
+                if (!line.Trim().StartsWith(BaseGenerator.GetCommentMarkerStart(language), StringComparison.Ordinal))
                     return true;
             }
 

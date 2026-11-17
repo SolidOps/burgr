@@ -28,9 +28,9 @@ public static class ConversionHelper
             }
 
             string first = returnedString[..1];
-            if (first.ToLower() != first)
+            if (first.ToLowerInvariant() != first)
             {
-                returnedString = first.ToLower() + returnedString[1..];
+                returnedString = first.ToLowerInvariant() + returnedString[1..];
             }
             return returnedString;
         }

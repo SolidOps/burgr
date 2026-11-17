@@ -74,7 +74,7 @@ public class SourceTemplateFiller
         foreach (TemplateOption option in generator.TemplateParser.Options)
         {
             templateDescriptor.Attributes[option.Name] = firstLine.Contains(option.Tag) ? "true" : "false";
-            if (option.Tag.StartsWith("[") && option.Tag.EndsWith("]"))
+            if (option.Tag.StartsWith("[", StringComparison.Ordinal) && option.Tag.EndsWith("]", StringComparison.Ordinal))
             {
                 var innerTag = option.Tag.Substring(1, option.Tag.Length - 2);
                 var notTag = $"[!{innerTag}]";
@@ -84,8 +84,8 @@ public class SourceTemplateFiller
                 }
             }
         }
-        int i0 = firstLine.IndexOf("[");
-        int i1 = firstLine.LastIndexOf("]");
+        int i0 = firstLine.IndexOf("[", StringComparison.Ordinal);
+        int i1 = firstLine.LastIndexOf("]", StringComparison.Ordinal);
         templateDescriptor.Headers = i0 >= 0 && i1 > i0 ? firstLine.Substring(i0, i1 - i0 + 1) : string.Empty;
     }
 }

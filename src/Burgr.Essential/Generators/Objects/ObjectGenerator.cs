@@ -159,26 +159,26 @@ public class ObjectGenerator : BaseBurgrGenerator, IGenerator
 
         // Resources
         List<ModelDescriptor> resourceDefinitions = model.GetChildren(DescriptorTypes.RESOURCE_DEFINITION_DESCRIPTOR);
-        result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLower() == "query").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTGETBYQUERY);
-        result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLower() == "get").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTGETBYID);
-        result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLower() == "add").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTADD);
-        result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLower() == "update").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTUPDATE);
-        result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLower() == "remove").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTREMOVE);
+        result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLowerInvariant() == "query").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTGETBYQUERY);
+        result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLowerInvariant() == "get").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTGETBYID);
+        result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLowerInvariant() == "add").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTADD);
+        result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLowerInvariant() == "update").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTUPDATE);
+        result = HandleResource(result, resourceDefinitions.Where(r => r.Name.ToLowerInvariant() == "remove").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTREMOVE);
 
         // Components
         List<ModelDescriptor> componentDefinitions = model.GetChildren(DescriptorTypes.COMPONENT_DEFINITION_DESCRIPTOR);
-        result = HandleComponent(result, componentDefinitions.Where(r => r.Name.ToLower() == "list").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTLISTCOMPONENT);
-        result = HandleComponent(result, componentDefinitions.Where(r => r.Name.ToLower() == "details").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTDETAILSCOMPONENT);
+        result = HandleComponent(result, componentDefinitions.Where(r => r.Name.ToLowerInvariant() == "list").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTLISTCOMPONENT);
+        result = HandleComponent(result, componentDefinitions.Where(r => r.Name.ToLowerInvariant() == "details").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTDETAILSCOMPONENT);
 
         // Views
         List<ModelDescriptor> viewDefinitions = model.GetChildren(DescriptorTypes.VIEW_DEFINITION_DESCRIPTOR);
-        result = HandleView(result, viewDefinitions.Where(r => r.Name.ToLower() == "list").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTLISTVIEW, resourceDefinitions.Where(r => r.Name.ToLower() == "query").SingleOrDefault()?.Is("Anonymous"));
-        result = HandleView(result, viewDefinitions.Where(r => r.Name.ToLower() == "details").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTDETAILSVIEW, false);
+        result = HandleView(result, viewDefinitions.Where(r => r.Name.ToLowerInvariant() == "list").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTLISTVIEW, resourceDefinitions.Where(r => r.Name.ToLowerInvariant() == "query").SingleOrDefault()?.Is("Anonymous"));
+        result = HandleView(result, viewDefinitions.Where(r => r.Name.ToLowerInvariant() == "details").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOTDETAILSVIEW, false);
 
         List<ModelDescriptor> eventDefinitions = model.GetChildren(DescriptorTypes.PRODUCED_EVENT_DESCRIPTOR);
-        result = HandleEvent(result, eventDefinitions.Where(r => r.Name.ToLower() == "add").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOADDEVENT);
-        result = HandleEvent(result, eventDefinitions.Where(r => r.Name.ToLower() == "update").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOUPDATEEVENT);
-        result = HandleEvent(result, eventDefinitions.Where(r => r.Name.ToLower() == "remove").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOREMOVEEVENT);
+        result = HandleEvent(result, eventDefinitions.Where(r => r.Name.ToLowerInvariant() == "add").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOADDEVENT);
+        result = HandleEvent(result, eventDefinitions.Where(r => r.Name.ToLowerInvariant() == "update").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOUPDATEEVENT);
+        result = HandleEvent(result, eventDefinitions.Where(r => r.Name.ToLowerInvariant() == "remove").SingleOrDefault(), ObjectTemplateParser.TOREMOVEIFNOREMOVEEVENT);
 
         result = result.Replace("Slug_CLASSNAME_", TextHelper.GenerateSlug(ConversionHelper.ConvertToPascalCase(model.Name)));
         result = result.Replace("Slug_CLASSNAMES_", TextHelper.GenerateSlug(ConversionHelper.ConvertToPascalCase(model.PluralName)));

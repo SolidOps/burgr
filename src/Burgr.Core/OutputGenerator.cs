@@ -46,7 +46,7 @@ namespace SolidOps.Burgr.Core
 
                 foreach (KeyValuePair<string, FullModelDescription> modelDescriptions in modelDescriptions)
                 {
-                    if (modelDescriptions.Key.StartsWith(GeneratorOptions.NamespaceName + "."))
+                    if (modelDescriptions.Key.StartsWith(GeneratorOptions.NamespaceName + ".", StringComparison.Ordinal))
                     {
                         ModuleGenerationResult moduleGenerationResult = GetModuleGenerationResult(moduleGenerationResults, modelDescriptions.Key);
                         List<ModelDescriptor> modelDescriptors = modelDescriptions.Value.ModelDescriptors;
@@ -144,7 +144,7 @@ namespace SolidOps.Burgr.Core
             string currentModuleName = moduleName;
             if (currentModuleName.Contains("."))
             {
-                int firstDotIndex = currentModuleName.IndexOf(".");
+                int firstDotIndex = currentModuleName.IndexOf(".", StringComparison.Ordinal);
                 currentModuleName = currentModuleName[(firstDotIndex + 1)..];
             }
             if (sourceTemplate.PathStyle == "Lower")

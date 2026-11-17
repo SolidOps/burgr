@@ -16,7 +16,7 @@ namespace SolidOps.Burgr.Core.Descriptors
 
         public bool Is(string option)
         {
-            return Attributes.ContainsKey(option) && Attributes[option] != null && Attributes[option].ToLower() == "true";
+            return Attributes.ContainsKey(option) && Attributes[option] != null && Attributes[option].ToLowerInvariant() == "true";
         }
 
         public string Get(string option)

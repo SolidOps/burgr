@@ -27,7 +27,7 @@ namespace SolidOps.Burgr.Core
                 string key = line.TrimEnd('\r');
                 bool duplicate =
                     (headerLine.IsMatch(key) && !seen.Add(key)) ||
-                    (key.StartsWith("// ") && key == previous);
+                    (key.StartsWith("// ", StringComparison.Ordinal) && key == previous);
                 previous = key;
                 if (!duplicate)
                 {

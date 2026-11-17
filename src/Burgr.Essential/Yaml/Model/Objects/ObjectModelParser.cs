@@ -73,7 +73,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
         ModelDescriptor descriptor = FindModelDescriptor(namespaceName, moduleName, ObjectGenerator.Name, name);
         if (descriptor == null)
         {
-            if (name.ToLower() != name)
+            if (name.ToLowerInvariant() != name)
             {
                 throw new Exception($"model object name must be in lower case : {name}");
             }
@@ -170,7 +170,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
             {
                 foreach (var kvp in value.properties)
                 {
-                    if (kvp.Key.ToLower() != kvp.Key)
+                    if (kvp.Key.ToLowerInvariant() != kvp.Key)
                     {
                         throw new Exception($"property name must be in lower case : {kvp.Key} of {name}");
                     }
@@ -278,7 +278,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
                     {
                         foreach (var kvpInput in method.inputs)
                         {
-                            if (kvpInput.Key.ToLower() != kvpInput.Key)
+                            if (kvpInput.Key.ToLowerInvariant() != kvpInput.Key)
                             {
                                 throw new Exception($"factory parameter method name must be in lower case : {kvpInput.Key} of {kvpMethods.Key} of {name}");
                             }
@@ -488,7 +488,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
 
             foreach (var kvp in kvpModule.Value.aggregate_roots)
             {
-                if (kvp.Key.Equals(propertyType))
+                if (kvp.Key.Equals(propertyType, StringComparison.Ordinal))
                 {
                     return GetOrCreateObjectDescriptor(kvp.Key, kvp.Value, DomainType.Aggregate, namespaceName, subModuleName, null);
                 }
@@ -496,7 +496,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
 
             foreach (var kvp in kvpModule.Value.entities)
             {
-                if (kvp.Key.Equals(propertyType))
+                if (kvp.Key.Equals(propertyType, StringComparison.Ordinal))
                 {
                     return GetOrCreateObjectDescriptor(kvp.Key, kvp.Value, DomainType.Entity, namespaceName, subModuleName, null);
                 }
@@ -504,7 +504,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
 
             foreach (var kvp in kvpModule.Value.transients)
             {
-                if (kvp.Key.Equals(propertyType))
+                if (kvp.Key.Equals(propertyType, StringComparison.Ordinal))
                 {
                     return GetOrCreateObjectDescriptor(kvp.Key, kvp.Value, DomainType.Transient, namespaceName, subModuleName, null);
                 }
@@ -512,7 +512,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
 
             foreach (var kvp in kvpModule.Value.value_objects)
             {
-                if (kvp.Key.Equals(propertyType))
+                if (kvp.Key.Equals(propertyType, StringComparison.Ordinal))
                 {
                     return GetOrCreateObjectDescriptor(kvp.Key, kvp.Value, DomainType.ValueObject, namespaceName, subModuleName, null);
                 }
@@ -520,7 +520,7 @@ public class ObjectModelParser : BaseYamlModelParser, IModelParser
 
             foreach (var kvp in kvpModule.Value.events)
             {
-                if (kvp.Key.Equals(propertyType))
+                if (kvp.Key.Equals(propertyType, StringComparison.Ordinal))
                 {
                     return GetOrCreateObjectDescriptor(kvp.Key, kvp.Value, DomainType.Event, namespaceName, subModuleName, new Dictionary<string, string>
                 {

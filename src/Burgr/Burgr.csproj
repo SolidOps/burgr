@@ -5,6 +5,10 @@
     <AssemblyName>SolidOps.Burgr</AssemblyName>
     <RootNamespace>SolidOps.Burgr</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Generated code must not depend on the machine's culture (Turkish dotless i in
+         ToLower, culture-aware comparisons), including in SubZero and third-party generators
+         loaded in the process. -->
+    <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
   <PropertyGroup>

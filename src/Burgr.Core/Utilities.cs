@@ -139,7 +139,7 @@ namespace SolidOps.Burgr.Core
                 if (index != -1 && endIndex != -1)
                 {
                     string inner = overallTemplate[startIndex..endIndex];
-                    if (inner.EndsWith("//"))
+                    if (inner.EndsWith("//", StringComparison.Ordinal))
                     {
                         inner = inner[..^2];
                     }
@@ -178,7 +178,7 @@ namespace SolidOps.Burgr.Core
             string[] parts = fileSuffix.Split(".");
             string extension = parts.Last();
             string suffix = string.Join(".", parts.Take(parts.Length - 1));
-            fileName = pathStyle == "Lower" ? generatedFilePrefix + fileName.ToLower() + suffix + generatedFileSuffix + "." + extension : generatedFilePrefix + fileName + suffix + generatedFileSuffix + "." + extension;
+            fileName = pathStyle == "Lower" ? generatedFilePrefix + fileName.ToLowerInvariant() + suffix + generatedFileSuffix + "." + extension : generatedFilePrefix + fileName + suffix + generatedFileSuffix + "." + extension;
             return fileName;
         }
     }

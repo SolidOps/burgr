@@ -10,7 +10,7 @@ public class JSConversionService : BaseConversionService
     }
     public override string ConvertParameterType(string typeName, string fullTypeName, bool isEnum, bool isNull, string namespaceName, string moduleName, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false)
     {
-        if (fullTypeName.StartsWith("System."))
+        if (fullTypeName.StartsWith("System.", StringComparison.Ordinal))
         {
             Type simpleType = Type.GetType(fullTypeName);
             return ConvertToJSPropertyType(simpleType);
@@ -47,7 +47,7 @@ public class JSConversionService : BaseConversionService
             prefix += "I";
         }
 
-        if (typeName.EndsWith("[]"))
+        if (typeName.EndsWith("[]", StringComparison.Ordinal))
         {
             if (!convertList)
             {
@@ -55,7 +55,7 @@ public class JSConversionService : BaseConversionService
             }
             return prefix + ConversionHelper.ConvertToPascalCase(typeName.Replace("[]", "")) + suffix + "[]";
         }
-        if (typeName.EndsWith("DTO"))
+        if (typeName.EndsWith("DTO", StringComparison.Ordinal))
         {
             return prefix + ConversionHelper.ConvertToPascalCase(typeName.Replace("DTO", "")) + suffix;
         }
@@ -137,13 +137,13 @@ public class JSConversionService : BaseConversionService
                                                                                 ? "string"
                                                                                 : type == typeof(object)
                                                                                                 ? "any"
-                                                                                                : type.FullName.StartsWith("SolidOps.Burgr.Core")
+                                                                                                : type.FullName.StartsWith("SolidOps.Burgr.Core", StringComparison.Ordinal)
                                                                                                                 ? type.FullName
                                                                                                                 : throw new NotImplementedException("Could not convert type : " + type.FullName);
     }
     public static string ConvertToJSLibrary(string moduleName)
     {
-        return moduleName.ToLower().Replace(".", "-");
+        return moduleName.ToLowerInvariant().Replace(".", "-");
     }
 
     public override string ReplaceIdentityType(string text, string type)

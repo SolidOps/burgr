@@ -10,7 +10,7 @@ public class PUMLConversionService : BaseConversionService
 
     public override string ConvertParameterType(string typeName, string fullTypeName, bool isEnum, bool isNull, string namespaceName, string moduleName, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false)
     {
-        if (fullTypeName.StartsWith("System."))
+        if (fullTypeName.StartsWith("System.", StringComparison.Ordinal))
         {
             Type simpleType = Type.GetType(fullTypeName);
             return ConvertToPUMLPropertyType(simpleType, null);
@@ -136,7 +136,7 @@ public class PUMLConversionService : BaseConversionService
             return "any";
         }
 
-        if (type.FullName.StartsWith("SolidOps.Burgr.Core"))
+        if (type.FullName.StartsWith("SolidOps.Burgr.Core", StringComparison.Ordinal))
         {
             return " type.FullName";
         }

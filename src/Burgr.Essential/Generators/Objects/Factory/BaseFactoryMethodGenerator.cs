@@ -118,7 +118,7 @@ public abstract class BaseFactoryMethodGenerator : BaseBurgrGenerator
                     singleBodyParameterType = conversionService.ConvertParameterType(parameterInfo, modelPrefix, modelSuffix, true, false, true);
                 }
                 _ = parameters.Append(ConversionHelper.ConvertToCamelCase(parameterInfo.Name));
-                if (parameterInfo.Name.EndsWith("[]"))
+                if (parameterInfo.Name.EndsWith("[]", StringComparison.Ordinal))
                 {
                     string mapperType = conversionService.ConvertParameterType(parameterInfo, ".Presentation.Mappers.", null, false, false, true) + "DTOMapper";
                     string propertyName = ConversionHelper.ConvertToCamelCase(parameterInfo.Name);

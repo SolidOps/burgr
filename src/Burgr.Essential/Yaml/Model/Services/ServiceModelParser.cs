@@ -51,7 +51,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
 
     private void CreateService(string name, Service service, string namespaceName, string moduleName)
     {
-        if (name.ToLower() != name)
+        if (name.ToLowerInvariant() != name)
         {
             throw new Exception($"service name must be in lower case : {name}");
         }
@@ -193,7 +193,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
             {
                 foreach (var kvpInput in method.inputs)
                 {
-                    if (kvpInput.Key.ToLower() != kvpInput.Key)
+                    if (kvpInput.Key.ToLowerInvariant() != kvpInput.Key)
                     {
                         throw new Exception($"service parameter method name must be in lower case : {kvpInput.Key} of {kvpMethods.Key} of {name}");
                     }
@@ -331,7 +331,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
 
         string resourceName = resourceType.Name;
 
-        if (resourceName.EndsWith("[]"))
+        if (resourceName.EndsWith("[]", StringComparison.Ordinal))
         {
             _ = resourceName.Replace("[]", string.Empty);
         }

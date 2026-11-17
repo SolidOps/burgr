@@ -43,7 +43,7 @@ public class EnumModelParser : BaseYamlModelParser, IModelParser
 
     public ModelDescriptor CreateDescriptor(string name, Enum value, string namespaceName, string moduleName)
     {
-        if (name.ToLower() != name)
+        if (name.ToLowerInvariant() != name)
         {
             throw new Exception($"enum name must be in lower case : {name}");
         }

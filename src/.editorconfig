@@ -10,3 +10,9 @@ indent_size = 2
 
 [*.sqlproj]
 indent_size = 2
+# Generation must not depend on the culture of the machine: explicit casing and comparisons.
+[{Burgr,Burgr.Core,Burgr.Essential}/**.cs]
+dotnet_diagnostic.CA1304.severity = error
+dotnet_diagnostic.CA1309.severity = error
+dotnet_diagnostic.CA1310.severity = error
+dotnet_diagnostic.CA1311.severity = error

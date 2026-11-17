@@ -24,7 +24,7 @@
             {
                 _initialContent = value;
                 string[] parts = _initialContent.Split(Utilities.NewLines, StringSplitOptions.None);
-                if (parts.Length > 0 && parts[0].StartsWith("["))
+                if (parts.Length > 0 && parts[0].StartsWith("[", StringComparison.Ordinal))
                 {
                     Header = parts[0];
                 }

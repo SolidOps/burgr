@@ -79,7 +79,7 @@ public class ParameterGenerator : BaseBurgrGenerator, IGenerator
         if (model.Get("SimpleType") != null)
         {
             result = result.Replace("_PARAMTYPE_", paramType);
-            if (paramType.StartsWith("System."))
+            if (paramType.StartsWith("System.", StringComparison.Ordinal))
             {
                 paramType = paramType.Replace("System.", string.Empty);
             }

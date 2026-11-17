@@ -59,6 +59,10 @@ public class DeterminismTests
         };
         startInfo.ArgumentList.Add(GetMetadata("BurgrToolPath"));
         startInfo.ArgumentList.Add(specsDirectory);
+        // A culture where "I".ToLower() is a dotless "ı": the output must not change. Taken
+        // into account outside Windows only (the CI), where .NET reads the culture from them.
+        startInfo.Environment["LC_ALL"] = "tr_TR.UTF-8";
+        startInfo.Environment["LANG"] = "tr_TR.UTF-8";
 
         using var process = Process.Start(startInfo)!;
         var error = process.StandardError.ReadToEndAsync();

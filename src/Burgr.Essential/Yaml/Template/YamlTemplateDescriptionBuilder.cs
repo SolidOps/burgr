@@ -27,7 +27,7 @@ public class YamlTemplateDescriptionBuilder
             string overrideDestination = null;
             foreach (KeyValuePair<string, string> kvp in GeneratorOptions.OverrideDestinations)
             {
-                if (templateDirectory.EndsWith("." + kvp.Key))
+                if (templateDirectory.EndsWith("." + kvp.Key, StringComparison.Ordinal))
                 {
                     overrideDestination = kvp.Value;
                     break;

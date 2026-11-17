@@ -47,7 +47,7 @@ namespace SolidOps.Burgr.Core
 
         public static string ConvertToJSLibrary(string moduleName)
         {
-            return moduleName.ToLower().Replace(".", "-");
+            return moduleName.ToLowerInvariant().Replace(".", "-");
         }
     }
 }

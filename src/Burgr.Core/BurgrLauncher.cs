@@ -43,13 +43,13 @@ namespace SolidOps.Burgr.Core
             string callerDirectory = Directory.GetCurrentDirectory();
             // the specs directory, unless the first argument is the configuration itself or an
             // option (/name:value); an absolute path starts with / too outside Windows.
-            if (args.Length >= 1 && !args[0].StartsWith("{") && (!args[0].StartsWith("/") || Directory.Exists(args[0])))
+            if (args.Length >= 1 && !args[0].StartsWith("{", StringComparison.Ordinal) && (!args[0].StartsWith("/", StringComparison.Ordinal) || Directory.Exists(args[0])))
             {
                 Environment.CurrentDirectory = args[0];
             }
 
             string jsonFileContent = null;
-            if (args.Length >= 1 && args[0].StartsWith("{"))
+            if (args.Length >= 1 && args[0].StartsWith("{", StringComparison.Ordinal))
             {
                 jsonFileContent = args[0];
             }

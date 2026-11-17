@@ -93,9 +93,9 @@ public abstract class BaseConversionService : IConversionService
 
     public virtual string ConvertParameterType(string typeName, string fullTypeName, bool isEnum, bool isNull, string namespaceName, string moduleName, string modelPrefix, string modelSuffix, bool convertList = false, bool isInterface = false, bool fullName = false)
     {
-        if (fullTypeName.StartsWith("System."))
+        if (fullTypeName.StartsWith("System.", StringComparison.Ordinal))
         {
-            if (fullTypeName.StartsWith("System.Nullable") || isNull)
+            if (fullTypeName.StartsWith("System.Nullable", StringComparison.Ordinal) || isNull)
             {
                 return fullTypeName + "?";
             }
@@ -128,7 +128,7 @@ public abstract class BaseConversionService : IConversionService
             prefix += "I";
         }
 
-        if (typeName.EndsWith("[]"))
+        if (typeName.EndsWith("[]", StringComparison.Ordinal))
         {
             if (!convertList)
             {
@@ -136,7 +136,7 @@ public abstract class BaseConversionService : IConversionService
             }
             return "IEnumerable<" + prefix + ConversionHelper.ConvertToPascalCase(typeName.Replace("[]", "")) + suffix + ">";
         }
-        if (typeName.EndsWith("DTO"))
+        if (typeName.EndsWith("DTO", StringComparison.Ordinal))
         {
             return prefix + ConversionHelper.ConvertToPascalCase(typeName.Replace("DTO", "")) + suffix;
         }
@@ -150,7 +150,7 @@ public abstract class BaseConversionService : IConversionService
 
     public string ConvertToLabel(string text)
     {
-        return string.Join(" ", text.Split('_').Select(t => t.Substring(0, 1).ToUpper() + t.ToLower().Substring(1)));
+        return string.Join(" ", text.Split('_').Select(t => t.Substring(0, 1).ToUpperInvariant() + t.ToLowerInvariant().Substring(1)));
     }
 
     public string ConvertToEnumValue(string text)
@@ -210,7 +210,7 @@ public abstract class BaseConversionService : IConversionService
             {
                 returnedString = "System.IO.Stream";
             }
-            else if (returnedString.EndsWith("DTO"))
+            else if (returnedString.EndsWith("DTO", StringComparison.Ordinal))
             {
                 //returnedString = returnedString;
                 //returnedString = returnedString.Replace("DTO", string.Empty);
@@ -336,9 +336,9 @@ public abstract class BaseConversionService : IConversionService
     {
         return methodInfo.ReturnType.FullName == "System.Void"
             ? ReturnType.Void
-            : methodInfo.ReturnType.FullName.StartsWith("System")
+            : methodInfo.ReturnType.FullName.StartsWith("System", StringComparison.Ordinal)
                 ? ReturnType.Simple
-                : methodInfo.ReturnType.FullName.EndsWith("[]") ? ReturnType.ModelList : ReturnType.Model;
+                : methodInfo.ReturnType.FullName.EndsWith("[]", StringComparison.Ordinal) ? ReturnType.ModelList : ReturnType.Model;
     }
 
     public Type GetSimpleType(string typeName)
