@@ -251,9 +251,9 @@ namespace SolidOps.Burgr.Core
                             fileInfo.Directory.Create();
                         }
 
-                        if (fileResult.Value.ModuleName.EndsWith("Contracts", StringComparison.Ordinal))
-                        {
-                            File.AppendAllText(projectFilePath, $@"<Project Sdk=""Microsoft.NET.Sdk"">
+                        // the line endings of a multi-line literal are those of this source file
+                        // when burgr was built: normalized, like everything burgr writes
+                        File.AppendAllText(projectFilePath, Utilities.NormalizeNewLines($@"<Project Sdk=""Microsoft.NET.Sdk"">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -262,31 +262,23 @@ namespace SolidOps.Burgr.Core
   </PropertyGroup>
 
 </Project>
-");
-                        }
-                        else
-                        {
-                            File.AppendAllText(projectFilePath, $@"<Project Sdk=""Microsoft.NET.Sdk"">
-
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <AssemblyName>{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}</AssemblyName>
-    <RootNamespace>{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}</RootNamespace>
-  </PropertyGroup>
-
-</Project>
-");
-                        }
+"));
                     }
 
                     // Empty folder
                     string fileDirectory = new FileInfo(fileResult.Key).DirectoryName;
-                    if (result.EmptyFolder && !emptiedFolder.Contains(fileDirectory) && Directory.Exists(fileDirectory))
+                    // emptied once per generation, before its first file is written: a folder
+                    // that does not exist yet counts as emptied, or the next file of the same
+                    // folder would delete the ones just written
+                    if (result.EmptyFolder && !emptiedFolder.Contains(fileDirectory))
                     {
-                        foreach (var file in FileSystemOrder.SortRecursive(Directory.GetFiles(fileDirectory, "*" + generatorSettings.GeneratedFileSuffix + ".*", SearchOption.AllDirectories), fileDirectory))
+                        if (Directory.Exists(fileDirectory))
                         {
-                            deletedFileContent.Add(file, File.ReadAllText(file));
-                            File.Delete(file);
+                            foreach (var file in FileSystemOrder.SortRecursive(Directory.GetFiles(fileDirectory, "*" + generatorSettings.GeneratedFileSuffix + ".*", SearchOption.AllDirectories), fileDirectory))
+                            {
+                                deletedFileContent.Add(file, File.ReadAllText(file));
+                                File.Delete(file);
+                            }
                         }
                         emptiedFolder.Add(fileDirectory);
                     }

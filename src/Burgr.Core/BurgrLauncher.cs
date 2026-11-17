@@ -47,6 +47,8 @@ namespace SolidOps.Burgr.Core
             {
                 Environment.CurrentDirectory = args[0];
             }
+            // models are read from the specs directory by default, not from where burgr is run
+            modelSpecDirectory = Directory.GetCurrentDirectory();
 
             string jsonFileContent = null;
             if (args.Length >= 1 && args[0].StartsWith("{", StringComparison.Ordinal))
