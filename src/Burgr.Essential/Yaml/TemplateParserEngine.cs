@@ -54,6 +54,13 @@ public class TemplateParserEngine : ITemplateParserEngine
             }
         }
 
+        var found = templateDirectoryPaths.Select(Path.GetFileName).Concat(templateZipPaths.Select(Path.GetFileNameWithoutExtension));
+        var missing = templates.Except(found, StringComparer.Ordinal).ToList();
+        if (missing.Count > 0)
+        {
+            throw new ArgumentException($"Templates not found in {templatesDirectory}: {string.Join(", ", missing)}");
+        }
+
         YamlTemplateDescriptionBuilder templateDescriptionBuilder = new(templatesDirectory, templateDirectoryPaths, templateZipPaths);
         return templateDescriptionBuilder.BuildTemplateDescription(generators, filter);
     }

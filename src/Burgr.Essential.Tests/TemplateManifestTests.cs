@@ -73,6 +73,21 @@ public class TemplateManifestTests
     }
 
     [TestMethod]
+    public void MissingTemplateFolderIsRefused()
+    {
+        DeterminismTests.InWorkDirectory(work =>
+        {
+            var templates = CopyMiniTemplates(work, _ => { });
+            var specs = WriteSpecs(work, MinimalConfig.Replace(" }", """, "Templates": ["Domain", "Missing"] }"""), Model);
+
+            var (_, output) = DeterminismTests.StartBurgr(specs, "/templateSpecDirectory:" + templates);
+
+            StringAssert.Contains(output, "Templates not found in");
+            StringAssert.Contains(output, ": Missing");
+        });
+    }
+
+    [TestMethod]
     public void UnsupportedFeatureIsRefusedWithItsName()
     {
         DeterminismTests.InWorkDirectory(work =>
