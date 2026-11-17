@@ -61,3 +61,7 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+# Generated sample files are the golden files of DeterminismTests: burgr writes CRLF on
+# every machine, so they are checked out as CRLF everywhere too.
+src/Samples/**/*.g.* text eol=crlf

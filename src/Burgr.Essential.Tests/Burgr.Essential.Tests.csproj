@@ -20,6 +20,13 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Burgr.Essential\Burgr.Essential.csproj" />
+    <!-- DeterminismTests run the tool itself: built first, not referenced. -->
+    <ProjectReference Include="..\Burgr\Burgr.csproj" ReferenceOutputAssembly="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="BurgrToolPath" Value="$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)..', 'Burgr', 'bin', '$(Configuration)', '$(TargetFramework)', 'SolidOps.Burgr.dll'))" />
+    <AssemblyMetadata Include="SamplesDirectory" Value="$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)..', 'Samples'))" />
   </ItemGroup>
 
 </Project>
