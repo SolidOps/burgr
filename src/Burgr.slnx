@@ -110,6 +110,10 @@
     <File Path=".editorconfig" />
     <File Path="makefile" />
   </Folder>
+  <Folder Name="/Samples/3. Mini API/">
+    <Project Path="Samples/3. Mini API/src/Library.Tests/Library.Tests.csproj" />
+    <Project Path="Samples/3. Mini API/src/Library/Library.csproj" />
+  </Folder>
   <Folder Name="/Templates/">
     <Project Path="Templates/Mini/Burgr.Templates.Mini.csproj" />
   </Folder>

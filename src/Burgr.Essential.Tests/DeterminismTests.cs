@@ -21,6 +21,7 @@ public class DeterminismTests
     [TestMethod]
     [DataRow("1. TODO list", "todo_specs", null)]
     [DataRow("2. User management API", "um_specs", null)]
+    [DataRow("3. Mini API", "specs", "Mini")]
     public void SampleGenerationGivesBackTheCommittedFilesAndIsStable(string sample, string specsDirectory, string? templateSet)
     {
         var options = templateSet == null

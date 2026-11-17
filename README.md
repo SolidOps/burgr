@@ -44,25 +44,27 @@ dotnet tool install --global Burgr
 
 ## Quick start
 
-**1. Create a specs directory with a `burgr.json`:**
+burgr's default template set, **Mini**, generates an ASP.NET Core Minimal API with EF Core
+in one project, from public packages only.
+
+**1. Create the project the code is generated into:**
+
+```sh
+dotnet new web -o src/Todo
+dotnet add src/Todo package Microsoft.EntityFrameworkCore.Sqlite
+```
+
+**2. Create a specs directory with a `burgr.json`:**
 
 ```json
 {
   "ProjectName": "Todo",
   "NamespaceName": "MyApp",
-  "ModelParserEngineType": "SolidOps.Burgr.Essential.Yaml.ModelParserEngine, SolidOps.Burgr.Essential",
-  "TemplateParserEngineType": "SolidOps.Burgr.Essential.Yaml.TemplateParserEngine, SolidOps.Burgr.Essential",
-  "BuildingDirectory": "../",
-  "TemplateSpecDirectory": "../my_templates",
-  "Templates": ["Domain", "Application"],
-  "Generators": [
-    "SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential",
-    "SolidOps.Burgr.Essential.Generators.Services.ServiceGenerator, SolidOps.Burgr.Essential"
-  ]
+  "BuildingDirectory": "../src/"
 }
 ```
 
-**2. Add a YAML model file:**
+**3. Add a YAML model file:**
 
 ```yaml
 # specs/aggregate_roots.yaml
@@ -91,13 +93,42 @@ enums:
       Done: 2
 ```
 
-**3. Run the generator:**
+**4. Run the generator, and install the AI harness of the template set:**
 
 ```sh
-dotnet burgr specs/
+dotnet burgr specs/ /harness:.
 ```
 
-That's it — C#, TypeScript, SQL, and diagram files land next to your source code.
+burgr writes `src/Todo/{Domain,Contracts,Infrastructure,Api}/*.g.cs`, and copies
+`AGENTS.md`, `CLAUDE.md` and a Claude Code hook that keeps AI agents out of the generated
+files (existing files are never overwritten).
+
+**5. Wire it in `src/Todo/Program.cs`:**
+
+```csharp
+using Microsoft.EntityFrameworkCore;
+using MyApp.Todo.Api;
+using MyApp.Todo.Infrastructure;
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<TodoDbContext>(options => options.UseSqlite("Data Source=todo.db"));
+
+var app = builder.Build();
+using (var scope = app.Services.CreateScope())
+{
+    scope.ServiceProvider.GetRequiredService<TodoDbContext>().Database.EnsureCreated();
+}
+app.MapTodoEndpoints();
+app.Run();
+```
+
+`dotnet run --project src/Todo`, and `/tasks` answers. Change the model, run burgr again,
+the generated files follow. `AGENTS.md` lists what the Mini set supports, what it
+generates and its extension points; a model using anything else is refused with the name
+of the feature. The [Mini API sample](src/Samples/3.%20Mini%20API) adds tests.
+
+The code generated from the Mini set is yours: its templates are under
+[MIT-0](src/Templates/Mini/LICENSE), which requires no attribution.
 
 ---
 
@@ -344,12 +375,34 @@ Templates are read from the first of:
 3. `TemplatePackage`: the package's `templates/` folder, taken from the NuGet global
    packages folder (`NUGET_PACKAGES` or `~/.nuget/packages`) when already restored,
    otherwise downloaded once into `%LOCALAPPDATA%/burgr/packages` from `Source` (a NuGet
-   flat-container URL, `https://api.nuget.org/v3-flatcontainer/` by default).
+   flat-container URL, `https://api.nuget.org/v3-flatcontainer/` by default);
+4. none of them: the default set, the `Burgr.Templates.Mini` package at the version of
+   burgr itself.
 
-A template set can require a minimum burgr version with a `burgr-templates.json` file at
-its root: `{ "MinimumBurgrVersion": "1.5.0" }`. An older burgr refuses to generate
-instead of producing code that does not compile; local development builds
-(`0.0.0-dev`) skip the check.
+A template set describes itself in a `burgr-templates.json` file at its root, every field
+optional:
+
+```json
+{
+  "MinimumBurgrVersion": "1.9.0",
+  "Description": "ASP.NET Core Minimal API + EF Core in one project",
+  "Templates": ["Domain", "Contracts", "Infrastructure", "Api"],
+  "Generators": ["SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential"],
+  "SupportedFeatures": ["aggregate_roots", "enums", "references", "navigations", "calculated_properties"],
+  "Dependencies": [{ "Id": "Microsoft.EntityFrameworkCore", "Version": "10.0.*" }],
+  "Harness": "harness"
+}
+```
+
+| Field | Effect |
+|---|---|
+| `MinimumBurgrVersion` | An older burgr refuses to generate instead of producing code that does not compile; local development builds (`0.0.0-dev`) skip the check. |
+| `Templates`, `Generators` | Used when `burgr.json` does not list its own. Without either, burgr uses the four `Burgr.Essential` generators (enums, objects, services, rights). `ModelParserEngineType` and `TemplateParserEngineType` default to `Burgr.Essential`'s. |
+| `SupportedFeatures` | burgr refuses a model using a feature missing from the list, and names it: `aggregate_roots`, `entities`, `value_objects`, `transients`, `events`, `services`, `enums`, `references`, `external_references`, `navigations`, `synchronized_navigations`, `calculated_properties`, `calculated_collections`, `non_persisted_properties`, `primitive_collections`, `composite_keys`, `composite_unique_constraints`, `rights`, `rules`, `factories`, `ui_components`. Without the field, nothing is checked. |
+| `Dependencies` | Packages the generated code needs (informative). |
+| `Harness` | Folder of the set copied by `/harness:<directory>` (instructions and hooks for AI agents). |
+
+Template sets published on NuGet carry the `burgr-templates` tag.
 
 ---
 
@@ -477,6 +530,7 @@ specs/
 |---|---|
 | [`Samples/1. TODO list`](src/Samples/1.%20TODO%20list) | Simple console app — one aggregate root, three services |
 | [`Samples/2. User Management API`](src/Samples/2.%20User%20Management%20API) | REST API with authentication, invite flow, and rights management |
+| [`Samples/3. Mini API`](src/Samples/3.%20Mini%20API) | The default Mini template set: Minimal API + EF Core, a hand-written calculated property and validation rule, integration tests |
 
 ---
 

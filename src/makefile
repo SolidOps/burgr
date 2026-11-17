@@ -5,6 +5,7 @@ list:
 	@echo install
 	@echo generate_um
 	@echo generate_todo
+	@echo generate_mini
 
 install:
 	dotnet restore
@@ -17,3 +18,6 @@ generate_um:
 	
 generate_todo:
 	dotnet burgr "Samples/1. TODO List/todo_specs"
+
+generate_mini:
+	dotnet burgr "Samples/3. Mini API/specs" /templateSpecDirectory:Templates/Mini/templates
