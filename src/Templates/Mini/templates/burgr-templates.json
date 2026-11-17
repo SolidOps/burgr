@@ -1,6 +1,6 @@
 {
   "MinimumBurgrVersion": "1.9.0",
-  "Description": "ASP.NET Core Minimal API + EF Core in one project, no framework of its own: entities, enums, DTOs, DbContext and CRUD endpoints.",
+  "Description": "ASP.NET Core Minimal API + EF Core in one project, no framework of its own: domain classes, enums, DTOs, DbContext and CRUD endpoints.",
   "Templates": [ "Domain", "Contracts", "Infrastructure", "Api" ],
   "Generators": [
     "SolidOps.Burgr.Essential.Generators.Enums.EnumGenerator, SolidOps.Burgr.Essential",
@@ -11,5 +11,6 @@
     { "Id": "Microsoft.AspNetCore.App", "Version": "10.0" },
     { "Id": "Microsoft.EntityFrameworkCore", "Version": "10.0.*" }
   ],
-  "Harness": "harness"
+  "Harness": "harness",
+  "ProjectFile": "Project.csproj"
 }

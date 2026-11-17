@@ -73,6 +73,22 @@ public class TemplateManifestTests
     }
 
     [TestMethod]
+    public void ProjectFileOfTheSetIsCreatedForAModuleWithoutOne()
+    {
+        DeterminismTests.InWorkDirectory(work =>
+        {
+            var templates = CopyMiniTemplates(work, _ => { });
+            var specs = WriteSpecs(work, MinimalConfig, Model);
+
+            DeterminismTests.RunBurgr(specs, "/templateSpecDirectory:" + templates);
+
+            var project = File.ReadAllText(Path.Combine(work, "output", "Shop", "Shop.csproj"));
+            StringAssert.Contains(project, "<Project Sdk=\"Microsoft.NET.Sdk.Web\">");
+            StringAssert.Contains(project, "<AssemblyName>Acme.Shop</AssemblyName>");
+        });
+    }
+
+    [TestMethod]
     public void MissingTemplateFolderIsRefused()
     {
         DeterminismTests.InWorkDirectory(work =>

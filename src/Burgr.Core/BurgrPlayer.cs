@@ -21,6 +21,9 @@ namespace SolidOps.Burgr.Core
         public string OverrideDestination { get; set; }
         public bool OnlyOneDll { get; set; } = true;
         public string Templates { get; set; } = null;
+        // content of the project file created for a module that has none, MetaCorp.Template
+        // standing for <namespace>.<module>; burgr's own when the template set has none
+        public string ProjectFileTemplate { get; set; }
         public List<IGenerator> Generators { get; set; } = new List<IGenerator>();
 
         public IModelParserEngine ModelParserEngine { get; set; }
@@ -37,6 +40,19 @@ namespace SolidOps.Burgr.Core
 
     public class BurgrPlayer : IDisposable
     {
+        private const string DefaultProjectFile = """
+            <Project Sdk="Microsoft.NET.Sdk">
+
+              <PropertyGroup>
+                <TargetFramework>net10.0</TargetFramework>
+                <AssemblyName>MetaCorp.Template</AssemblyName>
+                <RootNamespace>MetaCorp.Template</RootNamespace>
+              </PropertyGroup>
+
+            </Project>
+
+            """;
+
         private readonly List<Assembly> templateAssemblies = new();
         public readonly ModelDescriptionsRepository modelsRepository;
         private string templatesDirectory;
@@ -251,18 +267,11 @@ namespace SolidOps.Burgr.Core
                             fileInfo.Directory.Create();
                         }
 
+                        var projectFile = (generatorSettings.ProjectFileTemplate ?? DefaultProjectFile)
+                            .Replace(CommonTags.Namespace, $"{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}");
                         // the line endings of a multi-line literal are those of this source file
                         // when burgr was built: normalized, like everything burgr writes
-                        File.AppendAllText(projectFilePath, Utilities.NormalizeNewLines($@"<Project Sdk=""Microsoft.NET.Sdk"">
-
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <AssemblyName>{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}</AssemblyName>
-    <RootNamespace>{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}</RootNamespace>
-  </PropertyGroup>
-
-</Project>
-"));
+                        File.AppendAllText(projectFilePath, Utilities.NormalizeNewLines(projectFile));
                     }
 
                     // Empty folder

@@ -390,7 +390,8 @@ optional:
   "Generators": ["SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential"],
   "SupportedFeatures": ["aggregate_roots", "enums", "references", "navigations", "calculated_properties"],
   "Dependencies": [{ "Id": "Microsoft.EntityFrameworkCore", "Version": "10.0.*" }],
-  "Harness": "harness"
+  "Harness": "harness",
+  "ProjectFile": "Project.csproj"
 }
 ```
 
@@ -401,6 +402,7 @@ optional:
 | `SupportedFeatures` | burgr refuses a model using a feature missing from the list, and names it: `aggregate_roots`, `entities`, `value_objects`, `transients`, `events`, `services`, `enums`, `references`, `external_references`, `navigations`, `synchronized_navigations`, `calculated_properties`, `calculated_collections`, `non_persisted_properties`, `primitive_collections`, `composite_keys`, `composite_unique_constraints`, `rights`, `rules`, `factories`, `ui_components`. Without the field, nothing is checked. |
 | `Dependencies` | Packages the generated code needs (informative). |
 | `Harness` | Folder of the set copied by `/harness:<directory>` (instructions and hooks for AI agents). |
+| `ProjectFile` | Project file written for a C# module that has none yet, `MetaCorp.Template` standing for `<NamespaceName>.<module>`. Without it, burgr writes a plain `net10.0` class library. An existing project file is never touched. |
 
 Template sets published on NuGet carry the `burgr-templates` tag.
 

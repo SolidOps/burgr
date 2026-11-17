@@ -279,6 +279,7 @@ namespace SolidOps.Burgr.Core
                 ProjectName = projectName,
                 NamespaceName = namespaceName,
                 TemplateSpecDirectory = templateSpecDirectory,
+                ProjectFileTemplate = manifest?.ProjectFile == null ? null : File.ReadAllText(Path.Combine(templateSpecDirectory, manifest.ProjectFile)),
                 // internal
                 IdentityKeysType = identityKeysType,
                 ExternalModuleKeysTypes = externalModuleKeysTypes,

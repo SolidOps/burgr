@@ -91,6 +91,7 @@ For each aggregate root `X`, in the namespace `<NamespaceName>.<ProjectName>`:
 | `Contracts.XDto` | Read model returned by the API, `static XDto From(X)`. Navigations are filled by `GET /{id}` only. |
 | `Contracts.XInput` | Body of `POST` and `PUT`: `Validate()` (required strings, maximum lengths, enum values), `ApplyTo(X)`. |
 | `Infrastructure.<ProjectName>DbContext` | `DbSet<X> Xs`, keys, maximum lengths, unique indexes, enums stored as strings, calculated properties ignored. Relationships follow EF Core conventions. |
+| `<ProjectName>.csproj` | Written only when missing: Web SDK, `net10.0`, `Microsoft.EntityFrameworkCore`. Add the package of your database provider. Never overwritten afterwards. |
 | `Api.<ProjectName>Endpoints` | `Map<ProjectName>Endpoints()`: a `/xs` group with `GET /`, `GET /{id}`, `POST /` (201), `PUT /{id}`, `DELETE /{id}` (204), as listed in `api:`. 400 with a validation problem (unknown reference included), 404, 409 when a unique index or a foreign key is violated. |
 
 ## Extension points
