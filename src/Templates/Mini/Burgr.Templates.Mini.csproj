@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Burgr.Templates.Mini</AssemblyName>
+    <PackageId>Burgr.Templates.Mini</PackageId>
+    <Description>Burgr's default template set: an ASP.NET Core Minimal API with EF Core in one project, generated from a YAML model, with its AI harness. Depends on public packages only.</Description>
+    <PackageTags>burgr-templates;burgr;code-generation;minimal-api;efcore</PackageTags>
+    <PackageLicenseExpression>MIT-0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
+    <Company>Solid Ops</Company>
+    <Authors>Damien Lechat</Authors>
+    <IsPackable>true</IsPackable>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <!-- the harness has a .claude folder -->
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="templates\**\*" Pack="true" PackagePath="templates\" />
+    <None Include="LICENSE" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

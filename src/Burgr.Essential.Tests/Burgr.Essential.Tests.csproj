@@ -27,6 +27,7 @@
   <ItemGroup>
     <AssemblyMetadata Include="BurgrToolPath" Value="$([MSBuild]::NormalizePath('$(MSBuildThisFileDirectory)..', 'Burgr', 'bin', '$(Configuration)', '$(TargetFramework)', 'SolidOps.Burgr.dll'))" />
     <AssemblyMetadata Include="SamplesDirectory" Value="$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)..', 'Samples'))" />
+    <AssemblyMetadata Include="TemplatesDirectory" Value="$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)..', 'Templates'))" />
     <AssemblyMetadata Include="ReferenceDirectory" Value="$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', 'Reference'))" />
   </ItemGroup>
 

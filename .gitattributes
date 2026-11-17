@@ -65,3 +65,6 @@
 # Generated sample files are the golden files of DeterminismTests: burgr writes CRLF on
 # every machine, so they are checked out as CRLF everywhere too.
 src/Samples/**/*.g.* text eol=crlf
+
+# The harness hook runs under bash: CRLF would break it, in the package too.
+*.sh text eol=lf

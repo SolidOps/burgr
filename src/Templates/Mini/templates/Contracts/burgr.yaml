@@ -1,0 +1,7 @@
+source_templates:
+  contracts:
+    source: Contracts.cs.tpl
+    file_suffix: Contracts.cs
+    destination_suffix: Contracts
+    force_separate_dll: false
+    destination_language: CS

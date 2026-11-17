@@ -250,3 +250,9 @@ src/.config/dotnet-tools.json
 
 CLAUDE.md
 .claude
+
+# The AI harness shipped with a template set, and the copy installed in its sample
+!src/Templates/*/templates/harness/CLAUDE.md
+!src/Templates/*/templates/harness/.claude
+!src/Samples/*/CLAUDE.md
+!src/Samples/*/.claude

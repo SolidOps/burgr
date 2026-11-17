@@ -16,12 +16,16 @@ public class DeterminismTests
     private static readonly string[] BuildDirectories = ["bin", "obj"];
     private static readonly string[] GenerationMessages = ["Create generated file", "Update generated file", "Delete generated file"];
 
-    // The samples' committed generated files are their golden files.
+    // The samples' committed generated files are their golden files. A sample without a
+    // template source in its burgr.json uses one of the template sets of src/Templates.
     [TestMethod]
-    [DataRow("1. TODO list", "todo_specs")]
-    [DataRow("2. User management API", "um_specs")]
-    public void SampleGenerationGivesBackTheCommittedFilesAndIsStable(string sample, string specsDirectory)
+    [DataRow("1. TODO list", "todo_specs", null)]
+    [DataRow("2. User management API", "um_specs", null)]
+    public void SampleGenerationGivesBackTheCommittedFilesAndIsStable(string sample, string specsDirectory, string? templateSet)
     {
+        var options = templateSet == null
+            ? []
+            : new[] { "/templateSpecDirectory:" + Path.Combine(GetMetadata("TemplatesDirectory"), templateSet, "templates") };
         InWorkDirectory(workDirectory =>
         {
             CopyDirectory(Path.Combine(GetMetadata("SamplesDirectory"), sample), workDirectory);
@@ -33,10 +37,10 @@ public class DeterminismTests
             }
 
             var specs = Path.Combine(workDirectory, specsDirectory);
-            RunBurgr(specs);
+            RunBurgr(specs, options);
             var firstRun = ReadFiles(workDirectory, GeneratedFilePattern);
             AssertSameFiles(expected, firstRun, "committed sample", "generation from scratch");
-            AssertSecondRunChangesNothing(specs, workDirectory, GeneratedFilePattern, firstRun);
+            AssertSecondRunChangesNothing(specs, workDirectory, GeneratedFilePattern, firstRun, options);
         });
     }
 
@@ -76,7 +80,7 @@ public class DeterminismTests
         });
     }
 
-    private static void InWorkDirectory(Action<string> test)
+    internal static void InWorkDirectory(Action<string> test)
     {
         var workDirectory = Path.Combine(Path.GetTempPath(), "burgr-tests", Guid.NewGuid().ToString("N"));
         try
@@ -92,15 +96,25 @@ public class DeterminismTests
         }
     }
 
-    private static void AssertSecondRunChangesNothing(string specs, string outputDirectory, string pattern, Dictionary<string, byte[]> firstRun)
+    private static void AssertSecondRunChangesNothing(string specs, string outputDirectory, string pattern, Dictionary<string, byte[]> firstRun, params string[] options)
     {
-        var output = RunBurgr(specs);
+        var output = RunBurgr(specs, options);
         AssertSameFiles(firstRun, ReadFiles(outputDirectory, pattern), "first generation", "second generation");
         var changes = output.Split('\n').Where(l => GenerationMessages.Any(l.Contains)).ToList();
         Assert.AreEqual(0, changes.Count, "second generation reported changes:\n" + string.Join("\n", changes));
     }
 
-    private static string RunBurgr(string specsDirectory)
+    internal static string RunBurgr(string specsDirectory, params string[] options)
+    {
+        var (exitCode, output) = StartBurgr(specsDirectory, options);
+
+        // burgr reports a generation error on the console but exits with -1.
+        Assert.AreEqual(0, exitCode, "burgr failed:\n" + output);
+        Assert.IsFalse(output.Contains("Error occurred in Generation"), "burgr failed:\n" + output);
+        return output;
+    }
+
+    internal static (int ExitCode, string Output) StartBurgr(string specsDirectory, params string[] options)
     {
         var startInfo = new ProcessStartInfo(Environment.GetEnvironmentVariable("DOTNET_HOST_PATH") ?? "dotnet")
         {
@@ -110,6 +124,10 @@ public class DeterminismTests
         };
         startInfo.ArgumentList.Add(GetMetadata("BurgrToolPath"));
         startInfo.ArgumentList.Add(specsDirectory);
+        foreach (var option in options)
+        {
+            startInfo.ArgumentList.Add(option);
+        }
         // A culture where "I".ToLower() is a dotless "ı": the output must not change. Taken
         // into account outside Windows only (the CI), where .NET reads the culture from them.
         startInfo.Environment["LC_ALL"] = "tr_TR.UTF-8";
@@ -120,11 +138,7 @@ public class DeterminismTests
         var output = process.StandardOutput.ReadToEnd();
         process.WaitForExit();
         output += error.Result;
-
-        // burgr reports a generation error on the console but exits with -1.
-        Assert.AreEqual(0, process.ExitCode, "burgr failed:\n" + output);
-        Assert.IsFalse(output.Contains("Error occurred in Generation"), "burgr failed:\n" + output);
-        return output;
+        return (process.ExitCode, output);
     }
 
     private static Dictionary<string, byte[]> ReadFiles(string directory, string pattern)
@@ -174,7 +188,7 @@ public class DeterminismTests
 
     private static string Escape(string line) => "\"" + line.Replace("\r", "\\r") + "\"";
 
-    private static void CopyDirectory(string source, string destination)
+    internal static void CopyDirectory(string source, string destination)
     {
         Directory.CreateDirectory(destination);
         foreach (var file in Directory.GetFiles(source))
@@ -191,7 +205,7 @@ public class DeterminismTests
         }
     }
 
-    private static string GetMetadata(string key)
+    internal static string GetMetadata(string key)
     {
         return typeof(DeterminismTests).Assembly.GetCustomAttributes<AssemblyMetadataAttribute>().Single(a => a.Key == key).Value!;
     }

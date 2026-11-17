@@ -1,0 +1,7 @@
+source_templates:
+  model:
+    source: Model.cs.tpl
+    file_suffix: Model.cs
+    destination_suffix: Domain
+    force_separate_dll: false
+    destination_language: CS

@@ -1,0 +1,7 @@
+source_templates:
+  db_context:
+    source: DbContext.cs.tpl
+    file_suffix: DbContext.cs
+    destination_suffix: Infrastructure
+    force_separate_dll: false
+    destination_language: CS

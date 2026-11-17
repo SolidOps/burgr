@@ -8,7 +8,7 @@ using SolidOps.Burgr.Essential.Yaml.Model;
 
 namespace SolidOps.Burgr.Essential.Yaml;
 
-public class ModelParserEngine : IModelParserEngine
+public class ModelParserEngine : IModelParserEngine, IModelFeatures
 {
     public bool IsInitialized { get; set; } = false;
 
@@ -254,6 +254,8 @@ public class ModelParserEngine : IModelParserEngine
     {
         throw new NotImplementedException();
     }
+
+    public IReadOnlyCollection<string> GetUsedFeatures() => ModelFeatures.Detect(YamlModelContentByModule);
 
     public void Dispose() { }
 }

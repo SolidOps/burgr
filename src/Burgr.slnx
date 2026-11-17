@@ -110,6 +110,9 @@
     <File Path=".editorconfig" />
     <File Path="makefile" />
   </Folder>
+  <Folder Name="/Templates/">
+    <Project Path="Templates/Mini/Burgr.Templates.Mini.csproj" />
+  </Folder>
   <Project Path="Burgr.Core/Burgr.Core.csproj" />
   <Project Path="Burgr.Essential.Tests/Burgr.Essential.Tests.csproj" />
   <Project Path="Burgr.Essential/Burgr.Essential.csproj" />

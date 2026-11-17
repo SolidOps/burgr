@@ -11,6 +11,17 @@ namespace SolidOps.Burgr.Core
 {
     public static class BurgrLauncher
     {
+        public const string DefaultTemplatePackageId = "Burgr.Templates.Mini";
+        public const string DefaultModelParserEngineType = "SolidOps.Burgr.Essential.Yaml.ModelParserEngine, SolidOps.Burgr.Essential";
+        public const string DefaultTemplateParserEngineType = "SolidOps.Burgr.Essential.Yaml.TemplateParserEngine, SolidOps.Burgr.Essential";
+        public static readonly string[] DefaultGenerators =
+        [
+            "SolidOps.Burgr.Essential.Generators.Enums.EnumGenerator, SolidOps.Burgr.Essential",
+            "SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential",
+            "SolidOps.Burgr.Essential.Generators.Services.ServiceGenerator, SolidOps.Burgr.Essential",
+            "SolidOps.Burgr.Essential.Generators.Rights.RightGenerator, SolidOps.Burgr.Essential"
+        ];
+
         private static List<Assembly> referencedAssemblies = new List<Assembly>();
         public static int Launch(params string[] args)
         {
@@ -28,8 +39,8 @@ namespace SolidOps.Burgr.Core
             string overrideDestination = null;
             Dictionary<string, string> externalModuleKeysTypes = new();
             Dictionary<string, string[]> externalModuleTransients = new();
-            string modelTypeParserEngineType = "";
-            string templateTypeParserEngineType = "";
+            string modelTypeParserEngineType = DefaultModelParserEngineType;
+            string templateTypeParserEngineType = DefaultTemplateParserEngineType;
             bool onlyOneDll = true;
             string generatedFilePrefix = "";
             string generatedFileSuffix = ".g";
@@ -66,11 +77,11 @@ namespace SolidOps.Burgr.Core
                 BurgrConfig config = json.Deserialize<BurgrConfig>();
                 projectName = config.ProjectName;
                 namespaceName = config.NamespaceName;
-                buildingDir = Path.Combine(Directory.GetCurrentDirectory(), config.BuildingDirectory);
+                buildingDir = Path.Combine(Directory.GetCurrentDirectory(), config.BuildingDirectory ?? string.Empty);
                 templates = config.Templates;
                 generatorTypeNames = config.Generators;
-                generatedFilePrefix = config.GeneratedFilePrefix;
-                generatedFileSuffix = config.GeneratedFileSuffix;
+                generatedFilePrefix = config.GeneratedFilePrefix ?? generatedFilePrefix;
+                generatedFileSuffix = config.GeneratedFileSuffix ?? generatedFileSuffix;
                 toRemoveAtGenerationIdentifier = config.ToRemoveAtGenerationIdentifier ?? "to remove at generation";
                 toRemoveIfNoAPIIdentifier = config.ToRemoveIfNoAPIIdentifier ?? "to remove if NO_API";
                 overrideDestination = config.OverrideDestination;
@@ -186,13 +197,22 @@ namespace SolidOps.Burgr.Core
             {
                 templateSpecDirectory = Path.GetFullPath(templateSpecDirectoryArg.Replace("/templateSpecDirectory:", string.Empty), callerDirectory);
             }
-            if (templateSpecDirectory == null && templatePackage != null)
+            if (templateSpecDirectory == null)
             {
-                templateSpecDirectory = TemplatePackageResolver.Resolve(templatePackage);
+                templateSpecDirectory = TemplatePackageResolver.Resolve(templatePackage ?? DefaultTemplatePackage());
             }
-            if (templateSpecDirectory != null)
+
+            // burgr.json first, then the template set's manifest, then burgr's defaults
+            var manifest = TemplateManifest.Read(templateSpecDirectory);
+            manifest?.CheckBurgrVersion();
+            templates ??= manifest?.Templates ?? throw new ArgumentException($"No Templates in burgr.json nor in the {TemplateManifest.FileName} of {templateSpecDirectory}");
+            generatorTypeNames ??= manifest?.Generators ?? DefaultGenerators;
+
+            var harnessArg = args.FirstOrDefault(a => a.StartsWith("/harness:", StringComparison.Ordinal));
+            if (harnessArg != null)
             {
-                TemplateCompatibility.Check(templateSpecDirectory);
+                var harnessTarget = Path.GetFullPath(harnessArg.Replace("/harness:", string.Empty), callerDirectory);
+                (manifest ?? new TemplateManifest()).InstallHarness(templateSpecDirectory, harnessTarget);
             }
 
             foreach (string arg in args)
@@ -258,7 +278,7 @@ namespace SolidOps.Burgr.Core
                 // input
                 ProjectName = projectName,
                 NamespaceName = namespaceName,
-                TemplateSpecDirectory = templateSpecDirectory ?? modelSpecDirectory,
+                TemplateSpecDirectory = templateSpecDirectory,
                 // internal
                 IdentityKeysType = identityKeysType,
                 ExternalModuleKeysTypes = externalModuleKeysTypes,
@@ -280,12 +300,24 @@ namespace SolidOps.Burgr.Core
             BurgrPlayer Burgr = new();
             Burgr.Init(settings);
             Burgr.ParseModels();
+            if (manifest?.SupportedFeatures != null && modelParserEngine is IModelFeatures modelFeatures)
+            {
+                manifest.CheckFeatures(modelFeatures.GetUsedFeatures());
+            }
             Console.WriteLine($"Models parsed: {Burgr.modelsRepository.modelDescriptions.Values.SelectMany(v => v.ModelDescriptors).Count()}");
             Burgr.ParseTemplates();
             Console.WriteLine($"Templates parsed: {Burgr.sourceTemplates.Count()}");
             Burgr.Generate();
 
             return 0;
+        }
+
+        // without any template source, the default set at burgr's own version
+        private static TemplatePackageConfig DefaultTemplatePackage()
+        {
+            var version = TemplateManifest.CurrentBurgrVersion()
+                ?? throw new InvalidOperationException($"No template source: set TemplateSpecDirectory or TemplatePackage in burgr.json, or pass /templateSpecDirectory:. A development build of burgr has no version to pick the default set {DefaultTemplatePackageId} with.");
+            return new TemplatePackageConfig { Id = DefaultTemplatePackageId, Version = version.ToString(3) };
         }
 
         // burgr.json, whatever its case: file systems other than Windows' are case-sensitive.
