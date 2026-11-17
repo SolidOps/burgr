@@ -246,6 +246,7 @@ ModelManifest.xml
 source/**/*.jfm
 
 src/Burgr/Properties/launchSettings.json
+src/Samples/*/src/*/Properties/launchSettings.json
 src/.config/dotnet-tools.json
 
 CLAUDE.md
