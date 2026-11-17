@@ -34,12 +34,12 @@ public class YamlTemplateDescriptionBuilder
                 }
             }
 
-            var content = File.ReadAllText(templateDirectory + "\\burgr.yaml");
+            var content = File.ReadAllText(Path.Combine(templateDirectory, "burgr.yaml"));
             var yamlContent = new YamlDotNet.Serialization.Deserializer().Deserialize<YamlTemplateContentV1>(content);
 
             foreach (var source_template in yamlContent.source_templates)
             {
-                string fileContent = File.ReadAllText(templateDirectory + "\\" + source_template.Value.source);
+                string fileContent = Utilities.NormalizeNewLines(File.ReadAllText(Path.Combine(templateDirectory, source_template.Value.source)));
                 var sourceTemplate = new Core.Template.SourceTemplate(fileContent)
                 {
                     FileSuffix = source_template.Value.file_suffix,

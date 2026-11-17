@@ -177,74 +177,6 @@ namespace SolidOps.Burgr.Core
             }
         }
 
-        private static string RemoveConsecutiveLineBreaks(string content)
-        {
-            string finalContent = string.Empty;
-            var blocks = ChunksUpto(content, 10000).ToList();
-            for (var i = 0; i < blocks.Count - 1; i++)
-            {
-                var s = blocks[i];
-                var index = s.LastIndexOf("\n");
-                if (index > 0)
-                {
-                    var sub = s.Substring(index + 1);
-                    blocks[i] = s.Substring(0, index + 1);
-                    blocks[i + 1] = sub + blocks[i + 1];
-                }
-            }
-            int count = 0;
-            foreach (var block in blocks)
-            {
-                count++;
-                bool previousEmtpy = true;
-                string blockContent = string.Empty;
-                foreach (string line in block.Split(Utilities.SingleNewLine, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    foreach (string subline in line.Split(Utilities.AltNewLine, StringSplitOptions.RemoveEmptyEntries))
-                    {
-                        if (subline.Trim() == string.Empty)
-                        {
-                            if (!previousEmtpy)
-                            {
-                                previousEmtpy = true;
-                            }
-                            else
-                            {
-                                continue;
-                            }
-                        }
-                        else
-                        {
-                            previousEmtpy = false;
-                        }
-
-                        if (blockContent != string.Empty)
-                        {
-                            blockContent += Utilities.SingleNewLine;
-                        }
-                        if (!previousEmtpy)
-                            blockContent += subline;
-                    }
-                }
-                finalContent += blockContent;
-                if (count < blocks.Count)
-                    finalContent += Utilities.SingleNewLine;
-            }
-            return finalContent;
-        }
-
-        static IEnumerable<string> Split(string str, int chunkSize)
-        {
-            return Enumerable.Range(0, str.Length / chunkSize)
-                .Select(i => str.Substring(i * chunkSize, chunkSize));
-        }
-
-        static IEnumerable<string> ChunksUpto(string str, int maxChunkSize)
-        {
-            for (int i = 0; i < str.Length; i += maxChunkSize)
-                yield return str.Substring(i, Math.Min(maxChunkSize, str.Length - i));
-        }
-
         private void GenerateFiles(Dictionary<string, ModuleGenerationResult> moduleGenerationResults)
         {
             List<string> emptiedFolder = new List<string>();
@@ -298,7 +230,7 @@ namespace SolidOps.Burgr.Core
 
                     if (fileResult.Value.RemoveConsecutiveLineBreaks)
                     {
-                        fileContent = RemoveConsecutiveLineBreaks(fileContent);
+                        fileContent = BlankLineCleaner.Clean(fileContent);
                     }
 
                     string projectFilePath = null;
@@ -351,7 +283,7 @@ namespace SolidOps.Burgr.Core
                     string fileDirectory = new FileInfo(fileResult.Key).DirectoryName;
                     if (result.EmptyFolder && !emptiedFolder.Contains(fileDirectory) && Directory.Exists(fileDirectory))
                     {
-                        foreach (var file in Directory.GetFiles(fileDirectory, "*" + generatorSettings.GeneratedFileSuffix + ".*", SearchOption.AllDirectories))
+                        foreach (var file in FileSystemOrder.SortRecursive(Directory.GetFiles(fileDirectory, "*" + generatorSettings.GeneratedFileSuffix + ".*", SearchOption.AllDirectories), fileDirectory))
                         {
                             deletedFileContent.Add(file, File.ReadAllText(file));
                             File.Delete(file);

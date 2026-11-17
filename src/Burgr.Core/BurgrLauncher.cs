@@ -41,7 +41,9 @@ namespace SolidOps.Burgr.Core
             string[] generatorTypeNames;
 
             string callerDirectory = Directory.GetCurrentDirectory();
-            if (args.Length >= 1 && !args[0].StartsWith("{") && !args[0].StartsWith("/"))
+            // the specs directory, unless the first argument is the configuration itself or an
+            // option (/name:value); an absolute path starts with / too outside Windows.
+            if (args.Length >= 1 && !args[0].StartsWith("{") && (!args[0].StartsWith("/") || Directory.Exists(args[0])))
             {
                 Environment.CurrentDirectory = args[0];
             }
@@ -51,12 +53,9 @@ namespace SolidOps.Burgr.Core
             {
                 jsonFileContent = args[0];
             }
-            else if (File.Exists("Burgr.json"))
+            else if (FindConfigFile() is string configFile)
             {
-                using (StreamReader reader = File.OpenText("Burgr.json"))
-                {
-                    jsonFileContent = reader.ReadToEnd();
-                }
+                jsonFileContent = File.ReadAllText(configFile);
             }
 
             if (!string.IsNullOrEmpty(jsonFileContent))
@@ -77,7 +76,7 @@ namespace SolidOps.Burgr.Core
                 if (config.ModelSpecDirectory != null)
                 {
                     modelSpecDirectory = config.ModelSpecDirectory;
-                    if (!modelSpecDirectory.Contains(":\\"))
+                    if (!Path.IsPathRooted(modelSpecDirectory))
                     {
                         modelSpecDirectory = Path.Combine(Directory.GetCurrentDirectory(), modelSpecDirectory);
                     }
@@ -87,7 +86,7 @@ namespace SolidOps.Burgr.Core
                     foreach (var binaryDirectory in config.BinaryDirectories)
                     {
                         var dir = binaryDirectory;
-                        if (!dir.Contains(":\\"))
+                        if (!Path.IsPathRooted(dir))
                         {
                             dir = Path.Combine(Directory.GetCurrentDirectory(), dir);
                         }
@@ -97,7 +96,7 @@ namespace SolidOps.Burgr.Core
                 if (config.TemplateSpecDirectory != null)
                 {
                     templateSpecDirectory = config.TemplateSpecDirectory;
-                    if (!templateSpecDirectory.Contains(":\\"))
+                    if (!Path.IsPathRooted(templateSpecDirectory))
                     {
                         templateSpecDirectory = Path.Combine(Directory.GetCurrentDirectory(), templateSpecDirectory);
                     }
@@ -285,6 +284,15 @@ namespace SolidOps.Burgr.Core
             Burgr.Generate();
 
             return 0;
+        }
+
+        // burgr.json, whatever its case: file systems other than Windows' are case-sensitive.
+        private static string FindConfigFile()
+        {
+            return Directory.GetFiles(Directory.GetCurrentDirectory(), "*.json")
+                .Where(f => string.Equals(Path.GetFileName(f), "burgr.json", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(f => f, StringComparer.Ordinal)
+                .FirstOrDefault();
         }
 
         private static Assembly ResolveAssembliesForLauncher(object sender, ResolveEventArgs args)

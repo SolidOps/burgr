@@ -44,7 +44,7 @@ public class ModelParserEngine : IModelParserEngine
             foreach (string pattern in patterns)
             {
                 var files = Directory.GetFiles(ModelsDirectory, pattern, SearchOption.AllDirectories);
-                specFiles.AddRange(files);
+                specFiles.AddRange(FileSystemOrder.SortRecursive(files, ModelsDirectory));
             }
 
             if (specFiles.Count == 0)
@@ -59,7 +59,10 @@ public class ModelParserEngine : IModelParserEngine
                 var fileInfo = new FileInfo(file);
                 var directoryInfo = new DirectoryInfo(ModelsDirectory);
 
-                string moduleName = fileInfo.DirectoryName.Replace(directoryInfo.FullName, string.Empty).Replace("\\", string.Empty);
+                string relativeDirectory = Path.GetRelativePath(directoryInfo.FullName, fileInfo.DirectoryName);
+                string moduleName = relativeDirectory == "."
+                    ? string.Empty
+                    : relativeDirectory.Replace("\\", string.Empty).Replace("/", string.Empty);
 
                 if (!YamlModelContentByModule.ContainsKey(moduleName))
                 {

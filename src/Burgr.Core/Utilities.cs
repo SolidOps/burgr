@@ -17,6 +17,14 @@ namespace SolidOps.Burgr.Core
 
         public static Utilities Instance { get; private set; } = new Utilities();
 
+        // Generation inserts SingleNewLine itself, so a template is read with the same line
+        // ending whatever the checkout gave it (git text=auto: LF on Linux, CRLF on Windows):
+        // the output is then identical on every machine.
+        public static string NormalizeNewLines(string content)
+        {
+            return content.Replace(SingleNewLine, AltNewLine).Replace(AltNewLine, SingleNewLine);
+        }
+
         public int Counter { get; set; }
 
         public static string CombinePath(params string[] args)

@@ -360,6 +360,11 @@ A template set is a directory containing:
 - **`burgr.yaml`** — maps logical names to source files and output destinations.
 - **Source files** (`.cs`, `.ts`, `.tpl`, …) — code templates annotated with generation markers.
 
+Generation is deterministic: the same model and templates give byte-identical files on
+any machine and OS. Templates can use LF or CRLF line endings; generated files are always
+written with CRLF. The CI regenerates the [samples](#samples) from scratch and compares
+them byte for byte with the committed files.
+
 ### Loop markers
 
 ```

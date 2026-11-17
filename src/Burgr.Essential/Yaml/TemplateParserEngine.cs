@@ -1,4 +1,5 @@
-﻿using SolidOps.Burgr.Core.Generators;
+﻿using SolidOps.Burgr.Core;
+using SolidOps.Burgr.Core.Generators;
 using SolidOps.Burgr.Core.Template;
 using SolidOps.Burgr.Essential.Yaml.Template;
 
@@ -37,14 +38,14 @@ public class TemplateParserEngine : ITemplateParserEngine
         List<string> templateDirectoryPaths = new List<string>();
         List<string> templateZipPaths = new List<string>();
 
-        foreach (var subDirectory in Directory.GetDirectories(templatesDirectory))
+        foreach (var subDirectory in FileSystemOrder.Sort(Directory.GetDirectories(templatesDirectory)))
         {
             DirectoryInfo directoryInfo = new DirectoryInfo(subDirectory);
             if(templates.Contains(directoryInfo.Name))
                 templateDirectoryPaths.Add(subDirectory);
         }
 
-        foreach (string filePath in Directory.GetFiles(templatesDirectory, "*.zip"))
+        foreach (string filePath in FileSystemOrder.Sort(Directory.GetFiles(templatesDirectory, "*.zip")))
         {
             FileInfo fileInfo = new(filePath);
             if (templates.Contains(fileInfo.Name.Substring(0, fileInfo.Name.Length - 4)))
