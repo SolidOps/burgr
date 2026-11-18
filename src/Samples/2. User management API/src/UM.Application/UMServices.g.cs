@@ -6,8 +6,25 @@ using System.Threading.Tasks;
 using SolidOps.UM.Domain;
 namespace SolidOps.UM.Application;
 // Object [AG][R]
-public partial class UserService(Domain.IUserRepository repository, IUnitOfWork unitOfWork)
+public partial class UserService(
+    Domain.IUserRepository repository,
+    // Dependency [AG]
+    Domain.ILocalUserRepository LocalUserRepository,
+
+    IUnitOfWork unitOfWork,
+    IEventPublisher events,
+    ICurrentUser currentUser,
+    IServiceProvider serviceProvider)
 {
+    protected Domain.IUserRepository Repository { get; } = repository;
+    // Dependency [AG]
+    protected Domain.ILocalUserRepository LocalUserRepository { get; } = LocalUserRepository;
+
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IEventPublisher Events { get; } = events;
+    protected ICurrentUser CurrentUser { get; } = currentUser;
+    /// <summary>The services the rules need besides the repositories of the model dependencies.</summary>
+    protected IServiceProvider Services { get; } = serviceProvider;
 
     public async Task<Result<Page<UserDto>>> QueryAsync(PageRequest request, CancellationToken cancellationToken = default)
     {
@@ -16,13 +33,13 @@ public partial class UserService(Domain.IUserRepository repository, IUnitOfWork 
         {
             return Error.Invalid(errors);
         }
-        var page = await repository.QueryAsync(request, cancellationToken);
+        var page = await Repository.QueryAsync(request, cancellationToken);
         return page.Map(UserDto.From);
     }
 
     public async Task<Result<UserDto>> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var aggregate = await repository.FindAsync(id, cancellationToken);
+        var aggregate = await Repository.FindAsync(id, cancellationToken);
         return aggregate is null ? Error.NotFound() : UserDto.From(aggregate);
     }
 
@@ -35,17 +52,24 @@ public partial class UserService(Domain.IUserRepository repository, IUnitOfWork 
         }
         var aggregate = new Domain.User();
         input.ApplyTo(aggregate);
-        repository.Add(aggregate);
-        if (await unitOfWork.SaveChangesAsync(cancellationToken) is { } error)
+        // Rule [BA]
+        if (await CreateLocalUserAsync(aggregate, cancellationToken) is { } CreateLocalUserError)
+        {
+            return CreateLocalUserError;
+        }
+
+        Repository.Add(aggregate);
+        if (await UnitOfWork.SaveChangesAsync(cancellationToken) is { } error)
         {
             return error;
         }
+
         return UserDto.From(aggregate);
     }
 
     public async Task<Result<UserDto>> UpdateAsync(Guid id, UserInput input, CancellationToken cancellationToken = default)
     {
-        var aggregate = await repository.FindAsync(id, cancellationToken);
+        var aggregate = await Repository.FindAsync(id, cancellationToken);
         if (aggregate is null)
         {
             return Error.NotFound();
@@ -56,27 +80,37 @@ public partial class UserService(Domain.IUserRepository repository, IUnitOfWork 
             return Error.Invalid(errors);
         }
         input.ApplyTo(aggregate);
-        if (await unitOfWork.SaveChangesAsync(cancellationToken) is { } error)
+
+        if (await UnitOfWork.SaveChangesAsync(cancellationToken) is { } error)
         {
             return error;
         }
+
         return UserDto.From(aggregate);
     }
 
     public async Task<Result> RemoveAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var aggregate = await repository.FindAsync(id, cancellationToken);
+        var aggregate = await Repository.FindAsync(id, cancellationToken);
         if (aggregate is null)
         {
             return Error.NotFound();
         }
-        repository.Remove(aggregate);
-        if (await unitOfWork.SaveChangesAsync(cancellationToken) is { } error)
+
+        Repository.Remove(aggregate);
+        if (await UnitOfWork.SaveChangesAsync(cancellationToken) is { } error)
         {
             return error;
         }
+
+        await Events.PublishAsync(new UserEvent(EventContext.Remove, UserDto.From(aggregate)), cancellationToken);
+
         return Result.Success();
     }
+
+    // Rule 
+    /// <summary>The rule CreateLocalUser of the model, written by hand: null to go on, or the error that stops the use case.</summary>
+    private partial Task<Error?> CreateLocalUserAsync(Domain.User aggregate, CancellationToken cancellationToken);
 
     // the input's own rules, then the existence of the aggregates and entities it references
     private async Task<Dictionary<string, string[]>> ValidateAsync(UserInput input, CancellationToken cancellationToken)
@@ -86,8 +120,21 @@ public partial class UserService(Domain.IUserRepository repository, IUnitOfWork 
         return errors;
     }
 }
-public partial class InviteService(Domain.IInviteRepository repository, IUnitOfWork unitOfWork)
+public partial class InviteService(
+    Domain.IInviteRepository repository,
+
+    IUnitOfWork unitOfWork,
+    IEventPublisher events,
+    ICurrentUser currentUser,
+    IServiceProvider serviceProvider)
 {
+    protected Domain.IInviteRepository Repository { get; } = repository;
+
+    protected IUnitOfWork UnitOfWork { get; } = unitOfWork;
+    protected IEventPublisher Events { get; } = events;
+    protected ICurrentUser CurrentUser { get; } = currentUser;
+    /// <summary>The services the rules need besides the repositories of the model dependencies.</summary>
+    protected IServiceProvider Services { get; } = serviceProvider;
 
     public async Task<Result<Page<InviteDto>>> QueryAsync(PageRequest request, CancellationToken cancellationToken = default)
     {
@@ -96,13 +143,13 @@ public partial class InviteService(Domain.IInviteRepository repository, IUnitOfW
         {
             return Error.Invalid(errors);
         }
-        var page = await repository.QueryAsync(request, cancellationToken);
+        var page = await Repository.QueryAsync(request, cancellationToken);
         return page.Map(InviteDto.From);
     }
 
     public async Task<Result<InviteDto>> GetAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var aggregate = await repository.FindAsync(id, cancellationToken);
+        var aggregate = await Repository.FindAsync(id, cancellationToken);
         return aggregate is null ? Error.NotFound() : InviteDto.From(aggregate);
     }
 
@@ -115,11 +162,13 @@ public partial class InviteService(Domain.IInviteRepository repository, IUnitOfW
         }
         var aggregate = new Domain.Invite();
         input.ApplyTo(aggregate);
-        repository.Add(aggregate);
-        if (await unitOfWork.SaveChangesAsync(cancellationToken) is { } error)
+
+        Repository.Add(aggregate);
+        if (await UnitOfWork.SaveChangesAsync(cancellationToken) is { } error)
         {
             return error;
         }
+
         return InviteDto.From(aggregate);
     }
 
@@ -128,7 +177,7 @@ public partial class InviteService(Domain.IInviteRepository repository, IUnitOfW
     {
         var errors = input.Validate();
         // Property [M][NO][NAR][AG][EN][PUO][NRO][NN]
-        if (!await unitOfWork.ExistsAsync<Domain.User>(input.CreatorId, cancellationToken))
+        if (!await UnitOfWork.ExistsAsync<Domain.User>(input.CreatorId, cancellationToken))
         {
             errors["CreatorId"] = ["User not found"];
         }

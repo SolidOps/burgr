@@ -600,7 +600,7 @@ specs/
 
 | Sample | Description |
 |---|---|
-| [`Samples/2. User management API`](src/Samples/2.%20User%20management%20API) | The Onion template set (in progress, not published yet): Domain, Application, Infrastructure, Api and Tests projects, entities, a value object stored as JSON, services with hand-written implementations, rights, JWT authentication, paging and sorting, integration tests |
+| [`Samples/2. User management API`](src/Samples/2.%20User%20management%20API) | The Onion template set (in progress, not published yet): Domain, Application, Infrastructure, Api and Tests projects, entities, a value object stored as JSON, services, factories and rules with hand-written implementations, in-process events, synchronized children, rights, JWT authentication, paging and sorting, integration tests |
 | [`Samples/3. Mini API`](src/Samples/3.%20Mini%20API) | The default Mini template set: Minimal API + EF Core, a hand-written calculated property and validation rule, integration tests |
 
 ---

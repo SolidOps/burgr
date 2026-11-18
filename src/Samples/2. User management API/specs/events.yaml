@@ -1,0 +1,6 @@
+burgr-model-version: 1.0.0
+
+events:
+  # ---- #
+  invite_used:
+    data_type: invite_result

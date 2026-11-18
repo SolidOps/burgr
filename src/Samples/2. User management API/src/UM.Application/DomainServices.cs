@@ -62,8 +62,20 @@ public partial class InvitesService
         }
 
         invite.Status = InviteStatus.Used;
-        var created = await Accounts.CreateAsync(UserRepository, LocalUserRepository, UnitOfWork, invite.Email, request.Password, [], cancellationToken);
-        return created.IsSuccess ? Result.Success() : created.Error!;
+        var created = await Accounts.CreateAsync(Services, UserRepository, LocalUserRepository, UnitOfWork, invite.Email, request.Password, [], cancellationToken);
+        if (!created.IsSuccess)
+        {
+            return created.Error!;
+        }
+
+        var result = new InviteResultDto { Email = invite.Email, Creator = invite.CreatorName, Message = invite.CreatorMessage };
+        await Services.GetRequiredService<IEventPublisher>().PublishAsync(new InviteUsedEvent("used", result), cancellationToken);
+        return Result.Success();
+    }
+
+    public async Task<Result<int>> CountByStatusAsync(InviteStatus status, CancellationToken cancellationToken = default)
+    {
+        return await InviteRepository.CountByStatusAsync(status, cancellationToken);
     }
 }
 
@@ -71,7 +83,7 @@ public partial class SelfUserCreationService
 {
     public Task<Result<Guid>> CreateUserAsync(SelfUserCreationRequestDto request, CancellationToken cancellationToken = default)
     {
-        return Accounts.CreateAsync(UserRepository, LocalUserRepository, UnitOfWork, request.Email, request.Password, [], cancellationToken);
+        return Accounts.CreateAsync(Services, UserRepository, LocalUserRepository, UnitOfWork, request.Email, request.Password, [], cancellationToken);
     }
 }
 
@@ -110,6 +122,6 @@ public partial class UserCreationService
         }
 
         var rightIds = userCreationInfo.Rights.Select(r => r.RightId);
-        return await Accounts.CreateAsync(UserRepository, LocalUserRepository, UnitOfWork, userCreationInfo.UserEmail, userCreationInfo.Password, rightIds, cancellationToken);
+        return await Accounts.CreateAsync(Services, UserRepository, LocalUserRepository, UnitOfWork, userCreationInfo.UserEmail, userCreationInfo.Password, rightIds, cancellationToken);
     }
 }

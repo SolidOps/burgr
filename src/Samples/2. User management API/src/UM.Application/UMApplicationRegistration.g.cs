@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace SolidOps.UM.Application;
 public static partial class UMApplicationRegistration
 {
-    /// <summary>The application services of the UM module: one per aggregate root with an API, and those of the model.</summary>
+    /// <summary>The application services of the UM module: one per aggregate root with an API, those of the model, the factories and the event handlers.</summary>
     public static IServiceCollection AddUMApplication(this IServiceCollection services)
     {
         // Object [AG][R]
@@ -24,6 +24,18 @@ public static partial class UMApplicationRegistration
 
         services.AddScoped<IUserCreationService, UserCreationService>();
 
+        // Object [AG][EN]
+        services.AddScoped<ILocalUserFactory, LocalUserFactory>();
+
+        services.AddScoped<IUserFactory, UserFactory>();
+
+        services.AddScoped<IUserRightFactory, UserRightFactory>();
+
+        services.AddScoped<IRightFactory, RightFactory>();
+
+        services.AddScoped<IInviteFactory, InviteFactory>();
+
+        services.AddEventHandlers(typeof(UMApplicationRegistration).Assembly);
         return services;
     }
 }

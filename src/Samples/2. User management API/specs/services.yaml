@@ -37,6 +37,12 @@ services:
       use_invite:
         inputs:
           request: invite_use_request
+      count_by_status:
+        result: int
+        inputs:
+          status: $invite_status
+        api_description:
+          is_anonymous: false
     dependencies:
       invite:
       user:

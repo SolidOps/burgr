@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using Microsoft.Extensions.DependencyInjection;
 using SolidOps.UM.Domain;
 
 namespace SolidOps.UM.Application;
@@ -15,10 +16,16 @@ internal static class Accounts
 
     // a user and the local user it logs in with, named after its email
     public static async Task<Result<Guid>> CreateAsync(
-        IUserRepository users, ILocalUserRepository localUsers, IUnitOfWork unitOfWork,
+        IServiceProvider services, IUserRepository users, ILocalUserRepository localUsers, IUnitOfWork unitOfWork,
         string email, string password, IEnumerable<Guid> rightIds, CancellationToken cancellationToken)
     {
-        var user = new User { Email = email, Provider = LocalProvider };
+        var created = await services.GetRequiredService<IUserFactory>().CreateLocalAsync(email, cancellationToken);
+        if (!created.IsSuccess)
+        {
+            return created.Error!;
+        }
+
+        var user = created.Value;
         user.UserRights.AddRange(rightIds.Select(rightId => new UserRight { RightId = rightId }));
         users.Add(user);
         localUsers.Add(new LocalUser { Name = email, HashedPassword = Passwords.Hash(password) });

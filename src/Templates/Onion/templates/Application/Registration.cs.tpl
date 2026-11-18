@@ -6,7 +6,7 @@ namespace _MODULE_NAMESPACE_.Application;
 
 public static partial class _MODULE_ApplicationRegistration
 {
-    /// <summary>The application services of the _MODULE_ module: one per aggregate root with an API, and those of the model.</summary>
+    /// <summary>The application services of the _MODULE_ module: one per aggregate root with an API, those of the model, the factories and the event handlers.</summary>
     public static IServiceCollection Add_MODULE_Application(this IServiceCollection services)
     {
         #region foreach MODEL[AG][R]
@@ -15,6 +15,10 @@ public static partial class _MODULE_ApplicationRegistration
         #region foreach DOMAIN_SERVICE
         services.AddScoped<ISERVICENAMEService, SERVICENAMEService>();
         #endregion foreach DOMAIN_SERVICE
+        #region foreach MODEL[AG][EN]
+        services.AddScoped<ICLASSNAMEFactory, CLASSNAMEFactory>();
+        #endregion foreach MODEL
+        services.AddEventHandlers(typeof(_MODULE_ApplicationRegistration).Assembly);
         return services;
     }
 }

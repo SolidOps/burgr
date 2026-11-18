@@ -11,6 +11,14 @@ public partial class LocalUserRepository
     }
 }
 
+public partial class InviteRepository
+{
+    public Task<int> CountByStatusAsync(InviteStatus status, CancellationToken cancellationToken = default)
+    {
+        return Db.Invites.CountAsync(x => x.Status == status, cancellationToken);
+    }
+}
+
 public partial class UserRepository
 {
     public Task<User?> FindByEmailAsync(string email, CancellationToken cancellationToken = default)

@@ -41,6 +41,8 @@ public partial interface IInvitesService
 
     Task<Result> UseInviteAsync(SolidOps.UM.Application.InviteUseRequestDto request, CancellationToken cancellationToken = default);
 
+    Task<Result<System.Int32>> CountByStatusAsync(SolidOps.UM.Domain.InviteStatus status, CancellationToken cancellationToken = default);
+
     Task<Result<InviteResultDto>> CheckInviteAsync(System.Guid inviteId, CancellationToken cancellationToken = default);
 
 }

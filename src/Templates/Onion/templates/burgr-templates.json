@@ -8,7 +8,7 @@
     "SolidOps.Burgr.Essential.Generators.Services.ServiceGenerator, SolidOps.Burgr.Essential",
     "SolidOps.Burgr.Essential.Generators.Rights.RightGenerator, SolidOps.Burgr.Essential"
   ],
-  "SupportedFeatures": [ "aggregate_roots", "entities", "value_objects", "enums", "references", "navigations", "calculated_properties", "composite_unique_constraints", "services", "transients", "rights" ],
+  "SupportedFeatures": [ "aggregate_roots", "entities", "value_objects", "enums", "references", "navigations", "calculated_properties", "composite_unique_constraints", "synchronized_navigations", "services", "transients", "rights", "rules", "factories", "events" ],
   "Dependencies": [
     { "Id": "Microsoft.AspNetCore.App", "Version": "10.0" },
     { "Id": "Microsoft.EntityFrameworkCore", "Version": "10.0.*" },
@@ -16,5 +16,6 @@
     { "Id": "Microsoft.AspNetCore.Mvc.Testing", "Version": "10.0.*" },
     { "Id": "MSTest", "Version": "4.*" }
   ],
+  "EnumType": { "Prefix": ".Domain.", "Suffix": "" },
   "Tokens": { "ModuleNamespace": "_MODULE_NAMESPACE_", "Module": "_MODULE_", "ModuleSlug": "_MODULE_SLUG_" }
 }

@@ -19,7 +19,17 @@ aggregate_roots:
         field_size: 50
       technical_user: bool
       preferences: preferences?
-      user_rights: ->user_right[]
+      user_rights: ~>user_right[]
+    dependencies:
+      local_user: read
+    rules:
+      before_add:
+        - create_local_user
+    factories:
+      create_local:
+        inputs:
+          email:
+    event_produced: remove
     api:
       query:
       get:

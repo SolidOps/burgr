@@ -156,7 +156,11 @@ public sealed partial class UserInput
     // Property [M][NO][NAR][VO][PUO][NRO]
     public Domain.Preferences? Preferences { get; set; }
 
-    /// <summary>Required values, maximum lengths, enum values and value objects, then <see cref="OnValidating"/>.</summary>
+    // Property [M][LNA][SY][EN][PUO][NRO]
+    /// <summary>The whole list: a child without Id is added, a child missing from the list is removed.</summary>
+    public List<UserRightInput> UserRights { get; set; } = [];
+
+    /// <summary>Required values, maximum lengths, enum values, value objects and synchronized children, then <see cref="OnValidating"/>.</summary>
     public Dictionary<string, string[]> Validate()
     {
         var errors = new Dictionary<string, string[]>();
@@ -192,6 +196,15 @@ public sealed partial class UserInput
             PreferencesValidation.Validate(Preferences, "Preferences", errors);
         }
 
+        // Property [M][LNA][SY][EN][PUO][NRO]
+        for (var i = 0; i < UserRights.Count; i++)
+        {
+            foreach (var (key, messages) in UserRights[i].Validate())
+            {
+                errors[$"UserRights[{i}].{key}"] = messages;
+            }
+        }
+
         OnValidating(errors);
         return errors;
     }
@@ -207,6 +220,19 @@ public sealed partial class UserInput
 
         // Property [M][NO][NAR][VO][PUO][NRO]
         entity.Preferences = Preferences!;
+
+        // Property [M][LNA][SY][EN][PUO][NRO]
+        entity.UserRights.RemoveAll(child => !UserRights.Exists(input => Equals(input.Id, child.Id)));
+        foreach (var childInput in UserRights)
+        {
+            var child = childInput.Id is { } childId ? entity.UserRights.Find(c => c.Id.Equals(childId)) : null;
+            if (child is null)
+            {
+                child = new Domain.UserRight();
+                entity.UserRights.Add(child);
+            }
+            childInput.ApplyTo(child);
+        }
 
     }
 }
@@ -246,7 +272,7 @@ public sealed partial class InviteInput
     // Property [M][NO][NAR][AG][EN][PUO][NRO]
     public Guid CreatorId { get; set; }
 
-    /// <summary>Required values, maximum lengths, enum values and value objects, then <see cref="OnValidating"/>.</summary>
+    /// <summary>Required values, maximum lengths, enum values, value objects and synchronized children, then <see cref="OnValidating"/>.</summary>
     public Dictionary<string, string[]> Validate()
     {
         var errors = new Dictionary<string, string[]>();
@@ -312,6 +338,70 @@ public sealed partial class InviteInput
 
         // Property [M][NO][NAR][AG][EN][PUO][NRO]
         entity.CreatorId = CreatorId;
+
+    }
+}
+// Object [EN]
+// a child of a synchronized navigation; its references to aggregate roots are set by the navigation
+public sealed partial class UserRightInput
+{
+    /// <summary>The child to update; null for a new child.</summary>
+    public Guid? Id { get; set; }
+
+    // Property [M][NO][NAR][EN][PUO][NRO]
+    public Guid RightId { get; set; }
+
+    /// <summary>Required values, maximum lengths, enum values and value objects, then <see cref="OnValidating"/>.</summary>
+    public Dictionary<string, string[]> Validate()
+    {
+        var errors = new Dictionary<string, string[]>();
+
+        OnValidating(errors);
+        return errors;
+    }
+    partial void OnValidating(Dictionary<string, string[]> errors);
+    public void ApplyTo(Domain.UserRight entity)
+    {
+
+        // Property [M][NO][NAR][EN][PUO][NRO]
+        entity.RightId = RightId;
+
+    }
+}
+// a child of a synchronized navigation; its references to aggregate roots are set by the navigation
+public sealed partial class RightInput
+{
+    /// <summary>The child to update; null for a new child.</summary>
+    public Guid? Id { get; set; }
+    // Property [S][NO][NAR][PUO][NRO]
+    public System.String Name { get; set; } = string.Empty;
+
+    /// <summary>Required values, maximum lengths, enum values and value objects, then <see cref="OnValidating"/>.</summary>
+    public Dictionary<string, string[]> Validate()
+    {
+        var errors = new Dictionary<string, string[]>();
+        // Property [S][NO][NAR][PUO][NRO]
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(Name))
+        {
+            errors["Name"] = ["Name is required"];
+        }
+
+        // Property [S][NO][NAR][PUO][NRO]
+        // VALIDATION RULE - PROPERTY_HAS_MAX_SIZE
+        if (Name?.Length > 50)
+        {
+            errors["Name"] = ["Name is longer than 50 characters"];
+        }
+
+        OnValidating(errors);
+        return errors;
+    }
+    partial void OnValidating(Dictionary<string, string[]> errors);
+    public void ApplyTo(Domain.Right entity)
+    {
+        // Property [S][NO][NAR][PUO][NRO]
+        entity.Name = Name;
 
     }
 }

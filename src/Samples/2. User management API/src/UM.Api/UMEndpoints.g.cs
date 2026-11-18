@@ -138,6 +138,14 @@ public static partial class UMEndpoints
 
             ;
 
+        group.MapGet("/count-by-status", async (SolidOps.UM.Domain.InviteStatus status, IInvitesService service, CancellationToken cancellationToken) =>
+            (await service.CountByStatusAsync(status, cancellationToken)).ToHttpResult())
+            .ValidateBody()
+
+            .RequireRight("")
+
+            ;
+
         group.MapGet("/check-invite", async (System.Guid inviteId, IInvitesService service, CancellationToken cancellationToken) =>
             (await service.CheckInviteAsync(inviteId, cancellationToken)).ToHttpResult())
             .ValidateBody()

@@ -20,6 +20,21 @@ source_templates:
     options:
       model_prefix: .Application.
       model_suffix: Dto
+  factories:
+    source: Factories.cs.tpl
+    file_suffix: Factories.cs
+    destination_suffix: Application
+    force_separate_dll: true
+    destination_language: CS
+    options:
+      model_prefix: .Application.
+      model_suffix: Dto
+  model_events:
+    source: ModelEvents.cs.tpl
+    file_suffix: Events.cs
+    destination_suffix: Application
+    force_separate_dll: true
+    destination_language: CS
   rights:
     source: Rights.cs.tpl
     file_suffix: Rights.cs
@@ -56,6 +71,13 @@ source_templates:
   security:
     source: Security.cs.tpl
     file_suffix: Security.cs
+    destination_suffix: Application|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+  events:
+    source: Events.cs.tpl
+    file_suffix: Events.cs
     destination_suffix: Application|Framework
     force_separate_dll: true
     destination_language: CS
