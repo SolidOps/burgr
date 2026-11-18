@@ -19,7 +19,6 @@ public class DeterminismTests
     // The samples' committed generated files are their golden files. A sample without a
     // template source in its burgr.json uses one of the template sets of src/Templates.
     [TestMethod]
-    [DataRow("1. TODO list", "todo_specs", null)]
     [DataRow("2. User management API", "um_specs", null)]
     [DataRow("3. Mini API", "specs", "Mini")]
     public void SampleGenerationGivesBackTheCommittedFilesAndIsStable(string sample, string specsDirectory, string? templateSet)

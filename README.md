@@ -557,7 +557,6 @@ specs/
 
 | Sample | Description |
 |---|---|
-| [`Samples/1. TODO list`](src/Samples/1.%20TODO%20list) | Simple console app — one aggregate root, three services |
 | [`Samples/2. User Management API`](src/Samples/2.%20User%20Management%20API) | REST API with authentication, invite flow, and rights management |
 | [`Samples/3. Mini API`](src/Samples/3.%20Mini%20API) | The default Mini template set: Minimal API + EF Core, a hand-written calculated property and validation rule, integration tests |
 

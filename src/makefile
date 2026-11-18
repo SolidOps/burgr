@@ -4,7 +4,6 @@ list:
 	@echo set_hour
 	@echo install
 	@echo generate_um
-	@echo generate_todo
 	@echo generate_mini
 
 install:
@@ -16,8 +15,5 @@ install:
 generate_um:
 	dotnet burgr "Samples/2. User Management API/um_specs"
 	
-generate_todo:
-	dotnet burgr "Samples/1. TODO List/todo_specs"
-
 generate_mini:
 	dotnet burgr "Samples/3. Mini API/specs" /templateSpecDirectory:Templates/Mini/templates
