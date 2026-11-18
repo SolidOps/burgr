@@ -44,6 +44,12 @@ namespace SolidOps.Burgr.Core
                     continue;
                 }
 
+                if (sourceTemplate.IsFramework)
+                {
+                    GenerateFrameworkFiles(sourceTemplate, moduleGenerationResults);
+                    continue;
+                }
+
                 foreach (KeyValuePair<string, FullModelDescription> modelDescriptions in modelDescriptions)
                 {
                     if (modelDescriptions.Key.StartsWith(GeneratorOptions.NamespaceName + ".", StringComparison.Ordinal))
@@ -115,6 +121,20 @@ namespace SolidOps.Burgr.Core
             return moduleGenerationResults;
         }
 
+        // written as is for every module, whatever its models: only the module tokens are replaced
+        private void GenerateFrameworkFiles(SourceTemplate sourceTemplate, Dictionary<string, ModuleGenerationResult> moduleGenerationResults)
+        {
+            if (sourceTemplate.TemplateDescriptors.Count > 0)
+            {
+                throw new InvalidOperationException($"Framework template '{sourceTemplate.FileSuffix}' contains model regions (#region foreach): a framework file does not depend on the model, move these regions to a generated template");
+            }
+
+            foreach (string moduleName in modelDescriptions.Keys.Where(m => m.StartsWith(GeneratorOptions.NamespaceName + ".", StringComparison.Ordinal)))
+            {
+                GetFileGenerationResult(sourceTemplate, moduleName, GetModuleGenerationResult(moduleGenerationResults, moduleName), null);
+            }
+        }
+
         public ModuleGenerationResult GetModuleGenerationResult(Dictionary<string, ModuleGenerationResult> moduleGenerationResults, string moduleName)
         {
             if (!moduleGenerationResults.ContainsKey(moduleName))
@@ -130,7 +150,11 @@ namespace SolidOps.Burgr.Core
         public FileGenerationResult GetFileGenerationResult(SourceTemplate sourceTemplate, string moduleName, ModuleGenerationResult moduleGenerationResult, ModelDescriptor descriptor)
         {
             string fileName = Utilities.GetFileName(moduleName, sourceTemplate.FileSuffix, sourceTemplate.PathStyle, generatorSettings.GeneratedFilePrefix, generatorSettings.GeneratedFileSuffix);
-            if (sourceTemplate.IsGereratePerModelDescription)
+            if (sourceTemplate.IsFramework)
+            {
+                fileName = Utilities.GetFileName(string.Empty, sourceTemplate.FileSuffix, null, generatorSettings.GeneratedFilePrefix, generatorSettings.FrameworkFileSuffix);
+            }
+            else if (sourceTemplate.IsGereratePerModelDescription)
             {
                 fileName = Utilities.GetFileName(descriptor.Name, sourceTemplate.FileSuffix, sourceTemplate.PathStyle, generatorSettings.GeneratedFilePrefix, generatorSettings.GeneratedFileSuffix);
             }
@@ -205,8 +229,10 @@ namespace SolidOps.Burgr.Core
                     FinalGenerationResults = new Dictionary<string, Dictionary<string, FinalGenerationResult>>(),
 
                     OverwriteIfExist = sourceTemplate.OverwriteIfExist,
+                    IsFramework = sourceTemplate.IsFramework,
                     DestinationLanguage = sourceTemplate.DestinationLanguage,
-                    RemoveConsecutiveLineBreaks = sourceTemplate.RemoveConsecutiveLineBreaks,
+                    // no region to leave blank lines behind: kept as written, to be read
+                    RemoveConsecutiveLineBreaks = sourceTemplate.RemoveConsecutiveLineBreaks && !sourceTemplate.IsFramework,
                     EmptyFolder = sourceTemplate.IsGereratePerModelDescription
                 };
 

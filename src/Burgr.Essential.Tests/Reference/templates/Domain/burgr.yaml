@@ -19,3 +19,9 @@ source_templates:
     file_suffix: Services.cs
     destination_suffix: Application
     destination_language: CS
+  aggregate_root:
+    source: AggregateRoot.cs.tpl
+    file_suffix: AggregateRoot.cs
+    destination_suffix: Domain
+    destination_language: CS
+    file_kind: framework

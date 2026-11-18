@@ -6,6 +6,9 @@ namespace SolidOps.Burgr.Essential.Yaml.Template;
 
 public class YamlTemplateDescriptionBuilder
 {
+    private const string FileKindGenerated = "generated";
+    private const string FileKindFramework = "framework";
+
     private readonly string templateSpecDirectory;
     private readonly List<string> templateDirectoryPaths;
     private readonly List<string> templateZipPaths;
@@ -51,6 +54,12 @@ public class YamlTemplateDescriptionBuilder
                     PathStyle = source_template.Value.path_style,
                     IsGereratePerModelDescription = source_template.Value.is_generate_per_model_description,
                     ChildrenLevel = source_template.Value.children_level,
+                    IsFramework = source_template.Value.file_kind switch
+                    {
+                        null or FileKindGenerated => false,
+                        FileKindFramework => true,
+                        _ => throw new InvalidOperationException($"Unknown file_kind '{source_template.Value.file_kind}' for '{source_template.Key}' in {Path.Combine(templateDirectory, "burgr.yaml")}, use {FileKindGenerated} or {FileKindFramework}"),
+                    },
                 };
                 if (source_template.Value.options != null)
                 {

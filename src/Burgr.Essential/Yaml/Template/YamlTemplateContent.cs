@@ -27,6 +27,8 @@ public class SourceTemplate
 
     public int? children_level { get; set; }
 
+    public string file_kind { get; set; }
+
     public Options options { get; set; }
 }
 

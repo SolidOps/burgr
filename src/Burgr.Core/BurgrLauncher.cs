@@ -44,6 +44,7 @@ namespace SolidOps.Burgr.Core
             bool onlyOneDll = true;
             string generatedFilePrefix = "";
             string generatedFileSuffix = ".g";
+            string frameworkFileSuffix = ".f";
 
             string toRemoveAtGenerationIdentifier = "to remove at generation";
             string toRemoveIfNoAPIIdentifier = "to remove if NO_API";
@@ -82,6 +83,7 @@ namespace SolidOps.Burgr.Core
                 generatorTypeNames = config.Generators;
                 generatedFilePrefix = config.GeneratedFilePrefix ?? generatedFilePrefix;
                 generatedFileSuffix = config.GeneratedFileSuffix ?? generatedFileSuffix;
+                frameworkFileSuffix = config.FrameworkFileSuffix ?? frameworkFileSuffix;
                 toRemoveAtGenerationIdentifier = config.ToRemoveAtGenerationIdentifier ?? "to remove at generation";
                 toRemoveIfNoAPIIdentifier = config.ToRemoveIfNoAPIIdentifier ?? "to remove if NO_API";
                 overrideDestination = config.OverrideDestination;
@@ -295,6 +297,7 @@ namespace SolidOps.Burgr.Core
                 Generators = generators,
                 GeneratedFilePrefix = generatedFilePrefix,
                 GeneratedFileSuffix = generatedFileSuffix,
+                FrameworkFileSuffix = frameworkFileSuffix,
                 ToRemoveAtGenerationIdentifier = toRemoveAtGenerationIdentifier,
                 ToRemoveIfNoAPIIdentifier = toRemoveIfNoAPIIdentifier
             };

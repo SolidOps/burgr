@@ -31,6 +31,8 @@ namespace SolidOps.Burgr.Core
 
         public string GeneratedFileSuffix { get; set; }
 
+        public string FrameworkFileSuffix { get; set; }
+
         public string ToRemoveAtGenerationIdentifier { get; set; }
         public string ToRemoveIfNoAPIIdentifier { get; set; }
     }

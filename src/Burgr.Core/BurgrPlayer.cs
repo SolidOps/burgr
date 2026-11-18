@@ -33,6 +33,8 @@ namespace SolidOps.Burgr.Core
 
         public string GeneratedFileSuffix { get; set; }
 
+        public string FrameworkFileSuffix { get; set; }
+
         public string ToRemoveAtGenerationIdentifier { get; set; } = "to remove at generation";
         public string ToRemoveIfNoAPIIdentifier { get; set; } = "to remove if NO_API";
 
@@ -83,6 +85,12 @@ namespace SolidOps.Burgr.Core
 
             if (generatorSettings.GeneratedFileSuffix == null)
                 generatorSettings.GeneratedFileSuffix = ".g";
+
+            if (string.IsNullOrEmpty(generatorSettings.FrameworkFileSuffix))
+                generatorSettings.FrameworkFileSuffix = ".f";
+
+            if (generatorSettings.FrameworkFileSuffix == generatorSettings.GeneratedFileSuffix)
+                throw new ArgumentException($"FrameworkFileSuffix and GeneratedFileSuffix are both '{generatorSettings.FrameworkFileSuffix}': framework files must be told apart from generated ones");
 
             GeneratorOptions.BuildingDirectory = settings.BuildingDirectory;
 
@@ -196,6 +204,7 @@ namespace SolidOps.Burgr.Core
         private void GenerateFiles(Dictionary<string, ModuleGenerationResult> moduleGenerationResults)
         {
             List<string> emptiedFolder = new List<string>();
+            List<string> emptiedFrameworkFolder = new List<string>();
             Dictionary<string, string> deletedFileContent = new Dictionary<string, string>();
 
             foreach (KeyValuePair<string, ModuleGenerationResult> moduleResult in moduleGenerationResults)
@@ -290,6 +299,20 @@ namespace SolidOps.Burgr.Core
                             }
                         }
                         emptiedFolder.Add(fileDirectory);
+                    }
+
+                    // top level only: a subfolder may hold the framework files of another template folder
+                    if (result.IsFramework && !emptiedFrameworkFolder.Contains(fileDirectory))
+                    {
+                        if (Directory.Exists(fileDirectory))
+                        {
+                            foreach (var file in FileSystemOrder.SortRecursive(Directory.GetFiles(fileDirectory, "*" + generatorSettings.FrameworkFileSuffix + ".*", SearchOption.TopDirectoryOnly), fileDirectory))
+                            {
+                                deletedFileContent.TryAdd(file, File.ReadAllText(file));
+                                File.Delete(file);
+                            }
+                        }
+                        emptiedFrameworkFolder.Add(fileDirectory);
                     }
 
                     if (!fileResult.Value.OverwriteIfExist && File.Exists(fileResult.Key))

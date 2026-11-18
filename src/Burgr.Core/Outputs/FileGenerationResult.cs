@@ -12,6 +12,7 @@ namespace SolidOps.Burgr.Core.Outputs
         public Dictionary<string, Dictionary<string, FinalGenerationResult>> FinalGenerationResults { get; set; }
 
         public bool OverwriteIfExist { get; set; }
+        public bool IsFramework { get; set; }
 
         public string DestinationLanguage { get; set; }
 

@@ -354,6 +354,8 @@ enums:
 | `Generators` | List of generator types to activate |
 | `ModelMonitored` | `true` to watch files and regenerate automatically |
 | `OverrideDestination` | Redirect a template's output: `"NgClient=../../angular/projects/lib"` |
+| `GeneratedFilePrefix`, `GeneratedFileSuffix` | Name of a generated file: `<prefix><name><suffix>.<ext>`, `""` and `.g` by default (`ProductEntity.g.cs`) |
+| `FrameworkFileSuffix` | Suffix of the [framework files](#framework-files) of the template set, `.f` by default (`AggregateRoot.f.cs`); must differ from `GeneratedFileSuffix` |
 
 ### Identity keys
 
@@ -503,6 +505,31 @@ Use `#region to remove at generation` for placeholder code that should always be
 | `DEPENDENCYNAMESPACE` | Root namespace of the referenced module |
 | `MODELNAME` | Snake_case model name |
 | `MINSIZE` / `FIELDSIZE` | Min / max field size |
+
+### Framework files
+
+The behavior that is the same for every model (base classes, unit of work, error
+mapping…) belongs to the template set, not to the generated code. A template marked
+`file_kind: framework` in `burgr.yaml` (default `generated`) holds such a file:
+
+```yaml
+source_templates:
+  aggregate_root:
+    source: AggregateRoot.cs.tpl
+    file_suffix: AggregateRoot.cs
+    destination_suffix: Domain
+    destination_language: CS
+    file_kind: framework
+```
+
+- It is written once per module, named after `file_suffix` alone with
+  `FrameworkFileSuffix` (`AggregateRoot.f.cs`), and rewritten at each generation: a new
+  version of the template set fixes it. A framework file the set no longer produces is
+  deleted from its folder.
+- It must not depend on the model: burgr refuses a framework template containing a
+  `#region foreach`. Only the module tokens (`MetaCorp.Template`, `Template`) are replaced.
+- It is kept as written, blank lines included: it is meant to be read. The hook of a
+  template set's harness lets AI agents read it, and refuses to edit it.
 
 ---
 

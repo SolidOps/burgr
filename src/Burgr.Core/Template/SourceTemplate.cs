@@ -46,6 +46,9 @@ namespace SolidOps.Burgr.Core.Template
 
         public bool OverwriteIfExist { get; set; }
 
+        // model-independent: one file per module, named after FileSuffix alone, with the framework suffix
+        public bool IsFramework { get; set; }
+
         public bool RemoveConsecutiveLineBreaks { get; set; } = true;
 
         public override string ToString()
