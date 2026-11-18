@@ -257,4 +257,4 @@ CLAUDE.md
 !src/Templates/*/templates/harness/.claude
 !src/Samples/*/CLAUDE.md
 !src/Samples/*/.claude
-/src/Samples/2. User management API/src/UM.Api/um.db
+/src/Samples/2. User management API/src/UM.Api/um.*
