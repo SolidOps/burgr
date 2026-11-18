@@ -1,7 +1,7 @@
 {
   "MinimumBurgrVersion": "1.10.0",
   "Description": "ASP.NET Core API in onion architecture: Domain, Application, Infrastructure, Api and Tests projects per module, EF Core, and a light framework of its own generated with the code (*.f.cs).",
-  "Templates": [ "Domain", "Application", "Infrastructure", "Api", "Tests" ],
+  "Templates": [ "Domain", "Application", "Infrastructure", "Api", "Tests", "Diagrams" ],
   "Generators": [
     "SolidOps.Burgr.Essential.Generators.Enums.EnumGenerator, SolidOps.Burgr.Essential",
     "SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential",
@@ -16,6 +16,7 @@
     { "Id": "Microsoft.AspNetCore.Mvc.Testing", "Version": "10.0.*" },
     { "Id": "MSTest", "Version": "4.*" }
   ],
+  "Harness": "harness",
   "EnumType": { "Prefix": ".Domain.", "Suffix": "" },
   "Tokens": { "ModuleNamespace": "_MODULE_NAMESPACE_", "Module": "_MODULE_", "ModuleSlug": "_MODULE_SLUG_" }
 }

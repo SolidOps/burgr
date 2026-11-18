@@ -10,8 +10,7 @@
     <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
     <Company>Solid Ops</Company>
     <Authors>Damien Lechat</Authors>
-    <!-- not published until the set is complete: see specs/features/onion-template-set.md -->
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
     <EnableDefaultItems>false</EnableDefaultItems>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeSymbols>false</IncludeSymbols>

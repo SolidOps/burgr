@@ -1,0 +1,75 @@
+@startuml
+hide empty members
+' Object [AG]
+class LocalUser <<aggregate root>>
+class User <<aggregate root>>
+class Invite <<aggregate root>>
+' Object [EN]
+class UserRight <<entity>>
+class Right <<entity>>
+' Object [VO]
+class Preferences <<value object>>
+' Object [AG][EN][VO]
+class LocalUser {
+    ' Property [S][NO][CA][NAR][PUO]
+    +name: string[50]
+
+    +hashedPassword: string
+
+}
+class User {
+    ' Property [S][NO][CA][NAR][PUO]
+    +email: string[50]
+
+    +provider: string[50]
+
+    +technicalUser: boolean
+
+    ' Rule 
+    +CreateLocalUser()
+
+}
+' Property [M][NO][NAR][VO][N]
+User *-- "0..1" Preferences : preferences
+' Property [M][LNA][AG][EN]
+User o-- "*" UserRight : userRights
+class Preferences {
+    ' Property [S][NO][CA][NAR][PUO]
+    +language: string[10]
+
+    +timeZone: string[50]
+
+}
+class UserRight {
+
+}
+' Property [M][NO][NAR][AG][EN][NN]
+UserRight --> "1" Right : right
+UserRight --> "1" User : user
+class Right {
+    ' Property [S][NO][CA][NAR][PUO]
+    +name: string[50]
+
+}
+class Invite {
+    ' Property [S][NO][CA][NAR][PUO]
+    +email: string
+
+    +creatorName: string
+
+    +creatorMessage: string
+
+    +isOpen: boolean
+
+}
+' Property [E][NO][CA][NAR][PUO]
+Invite --> InviteStatus : status
+' Property [M][NO][NAR][AG][EN][NN]
+Invite --> "1" User : creator
+' Enum 
+enum InviteStatus {
+    Sent = 0,
+Used = 1,
+Declined = 2
+}
+@enduml

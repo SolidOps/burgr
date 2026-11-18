@@ -1,0 +1,7 @@
+source_templates:
+  classes:
+    source: Classes.puml.tpl
+    file_suffix: Classes.puml
+    destination_suffix: Diagrams
+    force_separate_dll: true
+    destination_language: PUML

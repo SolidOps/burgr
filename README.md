@@ -381,6 +381,23 @@ Templates are read from the first of:
 4. none of them: the default set, the `Burgr.Templates.Mini` package at the version of
    burgr itself.
 
+Two template sets are published with burgr, at its version, with their AI harness
+(`dotnet burgr specs/ /harness:.` installs it, never overwriting a file):
+
+| Package | Generates |
+|---|---|
+| `Burgr.Templates.Mini` (default) | One project: Minimal API, DTOs, EF Core `DbContext`, CRUD endpoints. No framework of its own. |
+| `Burgr.Templates.Onion` | Domain, Application, Infrastructure, Api and Tests projects in onion architecture, plus a class diagram: entities, value objects, services, transients, rights, rules, factories, in-process events, synchronized navigations, paged queries, with a light framework generated as `*.f.cs`. Its `AGENTS.md` documents the model, the extension points and the framework contracts. |
+
+```json
+{
+  "ProjectName": "Library",
+  "NamespaceName": "Acme",
+  "BuildingDirectory": "../src/",
+  "TemplatePackage": { "Id": "Burgr.Templates.Onion", "Version": "1.10.0" }
+}
+```
+
 A template set describes itself in a `burgr-templates.json` file at its root, every field
 optional:
 
@@ -600,7 +617,7 @@ specs/
 
 | Sample | Description |
 |---|---|
-| [`Samples/2. User management API`](src/Samples/2.%20User%20management%20API) | The Onion template set (in progress, not published yet): Domain, Application, Infrastructure, Api and Tests projects, entities, a value object stored as JSON, services, factories and rules with hand-written implementations, in-process events, synchronized children, rights, JWT authentication, paging and sorting, integration tests |
+| [`Samples/2. User management API`](src/Samples/2.%20User%20management%20API) | The Onion template set: Domain, Application, Infrastructure, Api and Tests projects, a class diagram, entities, a value object stored as JSON, services, factories and rules with hand-written implementations, in-process events, synchronized children, rights, JWT authentication, paging and sorting, integration tests |
 | [`Samples/3. Mini API`](src/Samples/3.%20Mini%20API) | The default Mini template set: Minimal API + EF Core, a hand-written calculated property and validation rule, integration tests |
 
 ---
