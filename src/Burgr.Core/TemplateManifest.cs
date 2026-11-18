@@ -17,6 +17,7 @@ namespace SolidOps.Burgr.Core
         public string Harness { get; set; }
         public string ProjectFile { get; set; }
         public TemplateTokens Tokens { get; set; }
+        public TemplateEnumType EnumType { get; set; }
 
         public static TemplateManifest Read(string templatesDirectory)
         {

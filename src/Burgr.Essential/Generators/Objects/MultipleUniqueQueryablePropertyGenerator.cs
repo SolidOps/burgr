@@ -86,7 +86,7 @@ public class MultipleUniqueQueryablePropertyGenerator : BaseBurgrGenerator, IGen
         }
         else if (model.Get("PropertyType") == "Enum")
         {
-            paramType = "Contracts.Enums." + model.GetPropertyType(conversionService, null, string.Empty, true);
+            paramType = GeneratorOptions.EnumTypePrefix.TrimStart('.') + model.GetPropertyType(conversionService, null, string.Empty, true);
         }
         else
         {

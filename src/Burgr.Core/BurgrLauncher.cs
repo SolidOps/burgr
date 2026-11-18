@@ -299,6 +299,7 @@ namespace SolidOps.Burgr.Core
                 GeneratedFileSuffix = generatedFileSuffix,
                 FrameworkFileSuffix = frameworkFileSuffix,
                 Tokens = manifest?.Tokens ?? new TemplateTokens(),
+                EnumType = manifest?.EnumType ?? new TemplateEnumType(),
                 ToRemoveAtGenerationIdentifier = toRemoveAtGenerationIdentifier,
                 ToRemoveIfNoAPIIdentifier = toRemoveIfNoAPIIdentifier
             };

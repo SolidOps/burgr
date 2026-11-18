@@ -37,6 +37,8 @@ namespace SolidOps.Burgr.Core
 
         public TemplateTokens Tokens { get; set; } = new();
 
+        public TemplateEnumType EnumType { get; set; } = new();
+
         public string ToRemoveAtGenerationIdentifier { get; set; } = "to remove at generation";
         public string ToRemoveIfNoAPIIdentifier { get; set; } = "to remove if NO_API";
 
@@ -93,6 +95,10 @@ namespace SolidOps.Burgr.Core
 
             generatorSettings.Tokens ??= new TemplateTokens();
             generatorSettings.Tokens.Check();
+
+            generatorSettings.EnumType ??= new TemplateEnumType();
+            GeneratorOptions.EnumTypePrefix = generatorSettings.EnumType.Prefix ?? string.Empty;
+            GeneratorOptions.EnumTypeSuffix = generatorSettings.EnumType.Suffix ?? string.Empty;
 
             if (generatorSettings.FrameworkFileSuffix == generatorSettings.GeneratedFileSuffix)
                 throw new ArgumentException($"FrameworkFileSuffix and GeneratedFileSuffix are both '{generatorSettings.FrameworkFileSuffix}': framework files must be told apart from generated ones");

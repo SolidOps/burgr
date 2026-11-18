@@ -1,4 +1,5 @@
-﻿using SolidOps.Burgr.Core.Descriptors;
+﻿using SolidOps.Burgr.Core;
+using SolidOps.Burgr.Core.Descriptors;
 using System.Globalization;
 using System.Reflection;
 
@@ -103,10 +104,10 @@ public abstract class BaseConversionService : IConversionService
         }
         if (isEnum)
         {
-            var suffix = "Enum";
+            var suffix = GeneratorOptions.EnumTypeSuffix;
             if (isNull)
                 suffix += "?";
-            return ConvertParameterType(typeName, namespaceName, moduleName, ".Contracts.Enums.", suffix, convertList, false, true);
+            return ConvertParameterType(typeName, namespaceName, moduleName, GeneratorOptions.EnumTypePrefix, suffix, convertList, false, true);
         }
         return ConvertParameterType(typeName, namespaceName, moduleName, modelPrefix, modelSuffix, convertList, isInterface, fullName);
 
@@ -405,14 +406,14 @@ public abstract class BaseConversionService : IConversionService
         string csClassName = ConversionHelper.ConvertToPascalCase(model.Get("EnumType"));
         if (!model.Is("List") || preventList)
         {
-            var res = csClassName + "Enum" + suffix;
+            var res = csClassName + GeneratorOptions.EnumTypeSuffix + suffix;
             if (model.Is("Null"))
             {
                 return res + "?";
             }
             return res;
         }
-        return "List<" + csClassName + "Enum" + suffix + ">";
+        return "List<" + csClassName + GeneratorOptions.EnumTypeSuffix + suffix + ">";
     }
 
     public virtual string ModelPropertyType(ModelDescriptor model, string prefix, string suffix, bool preventList)

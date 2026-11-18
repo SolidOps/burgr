@@ -35,5 +35,9 @@
         public static Dictionary<string, string> OverrideDestinations { get; set; }
 
         public static bool OnlyOneDll { get; set; }
+
+        // type of an enum outside its own templates (method parameters and results...): <module namespace><prefix><Name><suffix>
+        public static string EnumTypePrefix { get; set; } = TemplateEnumType.DefaultPrefix;
+        public static string EnumTypeSuffix { get; set; } = TemplateEnumType.DefaultSuffix;
     }
 }

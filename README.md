@@ -407,6 +407,7 @@ optional:
 | `Harness` | Folder of the set copied by `/harness:<directory>` (instructions and hooks for AI agents). |
 | `ProjectFile` | Project file written for a C# module that has none yet, the module namespace token standing for `<NamespaceName>.<module>`. Without it, burgr writes a plain `net10.0` class library. An existing project file is never touched. A template folder can declare its own, see [Project files](#project-files). |
 | `Tokens` | Names of the [module tokens](#module-tokens) used by the set's templates. |
+| `EnumType` | How burgr names an enum it writes itself, in a method parameter for instance: `<module namespace><Prefix><Name><Suffix>`. `{ "Prefix": ".Contracts.Enums.", "Suffix": "Enum" }` by default (NORAD's convention); Onion uses `{ "Prefix": ".Domain.", "Suffix": "" }`. |
 
 Template sets published on NuGet carry the `burgr-templates` tag.
 
