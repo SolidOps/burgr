@@ -404,7 +404,7 @@ optional:
 | `SupportedFeatures` | burgr refuses a model using a feature missing from the list, and names it: `aggregate_roots`, `entities`, `value_objects`, `transients`, `events`, `services`, `enums`, `references`, `external_references`, `navigations`, `synchronized_navigations`, `calculated_properties`, `calculated_collections`, `non_persisted_properties`, `primitive_collections`, `composite_keys`, `composite_unique_constraints`, `rights`, `rules`, `factories`, `ui_components`. Without the field, nothing is checked. |
 | `Dependencies` | Packages the generated code needs (informative). |
 | `Harness` | Folder of the set copied by `/harness:<directory>` (instructions and hooks for AI agents). |
-| `ProjectFile` | Project file written for a C# module that has none yet, `MetaCorp.Template` standing for `<NamespaceName>.<module>`. Without it, burgr writes a plain `net10.0` class library. An existing project file is never touched. |
+| `ProjectFile` | Project file written for a C# module that has none yet, `MetaCorp.Template` standing for `<NamespaceName>.<module>`. Without it, burgr writes a plain `net10.0` class library. An existing project file is never touched. A template folder can declare its own, see [Project files](#project-files). |
 
 Template sets published on NuGet carry the `burgr-templates` tag.
 
@@ -505,6 +505,28 @@ Use `#region to remove at generation` for placeholder code that should always be
 | `DEPENDENCYNAMESPACE` | Root namespace of the referenced module |
 | `MODELNAME` | Snake_case model name |
 | `MINSIZE` / `FIELDSIZE` | Min / max field size |
+
+### Project files
+
+A C# project that does not exist yet is created with the first of:
+
+1. the `project_file` of the template folder writing to it, declared next to
+   `source_templates` in its `burgr.yaml` (a path relative to the folder);
+2. the `ProjectFile` of the template set's `burgr-templates.json`;
+3. a plain `net10.0` class library.
+
+With `force_separate_dll: true`, the templates of a folder write to a project of their own,
+`<module>.<destination_suffix>`: a layered set gives each layer its project file (class
+library, Web SDK, test project…). In a project file, `MetaCorp.Template` stands for the
+assembly name (`Acme.Library.Domain`) and `Template` for the module without the layer, to
+reference another layer:
+
+```xml
+<ProjectReference Include="../Template.Domain/Template.Domain.csproj" />
+```
+
+burgr refuses two template folders declaring different project files for the same project.
+An existing project file is never touched.
 
 ### Framework files
 

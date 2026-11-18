@@ -49,6 +49,9 @@ namespace SolidOps.Burgr.Core.Template
         // model-independent: one file per module, named after FileSuffix alone, with the framework suffix
         public bool IsFramework { get; set; }
 
+        // project file of the template folder (project_file), for the projects its templates write to
+        public string ProjectFileTemplate { get; set; }
+
         public bool RemoveConsecutiveLineBreaks { get; set; } = true;
 
         public override string ToString()

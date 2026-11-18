@@ -10,7 +10,8 @@
     "Client",
     "Views",
     "Database",
-    "Diagrams"
+    "Diagrams",
+    "Api"
   ],
   "Generators": [
     "SolidOps.Burgr.Essential.Generators.Enums.EnumGenerator, SolidOps.Burgr.Essential",

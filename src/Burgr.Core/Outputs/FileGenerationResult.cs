@@ -13,6 +13,9 @@ namespace SolidOps.Burgr.Core.Outputs
 
         public bool OverwriteIfExist { get; set; }
         public bool IsFramework { get; set; }
+        public string ProjectFileTemplate { get; set; }
+        // the module part of ModuleName, without the layer of a separate project: Library for Library.Domain
+        public string ModuleBaseName { get; set; }
 
         public string DestinationLanguage { get; set; }
 

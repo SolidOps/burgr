@@ -39,6 +39,16 @@ public class YamlTemplateDescriptionBuilder
 
             var content = File.ReadAllText(Path.Combine(templateDirectory, "burgr.yaml"));
             var yamlContent = new YamlDotNet.Serialization.Deserializer().Deserialize<YamlTemplateContentV1>(content);
+            string projectFileTemplate = null;
+            if (yamlContent.project_file != null)
+            {
+                var projectFilePath = Path.Combine(templateDirectory, yamlContent.project_file);
+                if (!File.Exists(projectFilePath))
+                {
+                    throw new InvalidOperationException($"project_file '{yamlContent.project_file}' not found in {templateDirectory}");
+                }
+                projectFileTemplate = Utilities.NormalizeNewLines(File.ReadAllText(projectFilePath));
+            }
 
             foreach (var source_template in yamlContent.source_templates)
             {
@@ -54,6 +64,7 @@ public class YamlTemplateDescriptionBuilder
                     PathStyle = source_template.Value.path_style,
                     IsGereratePerModelDescription = source_template.Value.is_generate_per_model_description,
                     ChildrenLevel = source_template.Value.children_level,
+                    ProjectFileTemplate = projectFileTemplate,
                     IsFramework = source_template.Value.file_kind switch
                     {
                         null or FileKindGenerated => false,

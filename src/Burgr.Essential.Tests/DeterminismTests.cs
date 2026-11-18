@@ -47,7 +47,8 @@ public class DeterminismTests
     // Reference/ covers what the samples do not: two modules and model files whose names
     // differ in case, per-model files written to folders that do not exist yet (with
     // children_level), path_style Lower, TypeScript, HTML, SQL and PlantUML outputs, rights,
-    // a composite key, a framework file, templates with LF and CRLF line endings, and a burgr.json without
+    // a composite key, a framework file, a separate project per module with the project_file of
+    // its template folder, templates with LF and CRLF line endings, and a burgr.json without
     // ModelSpecDirectory. Run with BURGR_UPDATE_REFERENCE=1 to replace Reference/expected
     // with the current output, after an intended change of the generated code.
     [TestMethod]

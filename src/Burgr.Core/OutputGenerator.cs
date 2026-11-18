@@ -230,6 +230,8 @@ namespace SolidOps.Burgr.Core
 
                     OverwriteIfExist = sourceTemplate.OverwriteIfExist,
                     IsFramework = sourceTemplate.IsFramework,
+                    ProjectFileTemplate = sourceTemplate.ProjectFileTemplate,
+                    ModuleBaseName = currentModuleName,
                     DestinationLanguage = sourceTemplate.DestinationLanguage,
                     // no region to leave blank lines behind: kept as written, to be read
                     RemoveConsecutiveLineBreaks = sourceTemplate.RemoveConsecutiveLineBreaks && !sourceTemplate.IsFramework,

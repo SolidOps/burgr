@@ -206,6 +206,7 @@ namespace SolidOps.Burgr.Core
             List<string> emptiedFolder = new List<string>();
             List<string> emptiedFrameworkFolder = new List<string>();
             Dictionary<string, string> deletedFileContent = new Dictionary<string, string>();
+            Dictionary<string, string> folderProjectFiles = GetFolderProjectFiles(moduleGenerationResults);
 
             foreach (KeyValuePair<string, ModuleGenerationResult> moduleResult in moduleGenerationResults)
             {
@@ -258,16 +259,7 @@ namespace SolidOps.Burgr.Core
                         fileContent = BlankLineCleaner.Clean(fileContent);
                     }
 
-                    string projectFilePath = null;
-                    switch (fileResult.Value.DestinationLanguage)
-                    {
-                        case "CS":
-                            projectFilePath = Utilities.CombinePath(fileResult.Value.ModulePath, fileResult.Value.ModuleName) + ".csproj";
-                            break;
-                        default:
-                            break;
-                    }
-
+                    string projectFilePath = GetProjectFilePath(fileResult.Value);
                     if (projectFilePath != null && !File.Exists(projectFilePath))
                     {
                         FileInfo fileInfo = new(projectFilePath);
@@ -276,8 +268,9 @@ namespace SolidOps.Burgr.Core
                             fileInfo.Directory.Create();
                         }
 
-                        var projectFile = (generatorSettings.ProjectFileTemplate ?? DefaultProjectFile)
-                            .Replace(CommonTags.Namespace, $"{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}");
+                        var projectFile = (folderProjectFiles.GetValueOrDefault(projectFilePath) ?? generatorSettings.ProjectFileTemplate ?? DefaultProjectFile)
+                            .Replace(CommonTags.Namespace, $"{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}")
+                            .Replace(CommonTags.ShortModule, fileResult.Value.ModuleBaseName);
                         // the line endings of a multi-line literal are those of this source file
                         // when burgr was built: normalized, like everything burgr writes
                         File.AppendAllText(projectFilePath, Utilities.NormalizeNewLines(projectFile));
@@ -357,6 +350,32 @@ namespace SolidOps.Burgr.Core
             {
                 Console.WriteLine($"Delete generated file {filePath.Key}");
             }
+        }
+
+        private static string GetProjectFilePath(FileGenerationResult result)
+        {
+            return result.DestinationLanguage == "CS" ? Utilities.CombinePath(result.ModulePath, result.ModuleName) + ".csproj" : null;
+        }
+
+        // the project_file of the template folders, by project: chosen before any file is written,
+        // so that it does not depend on which template writes to the project first
+        private static Dictionary<string, string> GetFolderProjectFiles(Dictionary<string, ModuleGenerationResult> moduleGenerationResults)
+        {
+            Dictionary<string, string> projectFiles = new();
+            foreach (FileGenerationResult result in moduleGenerationResults.Values.SelectMany(m => m.FileGenerationResults.Values))
+            {
+                string projectFilePath = GetProjectFilePath(result);
+                if (projectFilePath == null || result.ProjectFileTemplate == null)
+                {
+                    continue;
+                }
+                if (projectFiles.TryGetValue(projectFilePath, out var other) && other != result.ProjectFileTemplate)
+                {
+                    throw new InvalidOperationException($"Two template folders declare a different project_file for {projectFilePath}: keep one, or write to separate projects");
+                }
+                projectFiles[projectFilePath] = result.ProjectFileTemplate;
+            }
+            return projectFiles;
         }
 
         private bool ShouldFileBeWritten(string content, string language)

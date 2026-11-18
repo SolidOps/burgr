@@ -3,6 +3,8 @@
 public class YamlTemplateContentV1
 {
     public Dictionary<string, SourceTemplate> source_templates { get; set; } = new Dictionary<string, SourceTemplate>();
+
+    public string project_file { get; set; }
 }
 
 public class SourceTemplate
