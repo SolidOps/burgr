@@ -298,6 +298,7 @@ namespace SolidOps.Burgr.Core
                 GeneratedFilePrefix = generatedFilePrefix,
                 GeneratedFileSuffix = generatedFileSuffix,
                 FrameworkFileSuffix = frameworkFileSuffix,
+                Tokens = manifest?.Tokens ?? new TemplateTokens(),
                 ToRemoveAtGenerationIdentifier = toRemoveAtGenerationIdentifier,
                 ToRemoveIfNoAPIIdentifier = toRemoveIfNoAPIIdentifier
             };

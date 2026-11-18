@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MetaCorp.Template.Contracts;
+namespace _MODULE_NAMESPACE_.Contracts;
 
 #region foreach MODEL[AG]
 public sealed partial class CLASSNAMEDto

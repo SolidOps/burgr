@@ -4,8 +4,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <AssemblyName>MetaCorp.Template</AssemblyName>
-    <RootNamespace>MetaCorp.Template</RootNamespace>
+    <AssemblyName>_MODULE_NAMESPACE_</AssemblyName>
+    <RootNamespace>_MODULE_NAMESPACE_</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

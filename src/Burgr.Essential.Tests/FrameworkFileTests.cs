@@ -18,15 +18,16 @@ public class FrameworkFileTests
               get:
         """;
     private const string EntityTemplate = """
-        namespace MetaCorp.Template.Domain;
+        namespace _MODULE_NAMESPACE_.Domain;
 
+        /* base class of the _MODULE_ entities */
         public abstract class Entity
         {
             public Guid Id { get; set; }
         }
         """;
     private const string ValueObjectTemplate = """
-        namespace MetaCorp.Template.Domain;
+        namespace _MODULE_NAMESPACE_.Domain;
 
         public abstract record ValueObject;
         """;
@@ -43,7 +44,9 @@ public class FrameworkFileTests
             DeterminismTests.RunBurgr(specs, "/templateSpecDirectory:" + templates);
 
             var domain = Path.Combine(work, "output", "Shop", "Domain");
-            StringAssert.Contains(File.ReadAllText(Path.Combine(domain, "Entity.f.cs")), "namespace Acme.Shop.Domain;");
+            var entity = File.ReadAllText(Path.Combine(domain, "Entity.f.cs"));
+            StringAssert.Contains(entity, "namespace Acme.Shop.Domain;");
+            StringAssert.Contains(entity, "/* base class of the Shop entities */", "a framework file keeps its block comments");
             Assert.IsTrue(File.Exists(Path.Combine(domain, "ShopModel.g.cs")), "generated files are still written");
         });
     }

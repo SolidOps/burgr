@@ -35,6 +35,8 @@ namespace SolidOps.Burgr.Core
 
         public string FrameworkFileSuffix { get; set; }
 
+        public TemplateTokens Tokens { get; set; } = new();
+
         public string ToRemoveAtGenerationIdentifier { get; set; } = "to remove at generation";
         public string ToRemoveIfNoAPIIdentifier { get; set; } = "to remove if NO_API";
 
@@ -88,6 +90,9 @@ namespace SolidOps.Burgr.Core
 
             if (string.IsNullOrEmpty(generatorSettings.FrameworkFileSuffix))
                 generatorSettings.FrameworkFileSuffix = ".f";
+
+            generatorSettings.Tokens ??= new TemplateTokens();
+            generatorSettings.Tokens.Check();
 
             if (generatorSettings.FrameworkFileSuffix == generatorSettings.GeneratedFileSuffix)
                 throw new ArgumentException($"FrameworkFileSuffix and GeneratedFileSuffix are both '{generatorSettings.FrameworkFileSuffix}': framework files must be told apart from generated ones");
@@ -224,13 +229,14 @@ namespace SolidOps.Burgr.Core
                         }
                     }
 
-                    string slug = TextHelper.GenerateSlug(moduleResult.Key.Split(".").Last());
-                    fileContent = fileContent.Replace(CommonTags.Slug + CommonTags.ShortModule, slug);
-                    fileContent = fileContent.Replace(CommonTags.Namespace, moduleResult.Key);
-                    fileContent = fileContent.Replace(CommonTags.Namespace, moduleResult.Key);
-                    fileContent = fileContent.Replace(CommonTags.ShortModule, moduleResult.Key.Split(".").Last());
-                    fileContent = fileContent.Replace("/*", string.Empty);
-                    fileContent = fileContent.Replace("*/", string.Empty);
+                    string shortModule = moduleResult.Key.Split(".").Last();
+                    fileContent = generatorSettings.Tokens.Replace(fileContent, moduleResult.Key, shortModule, TextHelper.GenerateSlug(shortModule));
+                    // /*_ISNULL_*/ keeps a template valid code; a framework file keeps its block comments
+                    if (!result.IsFramework)
+                    {
+                        fileContent = fileContent.Replace("/*", string.Empty);
+                        fileContent = fileContent.Replace("*/", string.Empty);
+                    }
                     fileContent = fileContent.Replace("using SolidOps.Burgr.Core;", string.Empty);
                     
                     fileContent = DuplicateLineCleaner.Clean(fileContent, fileResult.Value.DestinationLanguage);
@@ -268,9 +274,12 @@ namespace SolidOps.Burgr.Core
                             fileInfo.Directory.Create();
                         }
 
-                        var projectFile = (folderProjectFiles.GetValueOrDefault(projectFilePath) ?? generatorSettings.ProjectFileTemplate ?? DefaultProjectFile)
-                            .Replace(CommonTags.Namespace, $"{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}")
-                            .Replace(CommonTags.ShortModule, fileResult.Value.ModuleBaseName);
+                        // the module namespace token stands for the assembly name of the project
+                        var projectFile = generatorSettings.Tokens.Replace(
+                            folderProjectFiles.GetValueOrDefault(projectFilePath) ?? generatorSettings.ProjectFileTemplate ?? DefaultProjectFile,
+                            $"{fileResult.Value.NamespaceName}.{fileResult.Value.ModuleName}",
+                            fileResult.Value.ModuleBaseName,
+                            TextHelper.GenerateSlug(fileResult.Value.ModuleBaseName.Split(".").Last()));
                         // the line endings of a multi-line literal are those of this source file
                         // when burgr was built: normalized, like everything burgr writes
                         File.AppendAllText(projectFilePath, Utilities.NormalizeNewLines(projectFile));

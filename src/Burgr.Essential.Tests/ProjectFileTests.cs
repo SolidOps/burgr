@@ -20,10 +20,10 @@ public class ProjectFileTests
     private const string DomainProject = """
         <Project Sdk="Microsoft.NET.Sdk">
           <PropertyGroup>
-            <AssemblyName>MetaCorp.Template</AssemblyName>
+            <AssemblyName>_MODULE_NAMESPACE_</AssemblyName>
           </PropertyGroup>
           <ItemGroup>
-            <ProjectReference Include="../Template.Contracts/Template.Contracts.csproj" />
+            <ProjectReference Include="../_MODULE_.Contracts/_MODULE_.Contracts.csproj" />
           </ItemGroup>
         </Project>
         """;

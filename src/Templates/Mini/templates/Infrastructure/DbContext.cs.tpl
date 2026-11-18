@@ -2,9 +2,9 @@
 
 using Microsoft.EntityFrameworkCore;
 
-namespace MetaCorp.Template.Infrastructure;
+namespace _MODULE_NAMESPACE_.Infrastructure;
 
-public partial class TemplateDbContext(DbContextOptions<TemplateDbContext> options) : DbContext(options)
+public partial class _MODULE_DbContext(DbContextOptions<_MODULE_DbContext> options) : DbContext(options)
 {
     #region foreach MODEL[AG]
     public DbSet<Domain.CLASSNAME> _CLASSNAMES_ => Set<Domain.CLASSNAME>();

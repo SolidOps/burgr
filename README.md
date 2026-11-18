@@ -386,14 +386,15 @@ optional:
 
 ```json
 {
-  "MinimumBurgrVersion": "1.9.0",
+  "MinimumBurgrVersion": "1.10.0",
   "Description": "ASP.NET Core Minimal API + EF Core in one project",
   "Templates": ["Domain", "Contracts", "Infrastructure", "Api"],
   "Generators": ["SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential"],
   "SupportedFeatures": ["aggregate_roots", "enums", "references", "navigations", "calculated_properties"],
   "Dependencies": [{ "Id": "Microsoft.EntityFrameworkCore", "Version": "10.0.*" }],
   "Harness": "harness",
-  "ProjectFile": "Project.csproj"
+  "ProjectFile": "Project.csproj",
+  "Tokens": { "ModuleNamespace": "_MODULE_NAMESPACE_", "Module": "_MODULE_", "ModuleSlug": "_MODULE_SLUG_" }
 }
 ```
 
@@ -404,7 +405,8 @@ optional:
 | `SupportedFeatures` | burgr refuses a model using a feature missing from the list, and names it: `aggregate_roots`, `entities`, `value_objects`, `transients`, `events`, `services`, `enums`, `references`, `external_references`, `navigations`, `synchronized_navigations`, `calculated_properties`, `calculated_collections`, `non_persisted_properties`, `primitive_collections`, `composite_keys`, `composite_unique_constraints`, `rights`, `rules`, `factories`, `ui_components`. Without the field, nothing is checked. |
 | `Dependencies` | Packages the generated code needs (informative). |
 | `Harness` | Folder of the set copied by `/harness:<directory>` (instructions and hooks for AI agents). |
-| `ProjectFile` | Project file written for a C# module that has none yet, `MetaCorp.Template` standing for `<NamespaceName>.<module>`. Without it, burgr writes a plain `net10.0` class library. An existing project file is never touched. A template folder can declare its own, see [Project files](#project-files). |
+| `ProjectFile` | Project file written for a C# module that has none yet, the module namespace token standing for `<NamespaceName>.<module>`. Without it, burgr writes a plain `net10.0` class library. An existing project file is never touched. A template folder can declare its own, see [Project files](#project-files). |
+| `Tokens` | Names of the [module tokens](#module-tokens) used by the set's templates. |
 
 Template sets published on NuGet carry the `burgr-templates` tag.
 
@@ -506,6 +508,22 @@ Use `#region to remove at generation` for placeholder code that should always be
 | `MODELNAME` | Snake_case model name |
 | `MINSIZE` / `FIELDSIZE` | Min / max field size |
 
+### Module tokens
+
+Unlike the tokens above, which are replaced inside loop regions, the module tokens are
+replaced in the whole file, model names included. Their names are set by the `Tokens` of
+`burgr-templates.json`:
+
+| Role | Default | Recommended | Replaced with |
+|---|---|---|---|
+| `ModuleNamespace` | `MetaCorp.Template` | `_MODULE_NAMESPACE_` | Namespace of the module (`Acme.Library`) |
+| `Module` | `Template` | `_MODULE_` | Short name of the module (`Library`) |
+| `ModuleSlug` | `SlugTemplate` | `_MODULE_SLUG_` | Slug of the module (`library`) |
+
+The defaults are kept for compatibility with existing template sets, but `Template` is an
+ordinary word: a model `email_template` gives a class `EmailTemplate` that comes out as
+`EmailLibrary`. A new template set declares the recommended names, as Mini does.
+
 ### Project files
 
 A C# project that does not exist yet is created with the first of:
@@ -517,12 +535,12 @@ A C# project that does not exist yet is created with the first of:
 
 With `force_separate_dll: true`, the templates of a folder write to a project of their own,
 `<module>.<destination_suffix>`: a layered set gives each layer its project file (class
-library, Web SDK, test project…). In a project file, `MetaCorp.Template` stands for the
-assembly name (`Acme.Library.Domain`) and `Template` for the module without the layer, to
-reference another layer:
+library, Web SDK, test project…). In a project file, the module namespace token stands for
+the assembly name (`Acme.Library.Domain`) and the module token for the module without the
+layer, to reference another layer:
 
 ```xml
-<ProjectReference Include="../Template.Domain/Template.Domain.csproj" />
+<ProjectReference Include="../_MODULE_.Domain/_MODULE_.Domain.csproj" />
 ```
 
 burgr refuses two template folders declaring different project files for the same project.
@@ -549,9 +567,11 @@ source_templates:
   version of the template set fixes it. A framework file the set no longer produces is
   deleted from its folder.
 - It must not depend on the model: burgr refuses a framework template containing a
-  `#region foreach`. Only the module tokens (`MetaCorp.Template`, `Template`) are replaced.
-- It is kept as written, blank lines included: it is meant to be read. The hook of a
-  template set's harness lets AI agents read it, and refuses to edit it.
+  `#region foreach`. Only the [module tokens](#module-tokens) are replaced.
+- It is kept as written, blank lines and block comments included (other templates lose
+  every `/*` and `*/`, which lets them write `_ENUMTYPE_/*_ISNULL_*/` and stay valid code):
+  it is meant to be read. The hook of a template set's harness lets AI agents read it, and
+  refuses to edit it.
 
 ---
 

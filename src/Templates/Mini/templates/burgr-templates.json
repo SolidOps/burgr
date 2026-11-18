@@ -1,5 +1,5 @@
 {
-  "MinimumBurgrVersion": "1.9.0",
+  "MinimumBurgrVersion": "1.10.0",
   "Description": "ASP.NET Core Minimal API + EF Core in one project, no framework of its own: domain classes, enums, DTOs, DbContext and CRUD endpoints.",
   "Templates": [ "Domain", "Contracts", "Infrastructure", "Api" ],
   "Generators": [
@@ -12,5 +12,6 @@
     { "Id": "Microsoft.EntityFrameworkCore", "Version": "10.0.*" }
   ],
   "Harness": "harness",
-  "ProjectFile": "Project.csproj"
+  "ProjectFile": "Project.csproj",
+  "Tokens": { "ModuleNamespace": "_MODULE_NAMESPACE_", "Module": "_MODULE_", "ModuleSlug": "_MODULE_SLUG_" }
 }

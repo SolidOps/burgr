@@ -10,14 +10,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using MetaCorp.Template.Contracts;
-using MetaCorp.Template.Infrastructure;
+using _MODULE_NAMESPACE_.Contracts;
+using _MODULE_NAMESPACE_.Infrastructure;
 
-namespace MetaCorp.Template.Api;
+namespace _MODULE_NAMESPACE_.Api;
 
-public static partial class TemplateEndpoints
+public static partial class _MODULE_Endpoints
 {
-    public static IEndpointRouteBuilder MapTemplateEndpoints(this IEndpointRouteBuilder app)
+    public static IEndpointRouteBuilder Map_MODULE_Endpoints(this IEndpointRouteBuilder app)
     {
         #region foreach MODEL[AG][R]
         MapCLASSNAMEEndpoints(app.MapGroup("/Slug_CLASSNAMES_").WithTags("_CLASSNAMES_"));
@@ -26,7 +26,7 @@ public static partial class TemplateEndpoints
     }
 
     // a unique index or a foreign key violated by a concurrent change
-    private static async Task<bool> TrySaveAsync(TemplateDbContext db, CancellationToken cancellationToken)
+    private static async Task<bool> TrySaveAsync(_MODULE_DbContext db, CancellationToken cancellationToken)
     {
         try
         {
@@ -43,7 +43,7 @@ public static partial class TemplateEndpoints
     private static void MapCLASSNAMEEndpoints(RouteGroupBuilder group)
     {
         #region to remove if NOT_GETBYQUERY
-        group.MapGet("/", async (TemplateDbContext db, CancellationToken cancellationToken) =>
+        group.MapGet("/", async (_MODULE_DbContext db, CancellationToken cancellationToken) =>
         {
             var entities = await db._CLASSNAMES_.AsNoTracking().ToListAsync(cancellationToken);
             return TypedResults.Ok(entities.Select(CLASSNAMEDto.From).ToList());
@@ -51,7 +51,7 @@ public static partial class TemplateEndpoints
         #endregion to remove if NOT_GETBYQUERY
 
         #region to remove if NOT_GETBYID
-        group.MapGet("/{id}", async Task<Results<Ok<CLASSNAMEDto>, NotFound>> (_IDENTITY_KEY_TYPE_ id, TemplateDbContext db, CancellationToken cancellationToken) =>
+        group.MapGet("/{id}", async Task<Results<Ok<CLASSNAMEDto>, NotFound>> (_IDENTITY_KEY_TYPE_ id, _MODULE_DbContext db, CancellationToken cancellationToken) =>
         {
             var entity = await db._CLASSNAMES_.AsNoTracking()
                 #region foreach PROPERTY[M][LNA][AG]
@@ -63,7 +63,7 @@ public static partial class TemplateEndpoints
         #endregion to remove if NOT_GETBYID
 
         #region to remove if NOT_ADD
-        group.MapPost("/", async Task<Results<Created<CLASSNAMEDto>, ValidationProblem, Conflict>> (CLASSNAMEInput input, TemplateDbContext db, CancellationToken cancellationToken) =>
+        group.MapPost("/", async Task<Results<Created<CLASSNAMEDto>, ValidationProblem, Conflict>> (CLASSNAMEInput input, _MODULE_DbContext db, CancellationToken cancellationToken) =>
         {
             var errors = await ValidateCLASSNAMEAsync(input, db, cancellationToken);
             if (errors.Count > 0)
@@ -83,7 +83,7 @@ public static partial class TemplateEndpoints
         #endregion to remove if NOT_ADD
 
         #region to remove if NOT_UPDATE
-        group.MapPut("/{id}", async Task<Results<Ok<CLASSNAMEDto>, NotFound, ValidationProblem, Conflict>> (_IDENTITY_KEY_TYPE_ id, CLASSNAMEInput input, TemplateDbContext db, CancellationToken cancellationToken) =>
+        group.MapPut("/{id}", async Task<Results<Ok<CLASSNAMEDto>, NotFound, ValidationProblem, Conflict>> (_IDENTITY_KEY_TYPE_ id, CLASSNAMEInput input, _MODULE_DbContext db, CancellationToken cancellationToken) =>
         {
             var entity = await db._CLASSNAMES_.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             if (entity is null)
@@ -107,7 +107,7 @@ public static partial class TemplateEndpoints
         #endregion to remove if NOT_UPDATE
 
         #region to remove if NOT_REMOVE
-        group.MapDelete("/{id}", async Task<Results<NoContent, NotFound, Conflict>> (_IDENTITY_KEY_TYPE_ id, TemplateDbContext db, CancellationToken cancellationToken) =>
+        group.MapDelete("/{id}", async Task<Results<NoContent, NotFound, Conflict>> (_IDENTITY_KEY_TYPE_ id, _MODULE_DbContext db, CancellationToken cancellationToken) =>
         {
             var entity = await db._CLASSNAMES_.FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
             if (entity is null)
@@ -125,7 +125,7 @@ public static partial class TemplateEndpoints
         #endregion to remove if NOT_REMOVE
     }
 
-    private static async Task<Dictionary<string, string[]>> ValidateCLASSNAMEAsync(CLASSNAMEInput input, TemplateDbContext db, CancellationToken cancellationToken)
+    private static async Task<Dictionary<string, string[]>> ValidateCLASSNAMEAsync(CLASSNAMEInput input, _MODULE_DbContext db, CancellationToken cancellationToken)
     {
         var errors = input.Validate();
         #region foreach PROPERTY[M][NO][NAR][AG][PUO][NRO][NN]

@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MetaCorp.Template.Domain;
+namespace _MODULE_NAMESPACE_.Domain;
 
 #region foreach ENUMTYPE
 public enum _ENUMTYPE_
