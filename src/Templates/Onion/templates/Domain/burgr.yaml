@@ -1,0 +1,28 @@
+source_templates:
+  model:
+    source: Model.cs.tpl
+    file_suffix: Model.cs
+    destination_suffix: Domain
+    force_separate_dll: true
+    destination_language: CS
+  repositories:
+    source: Repositories.cs.tpl
+    file_suffix: Repositories.cs
+    destination_suffix: Domain
+    force_separate_dll: true
+    destination_language: CS
+  entity:
+    source: Entity.cs.tpl
+    file_suffix: Entity.cs
+    destination_suffix: Domain|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+  repository:
+    source: Repository.cs.tpl
+    file_suffix: Repository.cs
+    destination_suffix: Domain|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+project_file: Domain.csproj

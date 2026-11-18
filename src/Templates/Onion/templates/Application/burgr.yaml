@@ -1,0 +1,41 @@
+source_templates:
+  contracts:
+    source: Contracts.cs.tpl
+    file_suffix: Contracts.cs
+    destination_suffix: Application
+    force_separate_dll: true
+    destination_language: CS
+  services:
+    source: Services.cs.tpl
+    file_suffix: Services.cs
+    destination_suffix: Application
+    force_separate_dll: true
+    destination_language: CS
+  registration:
+    source: Registration.cs.tpl
+    file_suffix: ApplicationRegistration.cs
+    destination_suffix: Application
+    force_separate_dll: true
+    destination_language: CS
+  result:
+    source: Result.cs.tpl
+    file_suffix: Result.cs
+    destination_suffix: Application|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+  unit_of_work:
+    source: UnitOfWork.cs.tpl
+    file_suffix: UnitOfWork.cs
+    destination_suffix: Application|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+  paging:
+    source: Paging.cs.tpl
+    file_suffix: Paging.cs
+    destination_suffix: Application|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+project_file: Application.csproj

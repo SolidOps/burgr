@@ -1,0 +1,22 @@
+source_templates:
+  endpoints:
+    source: Endpoints.cs.tpl
+    file_suffix: Endpoints.cs
+    destination_suffix: Api
+    force_separate_dll: true
+    destination_language: CS
+  http_results:
+    source: HttpResults.cs.tpl
+    file_suffix: HttpResults.cs
+    destination_suffix: Api|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+  program:
+    source: Program.cs.tpl
+    file_suffix: Program.cs
+    destination_suffix: Api|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+project_file: Api.csproj

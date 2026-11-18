@@ -10,16 +10,17 @@ namespace SolidOps.Burgr.Essential.Tests;
 [TestClass]
 public class DeterminismTests
 {
-    private const string GeneratedFilePattern = "*.g.*";
+    // generated and framework files: both rewritten at each generation
+    private static readonly string[] GeneratedFilePatterns = ["*.g.*", "*.f.*"];
     private const string AllFilesPattern = "*";
     private const string UpdateReferenceVariable = "BURGR_UPDATE_REFERENCE";
     private static readonly string[] BuildDirectories = ["bin", "obj"];
     private static readonly string[] GenerationMessages = ["Create generated file", "Update generated file", "Delete generated file"];
 
-    // The samples' committed generated files are their golden files. A sample without a
-    // template source in its burgr.json uses one of the template sets of src/Templates.
+    // The samples' committed generated and framework files are their golden files. Each
+    // sample is generated with its template set of src/Templates, whatever its burgr.json says.
     [TestMethod]
-    [DataRow("2. User management API", "um_specs", null)]
+    [DataRow("2. User management API", "specs", "Onion")]
     [DataRow("3. Mini API", "specs", "Mini")]
     public void SampleGenerationGivesBackTheCommittedFilesAndIsStable(string sample, string specsDirectory, string? templateSet)
     {
@@ -29,7 +30,7 @@ public class DeterminismTests
         InWorkDirectory(workDirectory =>
         {
             CopyDirectory(Path.Combine(GetMetadata("SamplesDirectory"), sample), workDirectory);
-            var expected = ReadFiles(workDirectory, GeneratedFilePattern);
+            var expected = ReadFiles(workDirectory, GeneratedFilePatterns);
             Assert.AreNotEqual(0, expected.Count, $"no generated file committed in sample '{sample}'");
             foreach (var file in expected.Keys)
             {
@@ -38,9 +39,9 @@ public class DeterminismTests
 
             var specs = Path.Combine(workDirectory, specsDirectory);
             RunBurgr(specs, options);
-            var firstRun = ReadFiles(workDirectory, GeneratedFilePattern);
+            var firstRun = ReadFiles(workDirectory, GeneratedFilePatterns);
             AssertSameFiles(expected, firstRun, "committed sample", "generation from scratch");
-            AssertSecondRunChangesNothing(specs, workDirectory, GeneratedFilePattern, firstRun, options);
+            AssertSecondRunChangesNothing(specs, workDirectory, GeneratedFilePatterns, firstRun, options);
         });
     }
 
@@ -77,7 +78,7 @@ public class DeterminismTests
             }
 
             AssertSameFiles(ReadFiles(expectedDirectory, AllFilesPattern), firstRun, "Reference/expected", "generation from scratch");
-            AssertSecondRunChangesNothing(specs, output, AllFilesPattern, firstRun);
+            AssertSecondRunChangesNothing(specs, output, [AllFilesPattern], firstRun);
         });
     }
 
@@ -97,10 +98,10 @@ public class DeterminismTests
         }
     }
 
-    private static void AssertSecondRunChangesNothing(string specs, string outputDirectory, string pattern, Dictionary<string, byte[]> firstRun, params string[] options)
+    private static void AssertSecondRunChangesNothing(string specs, string outputDirectory, string[] patterns, Dictionary<string, byte[]> firstRun, params string[] options)
     {
         var output = RunBurgr(specs, options);
-        AssertSameFiles(firstRun, ReadFiles(outputDirectory, pattern), "first generation", "second generation");
+        AssertSameFiles(firstRun, ReadFiles(outputDirectory, patterns), "first generation", "second generation");
         var changes = output.Split('\n').Where(l => GenerationMessages.Any(l.Contains)).ToList();
         Assert.AreEqual(0, changes.Count, "second generation reported changes:\n" + string.Join("\n", changes));
     }
@@ -142,9 +143,9 @@ public class DeterminismTests
         return (process.ExitCode, output);
     }
 
-    private static Dictionary<string, byte[]> ReadFiles(string directory, string pattern)
+    private static Dictionary<string, byte[]> ReadFiles(string directory, params string[] patterns)
     {
-        return Directory.GetFiles(directory, pattern, SearchOption.AllDirectories)
+        return patterns.SelectMany(pattern => Directory.GetFiles(directory, pattern, SearchOption.AllDirectories))
             .Select(f => Path.GetRelativePath(directory, f))
             .Where(f => !f.Split(Path.DirectorySeparatorChar).Any(BuildDirectories.Contains))
             .ToDictionary(f => f.Replace('\\', '/'), f => File.ReadAllBytes(Path.Combine(directory, f)));

@@ -1,57 +1,11 @@
 <Solution>
   <Folder Name="/Samples/" />
   <Folder Name="/Samples/2. User management API/">
-    <Project Path="Samples/2. User management API/UM.API/UM.API.csproj" />
-    <Project Path="Samples/2. User management API/UM.Contracts/UM.Contracts.csproj" />
-    <Project Path="Samples/2. User management API/UM.Shared/UM.Shared.csproj" />
-    <Project Path="Samples/2. User management API/UM.Tests/UM.Tests.csproj" />
-    <Project Path="Samples/2. User management API/UM/UM.csproj" />
-    <Project Path="Samples/2. User management API/um_specs/" Type="Website" DisplayName="um_specs">
-      <BuildType Project="Debug" />
-      <Build Project="false" />
-      <Properties Name="WebsiteProperties">
-        <Property Name="Debug.AspNetCompiler.Debug" Value="&quot;True&quot;" />
-        <Property Name="Debug.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
-        <Property Name="Debug.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
-        <Property Name="Debug.AspNetCompiler.PhysicalPath" Value="&quot;Samples\2. User management API\um_specs\&quot;" />
-        <Property Name="Debug.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57360\&quot;" />
-        <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
-        <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57360&quot;" />
-        <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
-        <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
-        <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
-        <Property Name="Release.AspNetCompiler.PhysicalPath" Value="&quot;Samples\2. User management API\um_specs\&quot;" />
-        <Property Name="Release.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57360\&quot;" />
-        <Property Name="Release.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
-        <Property Name="Release.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57360&quot;" />
-        <Property Name="SlnRelativePath" Value="&quot;Samples\2. User management API\um_specs\&quot;" />
-        <Property Name="TargetFrameworkMoniker" Value="&quot;.NETFramework,Version%3Dv4.8&quot;" />
-        <Property Name="VWDPort" Value="&quot;57360&quot;" />
-      </Properties>
-    </Project>
-    <Project Path="Samples/2. User management API/um_templates/" Type="Website" DisplayName="um_templates">
-      <BuildType Project="Debug" />
-      <Build Project="false" />
-      <Properties Name="WebsiteProperties">
-        <Property Name="Debug.AspNetCompiler.Debug" Value="&quot;True&quot;" />
-        <Property Name="Debug.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
-        <Property Name="Debug.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
-        <Property Name="Debug.AspNetCompiler.PhysicalPath" Value="&quot;Samples\2. User management API\um_templates\&quot;" />
-        <Property Name="Debug.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57363\&quot;" />
-        <Property Name="Debug.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
-        <Property Name="Debug.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57363&quot;" />
-        <Property Name="Release.AspNetCompiler.Debug" Value="&quot;False&quot;" />
-        <Property Name="Release.AspNetCompiler.FixedNames" Value="&quot;false&quot;" />
-        <Property Name="Release.AspNetCompiler.ForceOverwrite" Value="&quot;true&quot;" />
-        <Property Name="Release.AspNetCompiler.PhysicalPath" Value="&quot;Samples\2. User management API\um_templates\&quot;" />
-        <Property Name="Release.AspNetCompiler.TargetPath" Value="&quot;PrecompiledWeb\localhost_57363\&quot;" />
-        <Property Name="Release.AspNetCompiler.Updateable" Value="&quot;true&quot;" />
-        <Property Name="Release.AspNetCompiler.VirtualPath" Value="&quot;/localhost_57363&quot;" />
-        <Property Name="SlnRelativePath" Value="&quot;Samples\2. User management API\um_templates\&quot;" />
-        <Property Name="TargetFrameworkMoniker" Value="&quot;.NETFramework,Version%3Dv4.8&quot;" />
-        <Property Name="VWDPort" Value="&quot;57363&quot;" />
-      </Properties>
-    </Project>
+    <Project Path="Samples/2. User management API/src/UM.Api/UM.Api.csproj" />
+    <Project Path="Samples/2. User management API/src/UM.Application/UM.Application.csproj" />
+    <Project Path="Samples/2. User management API/src/UM.Domain/UM.Domain.csproj" />
+    <Project Path="Samples/2. User management API/src/UM.Infrastructure/UM.Infrastructure.csproj" />
+    <Project Path="Samples/2. User management API/src/UM.Tests/UM.Tests.csproj" />
   </Folder>
   <Folder Name="/Solution Items/">
     <File Path="../.github/workflows/build_publish.yml" />
@@ -65,6 +19,7 @@
   </Folder>
   <Folder Name="/Templates/">
     <Project Path="Templates/Mini/Burgr.Templates.Mini.csproj" />
+    <Project Path="Templates/Onion/Burgr.Templates.Onion.csproj" />
   </Folder>
   <Project Path="Burgr.Core/Burgr.Core.csproj" />
   <Project Path="Burgr.Essential.Tests/Burgr.Essential.Tests.csproj" />

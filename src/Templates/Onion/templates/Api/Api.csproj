@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>_MODULE_NAMESPACE_</AssemblyName>
+    <RootNamespace>_MODULE_NAMESPACE_</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../_MODULE_.Application/_MODULE_.Application.csproj" />
+    <ProjectReference Include="../_MODULE_.Infrastructure/_MODULE_.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

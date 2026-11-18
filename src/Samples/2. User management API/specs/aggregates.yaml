@@ -1,0 +1,50 @@
+burgr-model-version: 1.0.0
+
+aggregate_roots:
+  # ---- #
+  local_user:
+    properties:
+      name:
+        is_unique: true
+        field_size: 50
+      hashed_password:
+
+  # ---- #
+  user:
+    properties:
+      email:
+        is_unique: true
+        field_size: 50
+      provider:
+        field_size: 50
+      technical_user: bool
+      preferences: preferences?
+      user_rights: ->user_right[]
+    api:
+      query:
+      get:
+      add:
+      update:
+      remove:
+
+  # ---- #
+  invite:
+    properties:
+      email:
+        is_queryable: true
+      status: $invite_status
+      creator: user
+      creator_name:
+      creator_message:
+      is_open: =bool
+    api:
+      query:
+      get:
+      add:
+
+enums:
+  invite_status:
+    values:
+      Sent: 0
+      Used: 1
+      Declined: 2

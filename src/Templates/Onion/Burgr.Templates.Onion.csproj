@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>Burgr.Templates.Onion</AssemblyName>
+    <PackageId>Burgr.Templates.Onion</PackageId>
+    <Description>Burgr's complete template set: an ASP.NET Core API in onion architecture (Domain, Application, Infrastructure, Api, Tests projects) with EF Core and a light framework of its own, generated from a YAML model, with its AI harness. Depends on public packages only.</Description>
+    <PackageTags>burgr-templates;burgr;code-generation;onion-architecture;ddd;efcore</PackageTags>
+    <PackageLicenseExpression>MIT-0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
+    <Company>Solid Ops</Company>
+    <Authors>Damien Lechat</Authors>
+    <!-- not published until the set is complete: see specs/features/onion-template-set.md -->
+    <IsPackable>false</IsPackable>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeSymbols>false</IncludeSymbols>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <NoDefaultExcludes>true</NoDefaultExcludes>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="templates\**\*" Pack="true" PackagePath="templates\" />
+    <None Include="LICENSE" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+</Project>

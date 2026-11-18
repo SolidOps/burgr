@@ -1,0 +1,15 @@
+source_templates:
+  api_tests:
+    source: ApiTests.cs.tpl
+    file_suffix: ApiTests.cs
+    destination_suffix: Tests
+    force_separate_dll: true
+    destination_language: CS
+  api_test_base:
+    source: ApiTestBase.cs.tpl
+    file_suffix: ApiTestBase.cs
+    destination_suffix: Tests|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+project_file: Tests.csproj

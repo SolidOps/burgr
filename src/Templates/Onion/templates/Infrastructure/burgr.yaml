@@ -1,0 +1,41 @@
+source_templates:
+  db_context:
+    source: DbContext.cs.tpl
+    file_suffix: DbContext.cs
+    destination_suffix: Infrastructure
+    force_separate_dll: true
+    destination_language: CS
+  repositories:
+    source: Repositories.cs.tpl
+    file_suffix: Repositories.cs
+    destination_suffix: Infrastructure
+    force_separate_dll: true
+    destination_language: CS
+  registration:
+    source: Registration.cs.tpl
+    file_suffix: InfrastructureRegistration.cs
+    destination_suffix: Infrastructure
+    force_separate_dll: true
+    destination_language: CS
+  ef_repository:
+    source: EfRepository.cs.tpl
+    file_suffix: EfRepository.cs
+    destination_suffix: Infrastructure|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+  unit_of_work:
+    source: UnitOfWork.cs.tpl
+    file_suffix: UnitOfWork.cs
+    destination_suffix: Infrastructure|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+  model_conventions:
+    source: ModelConventions.cs.tpl
+    file_suffix: ModelConventions.cs
+    destination_suffix: Infrastructure|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+project_file: Infrastructure.csproj

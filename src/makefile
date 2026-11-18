@@ -13,7 +13,7 @@ install:
 	dotnet tool install --add-source nuget/ --create-manifest-if-needed --version 1.0.0-local$(MY_VAR) --allow-downgrade Burgr
 
 generate_um:
-	dotnet burgr "Samples/2. User Management API/um_specs"
+	dotnet burgr "Samples/2. User management API/specs"
 	
 generate_mini:
 	dotnet burgr "Samples/3. Mini API/specs" /templateSpecDirectory:Templates/Mini/templates

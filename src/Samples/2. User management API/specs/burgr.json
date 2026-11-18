@@ -1,0 +1,6 @@
+{
+  "ProjectName": "UM",
+  "NamespaceName": "SolidOps",
+  "BuildingDirectory": "../src/",
+  "TemplateSpecDirectory": "../../../Templates/Onion/templates"
+}

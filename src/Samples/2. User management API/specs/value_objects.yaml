@@ -1,0 +1,10 @@
+burgr-model-version: 1.0.0
+
+value_objects:
+  # ---- #
+  preferences:
+    properties:
+      language:
+        field_size: 10
+      time_zone:
+        field_size: 50
