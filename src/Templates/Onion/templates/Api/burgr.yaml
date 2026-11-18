@@ -5,6 +5,9 @@ source_templates:
     destination_suffix: Api
     force_separate_dll: true
     destination_language: CS
+    options:
+      model_prefix: .Application.
+      model_suffix: Dto
   http_results:
     source: HttpResults.cs.tpl
     file_suffix: HttpResults.cs
@@ -15,6 +18,13 @@ source_templates:
   program:
     source: Program.cs.tpl
     file_suffix: Program.cs
+    destination_suffix: Api|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+  security:
+    source: Security.cs.tpl
+    file_suffix: Security.cs
     destination_suffix: Api|Framework
     force_separate_dll: true
     destination_language: CS

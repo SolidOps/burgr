@@ -11,6 +11,21 @@ source_templates:
     destination_suffix: Application
     force_separate_dll: true
     destination_language: CS
+  domain_services:
+    source: DomainServices.cs.tpl
+    file_suffix: DomainServices.cs
+    destination_suffix: Application
+    force_separate_dll: true
+    destination_language: CS
+    options:
+      model_prefix: .Application.
+      model_suffix: Dto
+  rights:
+    source: Rights.cs.tpl
+    file_suffix: Rights.cs
+    destination_suffix: Application
+    force_separate_dll: true
+    destination_language: CS
   registration:
     source: Registration.cs.tpl
     file_suffix: ApplicationRegistration.cs
@@ -34,6 +49,13 @@ source_templates:
   paging:
     source: Paging.cs.tpl
     file_suffix: Paging.cs
+    destination_suffix: Application|Framework
+    force_separate_dll: true
+    destination_language: CS
+    file_kind: framework
+  security:
+    source: Security.cs.tpl
+    file_suffix: Security.cs
     destination_suffix: Application|Framework
     force_separate_dll: true
     destination_language: CS

@@ -24,8 +24,11 @@ aggregate_roots:
       query:
       get:
       add:
+        mandatory_right: ManageUsers
       update:
+        mandatory_right: ManageUsers
       remove:
+        mandatory_right: ManageUsers
 
   # ---- #
   invite:

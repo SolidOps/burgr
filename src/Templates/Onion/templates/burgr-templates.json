@@ -4,9 +4,11 @@
   "Templates": [ "Domain", "Application", "Infrastructure", "Api", "Tests" ],
   "Generators": [
     "SolidOps.Burgr.Essential.Generators.Enums.EnumGenerator, SolidOps.Burgr.Essential",
-    "SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential"
+    "SolidOps.Burgr.Essential.Generators.Objects.ObjectGenerator, SolidOps.Burgr.Essential",
+    "SolidOps.Burgr.Essential.Generators.Services.ServiceGenerator, SolidOps.Burgr.Essential",
+    "SolidOps.Burgr.Essential.Generators.Rights.RightGenerator, SolidOps.Burgr.Essential"
   ],
-  "SupportedFeatures": [ "aggregate_roots", "entities", "value_objects", "enums", "references", "navigations", "calculated_properties", "composite_unique_constraints" ],
+  "SupportedFeatures": [ "aggregate_roots", "entities", "value_objects", "enums", "references", "navigations", "calculated_properties", "composite_unique_constraints", "services", "transients", "rights" ],
   "Dependencies": [
     { "Id": "Microsoft.AspNetCore.App", "Version": "10.0" },
     { "Id": "Microsoft.EntityFrameworkCore", "Version": "10.0.*" },

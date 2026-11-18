@@ -174,6 +174,84 @@ public sealed partial class CLASSNAMEInput
 }
 
 #endregion foreach MODEL
+#region foreach MODEL[TR]
+public sealed partial class CLASSNAMEDto : IValidatable
+{
+    #region foreach PROPERTY[S][NP][NAR][PUO]
+    public _SIMPLE__TYPE_ _SIMPLE__PROPERTYNAME_ { get; set; } = _DEFAULT_VALUE_;
+    #endregion foreach PROPERTY
+
+    #region foreach PROPERTY[E][NP][NAR][PUO]
+    public Domain._ENUMTYPE_/*_ISNULL_*/ _PROPERTYNAME_ { get; set; }
+    #endregion foreach PROPERTY
+
+    #region foreach PROPERTY[M][NP][NAR][AG][EN][PUO]
+    public _IDENTITY_KEY_TYPE_/*_ISNULL_*/ _SIMPLE__PROPERTYNAME_ { get; set; }
+    #endregion foreach PROPERTY
+
+    #region foreach PROPERTY[M][NP][AR][AG][EN][TR][PUO]
+    public List<_PROPERTYTYPE_Dto> _PROPERTYNAME_ { get; set; } = [];
+    #endregion foreach PROPERTY
+
+    #region foreach PROPERTY[M][NP][NAR][TR][PUO]
+    public _PROPERTYTYPE_Dto/*_ISNULL_*/ _PROPERTYNAME_ { get; set; } = null!;
+    #endregion foreach PROPERTY
+
+    #region foreach PROPERTY[M][NP][NAR][VO][PUO]
+    public Domain._PROPERTYTYPE_/*_ISNULL_*/ _PROPERTYNAME_ { get; set; } = null!;
+    #endregion foreach PROPERTY
+
+    #region foreach PROPERTY[M][NP][AR][VO][PUO]
+    public List<Domain._PROPERTYTYPE_> _PROPERTYNAME_ { get; set; } = [];
+    #endregion foreach PROPERTY
+
+    /// <summary>Required values, enum values and value objects, then <see cref="OnValidating"/>.</summary>
+    public Dictionary<string, string[]> Validate()
+    {
+        var errors = new Dictionary<string, string[]>();
+        #region foreach PROPERTY[S][NP][NAR][PUO]
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(_SIMPLE__PROPERTYNAME_))
+        {
+            errors["_SIMPLE__PROPERTYNAME_"] = ["_SIMPLE__PROPERTYNAME_ is required"];
+        }
+        #endregion foreach PROPERTY
+        #region foreach PROPERTY[E][NP][NAR][PUO][NN]
+        if (!Enum.IsDefined(_PROPERTYNAME_))
+        {
+            errors["_PROPERTYNAME_"] = ["_PROPERTYNAME_ is not a valid value"];
+        }
+        #endregion foreach PROPERTY
+        #region foreach PROPERTY[M][NP][NAR][VO][PUO][NN]
+        if (_PROPERTYNAME_ is null)
+        {
+            errors["_PROPERTYNAME_"] = ["_PROPERTYNAME_ is required"];
+        }
+        else
+        {
+            _PROPERTYTYPE_Validation.Validate(_PROPERTYNAME_, "_PROPERTYNAME_", errors);
+        }
+        #endregion foreach PROPERTY
+        #region foreach PROPERTY[M][NP][NAR][VO][PUO][N]
+        if (_PROPERTYNAME_ is not null)
+        {
+            _PROPERTYTYPE_Validation.Validate(_PROPERTYNAME_, "_PROPERTYNAME_", errors);
+        }
+        #endregion foreach PROPERTY
+        #region foreach PROPERTY[M][NP][NAR][TR][PUO][NN]
+        if (_PROPERTYNAME_ is null)
+        {
+            errors["_PROPERTYNAME_"] = ["_PROPERTYNAME_ is required"];
+        }
+        #endregion foreach PROPERTY
+        OnValidating(errors);
+        return errors;
+    }
+
+    partial void OnValidating(Dictionary<string, string[]> errors);
+}
+
+#endregion foreach MODEL
 #region foreach MODEL[VO]
 internal static partial class CLASSNAMEValidation
 {

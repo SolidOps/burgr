@@ -315,6 +315,157 @@ public sealed partial class InviteInput
 
     }
 }
+// Object [TR]
+public sealed partial class InviteResultDto : IValidatable
+{
+    // Property [S][NP][NAR][PUO]
+    public System.String Email { get; set; } = string.Empty;
+
+    public System.String Creator { get; set; } = string.Empty;
+
+    public System.String Message { get; set; } = string.Empty;
+
+    /// <summary>Required values, enum values and value objects, then <see cref="OnValidating"/>.</summary>
+    public Dictionary<string, string[]> Validate()
+    {
+        var errors = new Dictionary<string, string[]>();
+        // Property [S][NP][NAR][PUO]
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(Email))
+        {
+            errors["Email"] = ["Email is required"];
+        }
+
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(Creator))
+        {
+            errors["Creator"] = ["Creator is required"];
+        }
+
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(Message))
+        {
+            errors["Message"] = ["Message is required"];
+        }
+
+        OnValidating(errors);
+        return errors;
+    }
+    partial void OnValidating(Dictionary<string, string[]> errors);
+}
+public sealed partial class InviteUseRequestDto : IValidatable
+{
+    // Property [S][NP][NAR][PUO]
+    public System.Guid InviteId { get; set; } = default(System.Guid);
+
+    public System.String Password { get; set; } = string.Empty;
+
+    /// <summary>Required values, enum values and value objects, then <see cref="OnValidating"/>.</summary>
+    public Dictionary<string, string[]> Validate()
+    {
+        var errors = new Dictionary<string, string[]>();
+        // Property [S][NP][NAR][PUO]
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(Password))
+        {
+            errors["Password"] = ["Password is required"];
+        }
+
+        OnValidating(errors);
+        return errors;
+    }
+    partial void OnValidating(Dictionary<string, string[]> errors);
+}
+public sealed partial class LoginRequestDto : IValidatable
+{
+    // Property [S][NP][NAR][PUO]
+    public System.String Login { get; set; } = string.Empty;
+
+    public System.String Password { get; set; } = string.Empty;
+
+    /// <summary>Required values, enum values and value objects, then <see cref="OnValidating"/>.</summary>
+    public Dictionary<string, string[]> Validate()
+    {
+        var errors = new Dictionary<string, string[]>();
+        // Property [S][NP][NAR][PUO]
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(Login))
+        {
+            errors["Login"] = ["Login is required"];
+        }
+
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(Password))
+        {
+            errors["Password"] = ["Password is required"];
+        }
+
+        OnValidating(errors);
+        return errors;
+    }
+    partial void OnValidating(Dictionary<string, string[]> errors);
+}
+public sealed partial class SelfUserCreationRequestDto : IValidatable
+{
+    // Property [S][NP][NAR][PUO]
+    public System.String Email { get; set; } = string.Empty;
+
+    public System.String Password { get; set; } = string.Empty;
+
+    /// <summary>Required values, enum values and value objects, then <see cref="OnValidating"/>.</summary>
+    public Dictionary<string, string[]> Validate()
+    {
+        var errors = new Dictionary<string, string[]>();
+        // Property [S][NP][NAR][PUO]
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(Email))
+        {
+            errors["Email"] = ["Email is required"];
+        }
+
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(Password))
+        {
+            errors["Password"] = ["Password is required"];
+        }
+
+        OnValidating(errors);
+        return errors;
+    }
+    partial void OnValidating(Dictionary<string, string[]> errors);
+}
+public sealed partial class UserCreationInfoDto : IValidatable
+{
+    // Property [S][NP][NAR][PUO]
+    public System.String UserEmail { get; set; } = string.Empty;
+
+    public System.String Password { get; set; } = string.Empty;
+
+    // Property [M][NP][AR][AG][EN][TR][PUO]
+    public List<UserRightDto> Rights { get; set; } = [];
+
+    /// <summary>Required values, enum values and value objects, then <see cref="OnValidating"/>.</summary>
+    public Dictionary<string, string[]> Validate()
+    {
+        var errors = new Dictionary<string, string[]>();
+        // Property [S][NP][NAR][PUO]
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(UserEmail))
+        {
+            errors["UserEmail"] = ["UserEmail is required"];
+        }
+
+        // VALIDATION RULE - NULLABLE_PROPERTY
+        if (string.IsNullOrWhiteSpace(Password))
+        {
+            errors["Password"] = ["Password is required"];
+        }
+
+        OnValidating(errors);
+        return errors;
+    }
+    partial void OnValidating(Dictionary<string, string[]> errors);
+}
 // Object [VO]
 internal static partial class PreferencesValidation
 {
