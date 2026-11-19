@@ -1,5 +1,8 @@
 <div align="center">
-  <img src="logo.png" alt="burgr" width="480" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="logo-dark.png" />
+    <img src="logo-light.png" alt="Burgr" width="400" />
+  </picture>
   <br/><br/>
 
   [![Build](https://github.com/SolidOps/burgr/actions/workflows/build_publish.yml/badge.svg)](https://github.com/SolidOps/burgr/actions/workflows/build_publish.yml)
