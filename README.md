@@ -13,9 +13,7 @@
 
 ## What is burgr?
 
-**burgr** is a `dotnet` source code generator driven by YAML model specifications and DDD principles.
-
-You describe your domain once — aggregate roots, entities, enums, services — and burgr generates the C#, TypeScript, SQL, or PlantUML code you'd otherwise write by hand. Change the spec, re-run, done.
+**burgr** is a deterministic, model-driven code generator for `dotnet`. You describe your domain once in a small YAML model; burgr hydrates a set of templates into the C#, TypeScript, SQL or PlantUML you would otherwise write by hand. Same model + same templates = same output, on every machine (proved on every push by a golden-files test). Change the model, run again, done.
 
 ```bash
 # 1. describe your domain
@@ -24,14 +22,39 @@ cat specs/aggregate_roots.yaml
 # 2. run burgr
 dotnet burgr specs/
 
-# 3. find your generated files next to your source code
+# 3. find the generated files next to your source code
 ```
-
-burgr is distributed as a standard `dotnet tool`. It runs a 4-stage pipeline:
 
 > **YAML specs** → model parsing → template expansion → **generated source files**
 
-Each stage is pluggable — bring your own model parser, template engine, or code generators via `Burgr.Core`.
+Each stage is pluggable: bring your own model parser, template engine or code generators via `Burgr.Core`. The generated language is irrelevant, templates are text: they already produce C#, TypeScript, SQL and PlantUML.
+
+### What it is for
+
+- **Consistency and speed.** The structural code (entities, DTOs, persistence, API, client) is written once, in templates, and stays identical across every entity and project. No copy-paste drift, nothing to review in the generated files.
+- **A model as the source of truth.** The YAML model is small, readable and validatable, and can produce several outputs from one description: code, database schema, diagrams.
+- **Your own conventions.** Template sets are plain packages: use the public ones ([Mini and Onion](#template-sources)) or write your own for your architecture, even in another language.
+- **AI coding agents.** A *Model-Driven Harness*: the AI writes the model, a deterministic generator writes the code, the tests decide. This is one use of burgr, not a requirement: nothing in the tool needs an AI, and the harness is opt-in.
+
+### With an AI agent: the harness
+
+*Harness engineering* frames an AI coding agent with everything around it: context, tools, permissions and deterministic feedback loops. A rule that is *enforced* holds; a rule that is only *asked* drifts. A deterministic generator fits at the center of such a harness:
+
+- the AI writes the YAML model, plus the code of the extension points the template set provides;
+- burgr writes the rest, with no tokens spent;
+- the harness shipped with the template set tells the AI where it may write, what it must neither edit nor read (the generated files, enforced by a hook) and how to test. `dotnet burgr specs/ /harness:.` installs it, never overwriting a file.
+
+#### What it saves, measured
+
+Same tasks, same prompts, Claude Sonnet 5.5 through headless Claude Code, 5 runs per case, judged by a hidden acceptance suite. Protocol and scripts: [SolidOps/burgr-benchmarks](https://github.com/SolidOps/burgr-benchmarks).
+
+| Task | Cost | Output tokens |
+|---|---|---|
+| Create a simple / a complex project | −31 % / −37 % | −51 % / −63 % |
+| Evolve a complex project | −47 % | −54 % |
+| Small fix, question about the code | +12 % / +18 % | 0 % / −9 % |
+
+Read these with their caveats: input tokens go *up* when creating (more turns, almost all cached), the first build of the complex case is never green with burgr, small tasks cost a little more (the harness has an entry cost), and the share of generable code decides the gain: hand-written business logic costs the same either way. Costs are Claude Code's estimates.
 
 ---
 

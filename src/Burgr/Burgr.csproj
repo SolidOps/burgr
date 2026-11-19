@@ -21,8 +21,11 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>burgr</ToolCommandName>
     <PackageId>Burgr</PackageId>
-    <PackageDescription>A source generator using templates and DDD</PackageDescription>
+    <PackageDescription>A deterministic, model-driven code generator: a YAML model and templates in, source code out. Ships optional AI harnesses for coding agents.</PackageDescription>
     <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
+    <PackageProjectUrl>https://solidops.com</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>burgr;code-generation;source-generator;model-driven;yaml;ddd;dotnet-tool;ai;harness-engineering</PackageTags>
     <Company>Solid Ops</Company>
     <Authors>Damien Lechat</Authors>
     <IsPackable>true</IsPackable>
@@ -36,6 +39,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Burgr.Core\Burgr.Core.csproj" />
     <ProjectReference Include="..\Burgr.Essential\Burgr.Essential.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

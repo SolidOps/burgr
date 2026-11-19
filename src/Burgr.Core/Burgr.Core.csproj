@@ -12,6 +12,9 @@
     <PackageId>Burgr.Core</PackageId>
     <PackageDescription>Core classes available as package for customization</PackageDescription>
     <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
+    <PackageProjectUrl>https://solidops.com</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>burgr;code-generation;source-generator;model-driven;extensibility</PackageTags>
     <Company>Solid Ops</Company>
     <Authors>Damien Lechat</Authors>
     <IsPackable>true</IsPackable>
@@ -23,6 +26,10 @@
 
   <ItemGroup>
     <PackageReference Include="SubZero" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

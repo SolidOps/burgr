@@ -8,6 +8,8 @@
     <PackageTags>burgr-templates;burgr;code-generation;minimal-api;efcore</PackageTags>
     <PackageLicenseExpression>MIT-0</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
+    <PackageProjectUrl>https://solidops.com</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Company>Solid Ops</Company>
     <Authors>Damien Lechat</Authors>
     <IsPackable>true</IsPackable>
@@ -22,6 +24,7 @@
 
   <ItemGroup>
     <None Include="templates\**\*" Pack="true" PackagePath="templates\" />
+    <None Include="README.md" Pack="true" PackagePath="" />
     <None Include="LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
