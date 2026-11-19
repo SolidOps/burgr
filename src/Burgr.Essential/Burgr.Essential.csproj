@@ -11,7 +11,7 @@
     <PackageId>Burgr.Essential</PackageId>
     <PackageDescription>The essential package to build applications</PackageDescription>
     <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
-    <PackageProjectUrl>https://solidops.com</PackageProjectUrl>
+    <PackageProjectUrl>https://solidops.com/burgr</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>burgr;code-generation;source-generator;model-driven;yaml</PackageTags>
     <Company>Solid Ops</Company>

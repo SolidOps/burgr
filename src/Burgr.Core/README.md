@@ -10,4 +10,4 @@ If you only want to generate code, install the tool instead:
 dotnet tool install --global Burgr
 ```
 
-Documentation: <https://github.com/SolidOps/burgr#readme>
+Documentation: <https://github.com/SolidOps/burgr#readme> · Website: <https://solidops.com/burgr>

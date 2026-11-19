@@ -23,7 +23,7 @@
     <PackageId>Burgr</PackageId>
     <PackageDescription>A deterministic, model-driven code generator: a YAML model and templates in, source code out. Ships optional AI harnesses for coding agents.</PackageDescription>
     <RepositoryUrl>https://github.com/SolidOps/burgr</RepositoryUrl>
-    <PackageProjectUrl>https://solidops.com</PackageProjectUrl>
+    <PackageProjectUrl>https://solidops.com/burgr</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageTags>burgr;code-generation;source-generator;model-driven;yaml;ddd;dotnet-tool;ai;harness-engineering</PackageTags>
     <Company>Solid Ops</Company>

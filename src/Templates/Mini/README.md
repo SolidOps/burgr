@@ -11,6 +11,7 @@ dotnet burgr specs/ /harness:.
 
 No configuration is needed: Mini is the default set. To pin it, set `TemplatePackage` in `burgr.json`.
 
+- Website: <https://solidops.com/burgr>
 - Quick start: <https://github.com/SolidOps/burgr#quick-start>
 - Sample: <https://github.com/SolidOps/burgr-sample-mini>
 - Licence: MIT-0. The code generated from these templates is yours, no attribution required.

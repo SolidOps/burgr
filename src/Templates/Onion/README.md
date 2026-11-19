@@ -15,6 +15,7 @@ It optionally ships an AI harness for coding agents (`AGENTS.md`, `CLAUDE.md`, a
 }
 ```
 
+- Website: <https://solidops.com/burgr>
 - Documentation: <https://github.com/SolidOps/burgr#template-sources>
 - Sample: <https://github.com/SolidOps/burgr-sample-onion>
 - Licence: MIT-0. The code generated from these templates is yours, no attribution required.
