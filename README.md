@@ -129,6 +129,11 @@ burgr writes `src/Todo/{Domain,Contracts,Infrastructure,Api}/*.g.cs`, and copies
 `AGENTS.md`, `CLAUDE.md` and a Claude Code hook that keeps AI agents out of the generated
 files (existing files are never overwritten).
 
+> **Git Bash on Windows:** MSYS rewrites an argument such as `/harness:.` into a Windows
+> path, so burgr generates the code without installing the harness, and gives no error.
+> `/templateSpecDirectory:` is exposed to the same rewriting. Run
+> `MSYS_NO_PATHCONV=1 dotnet burgr specs/ /harness:.`, or use PowerShell or cmd.
+
 **5. Wire it in `src/Todo/Program.cs`:**
 
 ```csharp
