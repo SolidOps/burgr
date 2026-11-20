@@ -122,6 +122,7 @@ public class JSConversionService : BaseConversionService
             : type == typeof(decimal)
             || type == typeof(double)
             || type == typeof(int)
+            || type == typeof(long)
             || type == typeof(float)
             || type == typeof(ulong)
             ? "number"
