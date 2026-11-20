@@ -67,6 +67,11 @@ public abstract class BaseConversionService : IConversionService
             Type simpleType = GetSimpleType(parameter.Get("SimpleType"));
             string simpleTypeName = simpleType.Name;
             string simpleFullName = simpleType.FullName;
+            if (parameter.Is("List"))
+            {
+                simpleTypeName += "[]";
+                simpleFullName += "[]";
+            }
             return ConvertParameterType(simpleTypeName, simpleFullName, simpleType.IsEnum, parameter.Is("Null"), parameter.NamespaceName, parameter.ModuleName, modelPrefix, modelSuffix, convertList, isInterface, fullName);
         }
 

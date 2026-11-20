@@ -211,6 +211,7 @@ public class ServiceModelParser : BaseYamlModelParser, IModelParser
                     if (typeInfo.IsEnum)
                     {
                         modelServiceMethodParameter.Set("Enum", "true");
+                        modelServiceMethodParameter.Set("Null", typeInfo.IsNull.ToString());
                         AddRelatedDescriptor(modelServiceMethodParameter, typeInfo, Generators.Enums.EnumGenerator.Name);
                     }
                     else if (typeInfo.TypeType != TypeType.Simple)
