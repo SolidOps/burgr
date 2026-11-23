@@ -15,6 +15,7 @@ namespace SolidOps.Burgr.Core
         public string[] SupportedFeatures { get; set; }
         public TemplateDependency[] Dependencies { get; set; }
         public string Harness { get; set; }
+        public string Starter { get; set; }
         public string ProjectFile { get; set; }
         public TemplateTokens Tokens { get; set; }
         public TemplateEnumType EnumType { get; set; }
@@ -85,6 +86,40 @@ namespace SolidOps.Burgr.Core
                 Directory.CreateDirectory(Path.GetDirectoryName(destination));
                 File.Copy(file, destination);
                 Console.WriteLine($"Harness file written: {relative}");
+                written.Add(relative);
+            }
+            return written;
+        }
+
+        // Copies the set's starter project into an empty specs directory. The starter is laid out
+        // as a repository: its specs/ folder (burgr.json and YAML) goes into the specs directory,
+        // the rest (hand-written code next to the generated one) into the specs directory's
+        // parent, never overwriting a file.
+        public List<string> WriteStarter(string templatesDirectory, string specsDirectory)
+        {
+            if (string.IsNullOrEmpty(Starter))
+            {
+                throw new InvalidOperationException($"{specsDirectory} is empty and this template set has no starter model (no Starter in {FileName}): add a burgr.json and a YAML model to it");
+            }
+
+            const string StarterSpecs = "specs/";
+            var source = Path.Combine(templatesDirectory, Starter);
+            var root = Path.GetDirectoryName(Path.TrimEndingDirectorySeparator(specsDirectory));
+            var written = new List<string>();
+            foreach (var file in FileSystemOrder.SortRecursive(Directory.GetFiles(source, "*", SearchOption.AllDirectories), source))
+            {
+                var relative = Path.GetRelativePath(source, file).Replace('\\', '/');
+                var destination = relative.StartsWith(StarterSpecs, StringComparison.Ordinal)
+                    ? Path.Combine(specsDirectory, relative.Substring(StarterSpecs.Length))
+                    : Path.Combine(root, relative);
+                if (File.Exists(destination))
+                {
+                    Console.WriteLine($"Starter file kept: {relative}");
+                    continue;
+                }
+                Directory.CreateDirectory(Path.GetDirectoryName(destination));
+                File.Copy(file, destination);
+                Console.WriteLine($"Starter file written: {relative}");
                 written.Add(relative);
             }
             return written;

@@ -12,6 +12,7 @@
     { "Id": "Microsoft.EntityFrameworkCore", "Version": "10.0.*" }
   ],
   "Harness": "harness",
+  "Starter": "starter",
   "ProjectFile": "Project.csproj",
   "Tokens": { "ModuleNamespace": "_MODULE_NAMESPACE_", "Module": "_MODULE_", "ModuleSlug": "_MODULE_SLUG_" }
 }

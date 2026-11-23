@@ -135,7 +135,7 @@ public class TemplateManifestTests
             var (_, output) = DeterminismTests.StartBurgr(specs);
 
             StringAssert.Contains(output, "No template source");
-            StringAssert.Contains(output, "/templateSpecDirectory:");
+            StringAssert.Contains(output, "--templateSpecDirectory=");
         });
     }
 
@@ -154,6 +154,105 @@ public class TemplateManifestTests
             CollectionAssert.AreEqual(new[] { "CLAUDE.md", ".claude/settings.json", ".claude/hooks/block-generated-files.sh" }, written);
             Assert.AreEqual("mine", File.ReadAllText(Path.Combine(target, "AGENTS.md")));
         });
+    }
+
+    // --name=value, which Git Bash leaves alone, is the same option as /name:value
+    [TestMethod]
+    public void DoubleDashOptionsAreTheSlashOnes()
+    {
+        DeterminismTests.InWorkDirectory(work =>
+        {
+            var templates = CopyMiniTemplates(work, _ => { });
+            var specs = WriteSpecs(work, MinimalConfig, Model);
+            var target = Path.Combine(work, "repository");
+
+            DeterminismTests.RunBurgr(specs, "--templateSpecDirectory=" + templates, "--harness=" + target);
+
+            Assert.IsTrue(File.Exists(Path.Combine(target, "AGENTS.md")));
+            Assert.IsTrue(File.Exists(Path.Combine(work, "output", "Shop", "Domain", "ShopModel.g.cs")));
+        });
+    }
+
+    [TestMethod]
+    [DataRow(@"C:\Program Files\Git\harness;.", "write --harness=. instead")]
+    [DataRow("--harnes=.", "--harness")]
+    [DataRow("--harness", "--harness")]
+    [DataRow("extra", "--harness")]
+    public void UnknownArgumentIsRefused(string argument, string hint)
+    {
+        DeterminismTests.InWorkDirectory(work =>
+        {
+            var templates = CopyMiniTemplates(work, _ => { });
+            var specs = WriteSpecs(work, MinimalConfig, Model);
+
+            var (_, output) = DeterminismTests.StartBurgr(specs, "/templateSpecDirectory:" + templates, argument);
+
+            StringAssert.Contains(output, $"Unknown argument '{argument}'");
+            StringAssert.Contains(output, hint);
+            Assert.IsFalse(Directory.Exists(Path.Combine(work, "output")));
+        });
+    }
+
+    [TestMethod]
+    [DataRow(false)]
+    [DataRow(true)]
+    public void MissingOrEmptySpecsDirectoryGetsTheStarterModel(bool existsEmpty)
+    {
+        DeterminismTests.InWorkDirectory(work =>
+        {
+            var templates = CopyMiniTemplates(work, _ => { });
+            var specs = Path.Combine(work, "specs");
+            if (existsEmpty)
+            {
+                Directory.CreateDirectory(specs);
+            }
+
+            var output = DeterminismTests.RunBurgr(specs, "/templateSpecDirectory:" + templates);
+
+            StringAssert.Contains(output, "Starter file written: specs/burgr.json");
+            Assert.IsTrue(File.Exists(Path.Combine(specs, "library.yaml")));
+            var project = Path.Combine(work, "src", "Library");
+            Assert.IsTrue(File.Exists(Path.Combine(project, "Program.cs")));
+            Assert.IsTrue(File.Exists(Path.Combine(project, "Domain", "Book.cs")));
+            Assert.IsTrue(File.Exists(Path.Combine(project, "Domain", "LibraryModel.g.cs")));
+            // the starter's project file, with its Sqlite reference, not the set's ProjectFile
+            StringAssert.Contains(File.ReadAllText(Path.Combine(project, "Library.csproj")), "Microsoft.EntityFrameworkCore.Sqlite");
+        });
+    }
+
+    [TestMethod]
+    public void StarterFileNextToTheSpecsIsNeverOverwritten()
+    {
+        DeterminismTests.InWorkDirectory(work =>
+        {
+            var templates = CopyMiniTemplates(work, _ => { });
+            var program = Path.Combine(work, "src", "Library", "Program.cs");
+            Directory.CreateDirectory(Path.GetDirectoryName(program)!);
+            File.WriteAllText(program, "// mine");
+
+            var output = DeterminismTests.RunBurgr(Path.Combine(work, "specs"), "/templateSpecDirectory:" + templates);
+
+            StringAssert.Contains(output, "Starter file kept: src/Library/Program.cs");
+            Assert.AreEqual("// mine", File.ReadAllText(program));
+        });
+    }
+
+    // Each file of the starter is the file at the same path in the Mini API sample.
+    [TestMethod]
+    public void StarterOfMiniIsTakenFromTheMiniSample()
+    {
+        var starter = Path.Combine(DeterminismTests.GetMetadata("TemplatesDirectory"), "Mini", "templates", "starter");
+        var sample = Path.Combine(DeterminismTests.GetMetadata("SamplesDirectory"), "3. Mini API");
+
+        var files = Directory.GetFiles(starter, "*", SearchOption.AllDirectories).Select(f => Path.GetRelativePath(starter, f)).ToList();
+        CollectionAssert.Contains(files, Path.Combine("specs", "burgr.json"));
+        foreach (var file in files)
+        {
+            Assert.AreEqual(File.ReadAllText(Path.Combine(sample, file)), File.ReadAllText(Path.Combine(starter, file)), file);
+        }
+        CollectionAssert.AreEquivalent(
+            Directory.GetFiles(Path.Combine(sample, "specs")).Select(f => Path.GetRelativePath(sample, f)).ToList(),
+            files.Where(f => f.StartsWith("specs" + Path.DirectorySeparatorChar, StringComparison.Ordinal)).ToList());
     }
 
     [TestMethod]

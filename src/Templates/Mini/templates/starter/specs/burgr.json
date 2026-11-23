@@ -1,0 +1,5 @@
+{
+  "ProjectName": "Library",
+  "NamespaceName": "Acme",
+  "BuildingDirectory": "../src/"
+}

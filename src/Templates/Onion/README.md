@@ -4,7 +4,7 @@ Burgr's complete template set. From a YAML model, [burgr](https://github.com/Sol
 
 The invariant behaviour (unit of work, rights, events, paging...) lives in a light framework generated next to your code as `*.f.cs`: read it to understand a behaviour, extend it through its extension points, never edit it. The generated code depends on public packages only.
 
-It optionally ships an AI harness for coding agents (`AGENTS.md`, `CLAUDE.md`, a Claude Code hook): `dotnet burgr specs/ /harness:.` installs it. `AGENTS.md` documents the model, the extension points and the framework contracts.
+It optionally ships an AI harness for coding agents (`AGENTS.md`, `CLAUDE.md`, a Claude Code hook): `dotnet burgr specs/ --harness=.` installs it. `AGENTS.md` documents the model, the extension points and the framework contracts.
 
 ```json
 {

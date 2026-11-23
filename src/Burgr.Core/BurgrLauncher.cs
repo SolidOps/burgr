@@ -22,9 +22,16 @@ namespace SolidOps.Burgr.Core
             "SolidOps.Burgr.Essential.Generators.Rights.RightGenerator, SolidOps.Burgr.Essential"
         ];
 
+        private static readonly string[] OptionNames =
+        [
+            "projectDir", "buildingDir", "dllFolderPath", "identityKeysType", "forcedPrefix",
+            "overrideDestination", "onlyOneDll", "templateSpecDirectory", "harness"
+        ];
+
         private static List<Assembly> referencedAssemblies = new List<Assembly>();
         public static int Launch(params string[] args)
         {
+            args = NormalizeOptions(args);
             string projectName = string.Empty;
             string namespaceName = string.Empty;
             string buildingDir = string.Empty;
@@ -55,8 +62,9 @@ namespace SolidOps.Burgr.Core
             string callerDirectory = Directory.GetCurrentDirectory();
             // the specs directory, unless the first argument is the configuration itself or an
             // option (/name:value); an absolute path starts with / too outside Windows.
-            if (args.Length >= 1 && !args[0].StartsWith("{", StringComparison.Ordinal) && (!args[0].StartsWith("/", StringComparison.Ordinal) || Directory.Exists(args[0])))
+            if (args.Length >= 1 && !args[0].StartsWith("{", StringComparison.Ordinal) && !IsOption(args[0]))
             {
+                WriteStarterIfEmpty(args[0], callerDirectory, args);
                 Environment.CurrentDirectory = args[0];
             }
             // models are read from the specs directory by default, not from where burgr is run
@@ -194,11 +202,7 @@ namespace SolidOps.Burgr.Core
                 generatorTypeNames = new string[] {};
             }
 
-            var templateSpecDirectoryArg = args.FirstOrDefault(a => a.StartsWith("/templateSpecDirectory:", StringComparison.Ordinal));
-            if (templateSpecDirectoryArg != null)
-            {
-                templateSpecDirectory = Path.GetFullPath(templateSpecDirectoryArg.Replace("/templateSpecDirectory:", string.Empty), callerDirectory);
-            }
+            templateSpecDirectory = TemplateSpecDirectoryOption(args, callerDirectory) ?? templateSpecDirectory;
             if (templateSpecDirectory == null)
             {
                 templateSpecDirectory = TemplatePackageResolver.Resolve(templatePackage ?? DefaultTemplatePackage());
@@ -318,11 +322,77 @@ namespace SolidOps.Burgr.Core
             return 0;
         }
 
+        // --name=value is the same option as /name:value. Git Bash rewrites an argument such as
+        // /harness:. into a Windows path list (C:\Program Files\Git\harness;.), but leaves
+        // --harness=. alone. An argument burgr does not know is refused, not ignored: a
+        // rewritten or misspelt option would otherwise do nothing, silently.
+        private static string[] NormalizeOptions(string[] args)
+        {
+            var normalized = args.Select(arg =>
+            {
+                var equals = arg.IndexOf('=');
+                return arg.StartsWith("--", StringComparison.Ordinal) && equals > 2
+                    ? "/" + arg[2..equals] + ":" + arg[(equals + 1)..]
+                    : arg;
+            }).ToArray();
+
+            for (var i = 0; i < normalized.Length; i++)
+            {
+                var arg = normalized[i];
+                // the configuration itself, or the specs directory (no path has a ; but a rewritten one)
+                if (i == 0 && (arg.StartsWith("{", StringComparison.Ordinal) || (!IsOption(arg) && !arg.Contains(';'))))
+                {
+                    continue;
+                }
+                var option = System.Text.RegularExpressions.Regex.Match(arg, "^/([A-Za-z]+):");
+                if (option.Success && OptionNames.Contains(option.Groups[1].Value, StringComparer.Ordinal))
+                {
+                    continue;
+                }
+
+                var message = $"Unknown argument '{args[i]}'. burgr takes the specs directory first, then options written --name=value or /name:value: {string.Join(", ", OptionNames.Select(n => "--" + n))}.";
+                if (arg.Contains(';'))
+                {
+                    message += " Git Bash rewrites an argument such as /harness:. into a Windows path: write --harness=. instead.";
+                }
+                throw new ArgumentException(message);
+            }
+            return normalized;
+        }
+
+        private static bool IsOption(string arg)
+        {
+            return arg.StartsWith("/", StringComparison.Ordinal) && !Directory.Exists(arg)
+                && System.Text.RegularExpressions.Regex.IsMatch(arg, "^/[A-Za-z]+:");
+        }
+
+        private static string TemplateSpecDirectoryOption(string[] args, string callerDirectory)
+        {
+            var arg = args.FirstOrDefault(a => a.StartsWith("/templateSpecDirectory:", StringComparison.Ordinal));
+            return arg == null ? null : Path.GetFullPath(arg.Replace("/templateSpecDirectory:", string.Empty), callerDirectory);
+        }
+
+        // A specs directory missing or empty gets the starter model of the template set given on
+        // the command line, or of the default set: `dotnet burgr specs/` works in an empty folder.
+        // There is no burgr.json yet to pick another set from.
+        private static void WriteStarterIfEmpty(string specsDirectory, string callerDirectory, string[] args)
+        {
+            if (Directory.Exists(specsDirectory) && Directory.EnumerateFileSystemEntries(specsDirectory).Any())
+            {
+                return;
+            }
+
+            var templateSpecDirectory = TemplateSpecDirectoryOption(args, callerDirectory) ?? TemplatePackageResolver.Resolve(DefaultTemplatePackage());
+            var manifest = TemplateManifest.Read(templateSpecDirectory) ?? new TemplateManifest();
+            manifest.CheckBurgrVersion();
+            manifest.WriteStarter(templateSpecDirectory, Path.GetFullPath(specsDirectory, callerDirectory));
+        }
+
         // without any template source, the default set at burgr's own version
         private static TemplatePackageConfig DefaultTemplatePackage()
         {
             var version = TemplateManifest.CurrentBurgrVersion()
-                ?? throw new InvalidOperationException($"No template source: set TemplateSpecDirectory or TemplatePackage in burgr.json, or pass /templateSpecDirectory:. A development build of burgr has no version to pick the default set {DefaultTemplatePackageId} with.");
+                ?? throw new InvalidOperationException($"No template source: set TemplateSpecDirectory or TemplatePackage in burgr.json, or pass --templateSpecDirectory=. A development build of burgr has no version to pick the default set {DefaultTemplatePackageId} with.");
             return new TemplatePackageConfig { Id = DefaultTemplatePackageId, Version = version.ToString(3) };
         }
 

@@ -45,7 +45,7 @@ Each stage is pluggable: bring your own model parser, template engine or code ge
 
 - the AI writes the YAML model, plus the code of the extension points the template set provides;
 - burgr writes the rest, with no tokens spent;
-- the harness shipped with the template set tells the AI where it may write, what it must neither edit nor read (the generated files, enforced by a hook) and how to test. `dotnet burgr specs/ /harness:.` installs it, never overwriting a file.
+- the harness shipped with the template set tells the AI where it may write, what it must neither edit nor read (the generated files, enforced by a hook) and how to test. `dotnet burgr specs/ --harness=.` installs it, never overwriting a file.
 
 #### What it saves, measured
 
@@ -72,6 +72,13 @@ dotnet tool install --global Burgr
 
 burgr's default template set, **Mini**, generates an ASP.NET Core Minimal API with EF Core
 in one project, from public packages only.
+
+> **Just looking?** In an empty folder, `dotnet burgr specs/ --harness=.` first writes a
+> starter project (a library of authors and books, taken from the
+> [Mini API sample](src/Samples/3.%20Mini%20API)): the model in `specs/`, and the project
+> file, `Program.cs` and one extension point in `src/Library/`. Then it generates the code,
+> and `dotnet run --project src/Library` serves `/authors` and `/books`. burgr writes the
+> starter only when the specs directory is missing or empty, and never overwrites a file.
 
 **1. Create the project the code is generated into:**
 
@@ -122,17 +129,16 @@ enums:
 **4. Run the generator, and install the AI harness of the template set:**
 
 ```sh
-dotnet burgr specs/ /harness:.
+dotnet burgr specs/ --harness=.
 ```
 
 burgr writes `src/Todo/{Domain,Contracts,Infrastructure,Api}/*.g.cs`, and copies
 `AGENTS.md`, `CLAUDE.md` and a Claude Code hook that keeps AI agents out of the generated
 files (existing files are never overwritten).
 
-> **Git Bash on Windows:** MSYS rewrites an argument such as `/harness:.` into a Windows
-> path, so burgr generates the code without installing the harness, and gives no error.
-> `/templateSpecDirectory:` is exposed to the same rewriting. Run
-> `MSYS_NO_PATHCONV=1 dotnet burgr specs/ /harness:.`, or use PowerShell or cmd.
+> Options are written `--name=value`. The older `/name:value` form still works, except
+> in Git Bash on Windows, which rewrites it into a Windows path: burgr then refuses the
+> argument and says so.
 
 **5. Wire it in `src/Todo/Program.cs`:**
 
@@ -402,8 +408,8 @@ different `burgr.json` (`other_thing: Namespace.Module.thing`) takes its key typ
 
 Templates are read from the first of:
 
-1. the `/templateSpecDirectory:<path>` command-line option (relative to the directory
-   burgr is run from): `dotnet burgr specs/ /templateSpecDirectory:../my_templates`;
+1. the `--templateSpecDirectory=<path>` command-line option (relative to the directory
+   burgr is run from): `dotnet burgr specs/ --templateSpecDirectory=../my_templates`;
 2. `TemplateSpecDirectory` in `burgr.json` (relative to the specs directory);
 3. `TemplatePackage`: the package's `templates/` folder, taken from the NuGet global
    packages folder (`NUGET_PACKAGES` or `~/.nuget/packages`) when already restored,
@@ -413,7 +419,7 @@ Templates are read from the first of:
    burgr itself.
 
 Two template sets are published with burgr, at its version, with their AI harness
-(`dotnet burgr specs/ /harness:.` installs it, never overwriting a file):
+(`dotnet burgr specs/ --harness=.` installs it, never overwriting a file):
 
 | Package | Generates |
 |---|---|
@@ -452,7 +458,7 @@ optional:
 | `Templates`, `Generators` | Used when `burgr.json` does not list its own. Without either, burgr uses the four `Burgr.Essential` generators (enums, objects, services, rights). `ModelParserEngineType` and `TemplateParserEngineType` default to `Burgr.Essential`'s. |
 | `SupportedFeatures` | burgr refuses a model using a feature missing from the list, and names it: `aggregate_roots`, `entities`, `value_objects`, `transients`, `events`, `services`, `enums`, `references`, `external_references`, `navigations`, `synchronized_navigations`, `calculated_properties`, `calculated_collections`, `non_persisted_properties`, `primitive_collections`, `composite_keys`, `composite_unique_constraints`, `rights`, `rules`, `factories`, `ui_components`. Without the field, nothing is checked. |
 | `Dependencies` | Packages the generated code needs (informative). |
-| `Harness` | Folder of the set copied by `/harness:<directory>` (instructions and hooks for AI agents). |
+| `Harness` | Folder of the set copied by `--harness=<directory>` (instructions and hooks for AI agents). |
 | `ProjectFile` | Project file written for a C# module that has none yet, the module namespace token standing for `<NamespaceName>.<module>`. Without it, burgr writes a plain `net10.0` class library. An existing project file is never touched. A template folder can declare its own, see [Project files](#project-files). |
 | `Tokens` | Names of the [module tokens](#module-tokens) used by the set's templates. |
 | `EnumType` | How burgr names an enum it writes itself, in a method parameter for instance: `<module namespace><Prefix><Name><Suffix>`. `{ "Prefix": ".Contracts.Enums.", "Suffix": "Enum" }` by default; Onion uses `{ "Prefix": ".Domain.", "Suffix": "" }`. |

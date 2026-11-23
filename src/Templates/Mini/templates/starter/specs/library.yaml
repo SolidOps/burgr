@@ -1,0 +1,41 @@
+burgr-model-version: 1.0.0
+
+aggregate_roots:
+  author:
+    properties:
+      name:
+        is_unique: true
+        field_size: 100
+      biography: string?
+      books: ->book[]
+    api:
+      query:
+      get:
+      add:
+      update:
+      remove:
+
+  book:
+    properties:
+      title:
+        field_size: 200
+      isbn:
+        is_unique: true
+        field_size: 20
+      copies: int
+      status: $book_status
+      author: author
+      is_available: =bool
+    api:
+      query:
+      get:
+      add:
+      update:
+      remove:
+
+enums:
+  book_status:
+    values:
+      Draft: 0
+      Published: 1
+      OutOfPrint: 2
