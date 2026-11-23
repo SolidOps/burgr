@@ -9,7 +9,7 @@ dotnet tool install --global Burgr
 dotnet burgr specs/ --harness=.
 ```
 
-No configuration is needed: Mini is the default set. When `specs/` is missing or empty, burgr first writes the set's starter project (a library of authors and books, taken from the sample), then generates it: `dotnet run --project src/Library` serves the API. To pin it, set `TemplatePackage` in `burgr.json`.
+No configuration is needed: Mini is the default set. When `specs/` is missing or empty, burgr first writes the set's starter project (a library of authors and books, taken from the sample), then generates it: `dotnet run --project src/Library` serves the API, browsable under `/swagger`. To pin it, set `TemplatePackage` in `burgr.json`.
 
 - Website: <https://solidops.com/burgr>
 - Quick start: <https://github.com/SolidOps/burgr#quick-start>

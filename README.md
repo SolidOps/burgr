@@ -77,7 +77,9 @@ in one project, from public packages only.
 > starter project (a library of authors and books, taken from the
 > [Mini API sample](src/Samples/3.%20Mini%20API)): the model in `specs/`, and the project
 > file, `Program.cs` and one extension point in `src/Library/`. Then it generates the code,
-> and `dotnet run --project src/Library` serves `/authors` and `/books`. burgr writes the
+> and `dotnet run --project src/Library` serves the API, with Swagger UI on
+> <http://localhost:5000/swagger>.
+> burgr writes the
 > starter only when the specs directory is missing or empty, and never overwrites a file.
 
 **1. Create the project the code is generated into:**
